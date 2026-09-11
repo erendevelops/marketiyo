@@ -62,7 +62,7 @@ function run(binary: string, args: string[], input: string, timeoutMs: number): 
  */
 export function classifyCliFailure(stderr: string, stdout: string): ProviderError {
   const message =
-    stderr.trim() || stdout.trim() || 'Claude Code sifir disi cikis kodu dondurdu.';
+    stderr.trim() || stdout.trim() || 'Claude Code beklenmeyen bir hata döndürdü.';
   const isAuth = /login|log in|authenticate|auth|unauthori|oauth|session expired/i.test(message);
   return { code: isAuth ? 'auth' : 'transport', message };
 }
@@ -80,7 +80,7 @@ export function createClaudeCodeProvider({ binary }: Options): Provider {
       if (result.code === 0) return { available: true, detail: result.stdout.trim() };
       return {
         available: false,
-        detail: `Claude Code calistirilamadi. PATH uzerinde "${binary}" bulunamadi.`,
+        detail: `Claude Code çalıştırılamadı. PATH üzerinde "${binary}" bulunamadı.`,
       };
     },
 
@@ -93,12 +93,12 @@ export function createClaudeCodeProvider({ binary }: Options): Provider {
       );
 
       if (result.timedOut) {
-        return { ok: false, error: { code: 'timeout', message: 'Claude Code zaman asimina ugradi.' } };
+        return { ok: false, error: { code: 'timeout', message: 'Claude Code zaman aşımına uğradı.' } };
       }
       if (result.spawnFailed) {
         return {
           ok: false,
-          error: { code: 'not-available', message: `Claude Code baslatilamadi: ${result.stderr}` },
+          error: { code: 'not-available', message: `Claude Code başlatılamadı: ${result.stderr}` },
         };
       }
       if (result.code !== 0) {

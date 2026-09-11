@@ -16,11 +16,11 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
 
   const parsed = patchSchema.safeParse(await request.json().catch(() => null));
   if (!parsed.success) {
-    return NextResponse.json({ error: 'Gecersiz guncelleme.' }, { status: 400 });
+    return NextResponse.json({ error: 'Geçersiz güncelleme.' }, { status: 400 });
   }
 
   const ideas = await getStore().updateIdea(id, parsed.data);
   const updated = ideas.find((idea) => idea.id === id);
-  if (!updated) return NextResponse.json({ error: 'Fikir bulunamadi.' }, { status: 404 });
+  if (!updated) return NextResponse.json({ error: 'Fikir bulunamadı.' }, { status: 404 });
   return NextResponse.json(updated);
 }

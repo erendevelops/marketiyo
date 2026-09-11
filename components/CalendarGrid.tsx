@@ -1,20 +1,14 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { inputClass } from '@/components/fields';
+import { Field, inputClass } from '@/components/fields';
 import { t } from '@/lib/i18n';
+import { platformLabel, slotStatusLabel } from '@/lib/i18n/labels';
 import { proposeFill } from '@/lib/calendar/plan';
 import type { CalendarSlot, Idea, Language, Platform, SlotStatus } from '@/lib/schema';
 
 const PLATFORMS: Platform[] = ['short-video', 'x', 'linkedin', 'instagram-static'];
 const STATUS_CYCLE: SlotStatus[] = ['planned', 'ready', 'posted', 'skipped'];
-
-const PLATFORM_LABEL: Record<Platform, string> = {
-  'short-video': 'Kisa video',
-  x: 'X',
-  linkedin: 'LinkedIn',
-  'instagram-static': 'Instagram',
-};
 
 const STATUS_STYLE: Record<SlotStatus, string> = {
   planned: 'border-neutral-800',
@@ -45,6 +39,8 @@ type Props = {
 
 export function CalendarGrid({ initialSlots, ideas, language }: Props) {
   const dict = t(language);
+  const locale = language === 'tr' ? 'tr-TR' : 'en-GB';
+
   const [slots, setSlots] = useState<CalendarSlot[]>(initialSlots);
   const [weekStart, setWeekStart] = useState(() => startOfWeek(new Date()));
   const [platform, setPlatform] = useState<Platform>('short-video');
@@ -56,15 +52,12 @@ export function CalendarGrid({ initialSlots, ideas, language }: Props) {
       Array.from({ length: 7 }, (_, offset) => {
         const date = new Date(weekStart);
         date.setDate(date.getDate() + offset);
-        return isoDate(date);
+        return date;
       }),
     [weekStart],
   );
 
-  const hookById = useMemo(
-    () => new Map(ideas.map((idea) => [idea.id, idea.hook])),
-    [ideas],
-  );
+  const hookById = useMemo(() => new Map(ideas.map((idea) => [idea.id, idea.hook])), [ideas]);
 
   async function persist(next: CalendarSlot[]) {
     const previous = slots;
@@ -99,8 +92,7 @@ export function CalendarGrid({ initialSlots, ideas, language }: Props) {
         slot.id === id
           ? {
               ...slot,
-              status:
-                STATUS_CYCLE[(STATUS_CYCLE.indexOf(slot.status) + 1) % STATUS_CYCLE.length],
+              status: STATUS_CYCLE[(STATUS_CYCLE.indexOf(slot.status) + 1) % STATUS_CYCLE.length],
             }
           : slot,
       ),
@@ -114,12 +106,14 @@ export function CalendarGrid({ initialSlots, ideas, language }: Props) {
   function propose() {
     const filled = proposeFill({ slots, ideas });
     const added = filled.filter((slot, index) => slot.ideaId !== slots[index].ideaId).length;
+
     if (added === 0) {
-      setMessage(dict.ideasEmpty);
+      setMessage(dict.calendarNothingToFill);
       return;
     }
+
     void persist(filled);
-    setMessage(String(added));
+    setMessage(`${added} ${dict.calendarFilled}`);
   }
 
   function shiftWeek(direction: -1 | 1) {
@@ -130,99 +124,114 @@ export function CalendarGrid({ initialSlots, ideas, language }: Props) {
 
   return (
     <main className="mx-auto max-w-6xl p-8">
-      <h1 className="mb-6 text-2xl font-semibold">{dict.calendarTitle}</h1>
+      <h1 className="mb-2 text-2xl font-semibold">{dict.calendarTitle}</h1>
+      <p className="mb-8 text-sm text-neutral-500">{dict.calendarIntro}</p>
 
-      <div className="mb-6 flex flex-wrap items-center gap-3">
-        <button
-          type="button"
-          className="rounded border border-neutral-700 px-3 py-1 text-sm"
-          onClick={() => shiftWeek(-1)}
-        >
-          &larr;
-        </button>
-        <span className="text-sm text-neutral-400">{days[0]}</span>
-        <button
-          type="button"
-          className="rounded border border-neutral-700 px-3 py-1 text-sm"
-          onClick={() => shiftWeek(1)}
-        >
-          &rarr;
-        </button>
+      <div className="mb-6 flex flex-wrap items-end gap-4">
+        <div className="flex items-center gap-2 pb-2">
+          <button
+            type="button"
+            aria-label={dict.calendarPrevWeek}
+            className="rounded border border-neutral-700 px-3 py-1 text-sm"
+            onClick={() => shiftWeek(-1)}
+          >
+            &larr;
+          </button>
+          <span className="text-sm text-neutral-400">
+            {days[0].toLocaleDateString(locale, { day: 'numeric', month: 'long' })}
+          </span>
+          <button
+            type="button"
+            aria-label={dict.calendarNextWeek}
+            className="rounded border border-neutral-700 px-3 py-1 text-sm"
+            onClick={() => shiftWeek(1)}
+          >
+            &rarr;
+          </button>
+        </div>
 
-        <select
-          aria-label={dict.brandPlatforms}
-          className={`${inputClass} w-auto`}
-          value={platform}
-          onChange={(event) => setPlatform(event.target.value as Platform)}
-        >
-          {PLATFORMS.map((item) => (
-            <option key={item} value={item}>
-              {PLATFORM_LABEL[item]}
-            </option>
-          ))}
-        </select>
+        <div className="w-44">
+          <Field label={dict.ideasPlatform}>
+            <select
+              className={inputClass}
+              value={platform}
+              onChange={(event) => setPlatform(event.target.value as Platform)}
+            >
+              {PLATFORMS.map((item) => (
+                <option key={item} value={item}>
+                  {platformLabel(dict, item)}
+                </option>
+              ))}
+            </select>
+          </Field>
+        </div>
 
         <button
           type="button"
           onClick={propose}
           disabled={busy}
-          className="rounded border border-neutral-700 px-3 py-1 text-sm disabled:opacity-40"
+          className="mb-0.5 rounded border border-neutral-700 px-3 py-2 text-sm disabled:opacity-40"
         >
           {dict.calendarPropose}
         </button>
 
-        {message && <span className="text-sm text-neutral-400">{message}</span>}
+        {message && <span className="pb-2 text-sm text-neutral-400">{message}</span>}
       </div>
 
       <div className="grid gap-3 md:grid-cols-7">
-        {days.map((date) => (
-          <div key={date} className="rounded border border-neutral-900 p-2">
-            <p className="mb-2 text-xs text-neutral-500">{date.slice(5)}</p>
+        {days.map((date) => {
+          const key = isoDate(date);
+          return (
+            <div key={key} className="rounded border border-neutral-900 p-2">
+              <p className="mb-2 text-xs text-neutral-500">
+                {date.toLocaleDateString(locale, { weekday: 'short', day: 'numeric' })}
+              </p>
 
-            <div className="space-y-2">
-              {slots
-                .filter((slot) => slot.date === date)
-                .map((slot) => (
-                  <div key={slot.id} className={`rounded border p-2 ${STATUS_STYLE[slot.status]}`}>
-                    <p className="mb-1 text-xs text-neutral-500">
-                      {PLATFORM_LABEL[slot.platform]}
-                    </p>
-                    <p className="mb-2 text-sm leading-snug">
-                      {slot.ideaId
-                        ? (hookById.get(slot.ideaId) ?? slot.ideaId)
-                        : dict.calendarEmptySlot}
-                    </p>
-                    <div className="flex gap-1">
-                      <button
-                        type="button"
-                        className="rounded border border-neutral-800 px-2 py-0.5 text-xs text-neutral-400"
-                        onClick={() => cycleStatus(slot.id)}
-                      >
-                        {slot.status}
-                      </button>
-                      {slot.ideaId && (
+              <div className="space-y-2">
+                {slots
+                  .filter((slot) => slot.date === key)
+                  .map((slot) => (
+                    <div key={slot.id} className={`rounded border p-2 ${STATUS_STYLE[slot.status]}`}>
+                      <p className="mb-1 text-xs text-neutral-500">
+                        {platformLabel(dict, slot.platform)}
+                      </p>
+                      <p className="mb-2 text-sm leading-snug">
+                        {slot.ideaId
+                          ? (hookById.get(slot.ideaId) ?? slot.ideaId)
+                          : dict.calendarEmptySlot}
+                      </p>
+                      <div className="flex flex-wrap gap-1">
                         <button
                           type="button"
                           className="rounded border border-neutral-800 px-2 py-0.5 text-xs text-neutral-400"
-                          onClick={() => clearSlot(slot.id)}
+                          onClick={() => cycleStatus(slot.id)}
                         >
-                          {dict.calendarClear}
+                          {slotStatusLabel(dict, slot.status)}
                         </button>
-                      )}
+                        {slot.ideaId && (
+                          <button
+                            type="button"
+                            className="rounded border border-neutral-800 px-2 py-0.5 text-xs text-neutral-400"
+                            onClick={() => clearSlot(slot.id)}
+                          >
+                            {dict.calendarClear}
+                          </button>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                ))}
-            </div>
+                  ))}
+              </div>
 
-            <button
-              type="button"
-              className="mt-2 w-full rounded border border-dashed border-neutral-800 py-1 text-xs text-neutral-500"
-              onClick={() => addSlot(date)}
-            >
-              {dict.calendarAddSlot}
-            </button>
-          </div>
-        ))}
+              <button
+                type="button"
+                className="mt-2 w-full rounded border border-dashed border-neutral-800 py-1 text-xs text-neutral-500 hover:text-neutral-300"
+                onClick={() => addSlot(key)}
+              >
+                {dict.calendarAddSlot}
+              </button>
+            </div>
+          );
+        })}
       </div>
     </main>
   );

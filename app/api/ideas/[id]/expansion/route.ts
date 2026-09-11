@@ -32,7 +32,7 @@ const putSchema = z.object({ markdown: z.string().min(1) });
 export async function PUT(request: Request, context: Context) {
   const { id } = await context.params;
   const parsed = putSchema.safeParse(await request.json().catch(() => null));
-  if (!parsed.success) return NextResponse.json({ error: 'Gecersiz icerik.' }, { status: 400 });
+  if (!parsed.success) return NextResponse.json({ error: 'Geçersiz içerik.' }, { status: 400 });
 
   await getStore().writeExpansion(id, parsed.data.markdown);
   return NextResponse.json({ markdown: parsed.data.markdown });

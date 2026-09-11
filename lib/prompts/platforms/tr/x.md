@@ -1,18 +1,18 @@
 # X
 
 ## Formatlar
-- `single`: tek gonderi, 280 karakter siniri
-- `thread`: 4-9 gonderiden olusan dizi
-- `quote-take`: bir goruse kisa ve net karsi cikis
+- `single`: tek gönderi, 280 karakter sınırı
+- `thread`: 4-9 gönderiden oluşan dizi
+- `quote-take`: bir görüşe kısa ve net karşı çıkış
 
 ## Kancalar
-- Ilk satir tek basina anlam tasimali.
-- Rakam, sonuc veya net bir iddia ile basla.
+- İlk satır tek başına anlam taşımalı.
+- Rakamla, sonuçla veya net bir iddiayla başla.
 
-## Yapi
-- Tek gonderi: iddia, kanit, kisa sonuc.
-- Dizi: her gonderi tek fikir tasir, son gonderi cagri icerir.
+## Yapı
+- Tek gönderi: iddia, kanıt, kısa sonuç.
+- Dizi: her gönderi tek fikir taşır, son gönderi çağrıyı içerir.
 
-## Kacinilacaklar
-- Hashtag yigini
-- "Bir dizi paylasacagim" gibi bos acilislar
+## Kaçınılacaklar
+- Hashtag yığını
+- "Bir dizi paylaşacağım" gibi boş açılışlar

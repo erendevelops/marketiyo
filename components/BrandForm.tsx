@@ -3,17 +3,10 @@
 import { useState } from 'react';
 import { Field, Section, StringList, inputClass } from '@/components/fields';
 import { t } from '@/lib/i18n';
+import { platformLabel } from '@/lib/i18n/labels';
 import type { BrandProfile, Language, Platform } from '@/lib/schema';
 
 const PLATFORMS: Platform[] = ['short-video', 'x', 'linkedin', 'instagram-static'];
-
-const PLATFORM_LABEL: Record<Platform, string> = {
-  'short-video': 'Kisa video',
-  x: 'X',
-  linkedin: 'LinkedIn',
-  'instagram-static': 'Instagram',
-};
-
 const AUDIENCE_KEYS = ['label', 'pain', 'desire', 'whereTheyHangOut'] as const;
 
 function emptyProfile(language: Language): BrandProfile {
@@ -54,11 +47,8 @@ export function BrandForm({ initial, language }: Props) {
       body: JSON.stringify({ text: description, language: profile.outputLanguage }),
     });
     const body = await response.json();
-    if (!response.ok) {
-      setMessage({ ok: false, text: body.error ?? dict.errorGeneric });
-    } else {
-      setProfile({ ...(body as BrandProfile), updatedAt: new Date().toISOString() });
-    }
+    if (!response.ok) setMessage({ ok: false, text: body.error ?? dict.errorGeneric });
+    else setProfile({ ...(body as BrandProfile), updatedAt: new Date().toISOString() });
     setBusy(false);
   }
 
@@ -84,10 +74,10 @@ export function BrandForm({ initial, language }: Props) {
 
   return (
     <main className="mx-auto max-w-3xl p-8">
-      <h1 className="mb-8 text-2xl font-semibold">{dict.brandTitle}</h1>
+      <h1 className="mb-2 text-2xl font-semibold">{dict.brandTitle}</h1>
+      <p className="mb-10 text-sm text-neutral-500">{dict.brandIntro}</p>
 
-      <Section title={dict.brandDraftLabel}>
-        <p className="mb-2 text-sm text-neutral-400">{dict.brandDraftHint}</p>
+      <Section title={dict.brandDraftLabel} hint={dict.brandDraftHint}>
         <textarea
           className={`${inputClass} min-h-28`}
           value={description}
@@ -103,7 +93,7 @@ export function BrandForm({ initial, language }: Props) {
         </button>
       </Section>
 
-      <Section title={dict.brandTitle}>
+      <Section title={dict.brandBasics}>
         <div className="space-y-4">
           <Field label={dict.brandProductName}>
             <input
@@ -129,12 +119,12 @@ export function BrandForm({ initial, language }: Props) {
         </div>
       </Section>
 
-      <Section title={dict.brandAudiences}>
+      <Section title={dict.brandAudiences} hint={dict.brandAudiencesHint}>
         <div className="space-y-4">
           {profile.audiences.map((audience, index) => (
             <div
               key={index}
-              className="grid gap-2 rounded border border-neutral-800 p-3 sm:grid-cols-2"
+              className="grid gap-3 rounded border border-neutral-800 p-4 sm:grid-cols-2"
             >
               {AUDIENCE_KEYS.map((key) => (
                 <Field key={key} label={audienceLabels[key]}>
@@ -179,7 +169,7 @@ export function BrandForm({ initial, language }: Props) {
         </div>
       </Section>
 
-      <Section title={dict.brandVoiceDo}>
+      <Section title={dict.brandVoiceDo} hint={dict.brandVoiceDoHint}>
         <StringList
           values={profile.voice.do}
           onChange={(next) => patch({ voice: { ...profile.voice, do: next } })}
@@ -188,7 +178,7 @@ export function BrandForm({ initial, language }: Props) {
         />
       </Section>
 
-      <Section title={dict.brandVoiceDont}>
+      <Section title={dict.brandVoiceDont} hint={dict.brandVoiceDontHint}>
         <StringList
           values={profile.voice.dont}
           onChange={(next) => patch({ voice: { ...profile.voice, dont: next } })}
@@ -197,7 +187,7 @@ export function BrandForm({ initial, language }: Props) {
         />
       </Section>
 
-      <Section title={dict.brandProof}>
+      <Section title={dict.brandProof} hint={dict.brandProofHint}>
         <StringList
           values={profile.proof}
           onChange={(next) => patch({ proof: next })}
@@ -206,7 +196,7 @@ export function BrandForm({ initial, language }: Props) {
         />
       </Section>
 
-      <Section title={dict.brandBannedClaims}>
+      <Section title={dict.brandBannedClaims} hint={dict.brandBannedClaimsHint}>
         <StringList
           values={profile.bannedClaims}
           onChange={(next) => patch({ bannedClaims: next })}
@@ -216,7 +206,7 @@ export function BrandForm({ initial, language }: Props) {
       </Section>
 
       <Section title={dict.brandPlatforms}>
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-wrap gap-4">
           {PLATFORMS.map((platform) => (
             <label key={platform} className="flex items-center gap-2 text-sm">
               <input
@@ -230,7 +220,7 @@ export function BrandForm({ initial, language }: Props) {
                   })
                 }
               />
-              {PLATFORM_LABEL[platform]}
+              {platformLabel(dict, platform)}
             </label>
           ))}
         </div>
@@ -238,11 +228,11 @@ export function BrandForm({ initial, language }: Props) {
 
       <Section title={dict.brandOutputLanguage}>
         <select
-          className={inputClass}
+          className={`${inputClass} w-auto`}
           value={profile.outputLanguage}
           onChange={(event) => patch({ outputLanguage: event.target.value as Language })}
         >
-          <option value="tr">Turkce</option>
+          <option value="tr">Türkçe</option>
           <option value="en">English</option>
         </select>
       </Section>

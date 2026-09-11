@@ -1,21 +1,21 @@
 # LinkedIn
 
 ## Formatlar
-- `narrative`: kisa hikaye ve cikarim, 120-250 kelime
-- `build-in-public`: surec ve sayilar
-- `document`: 6-10 sayfalik tasarim notu iceren dokuman
+- `narrative`: kısa hikâye ve çıkarım, 120-250 kelime
+- `build-in-public`: süreç ve sayılar
+- `document`: 6-10 sayfalık, tasarım notu içeren doküman
 
 ## Kancalar
-- Ilk iki satir kirpilmadan gorunur. Merak orada olusmali.
-- Kisisel deneyim genel tavsiyeden daha iyi calisir.
+- İlk iki satır kırpılmadan görünür. Merak orada oluşmalı.
+- Kişisel deneyim, genel tavsiyeden daha iyi çalışır.
 
-## Yapi
-1. Sahne, tek cumle
+## Yapı
+1. Sahne, tek cümle
 2. Gerilim veya problem
-3. Ne yaptin
-4. Cikarim
-5. Tartismayi acan kisa soru
+3. Ne yaptın
+4. Çıkarım
+5. Tartışmayı açan kısa soru
 
-## Kacinilacaklar
-- Asiri satir arasi bosluk ile yapay ritim
-- Bos motivasyon dili
+## Kaçınılacaklar
+- Aşırı satır arası boşlukla yapay ritim kurmak
+- Boş motivasyon dili

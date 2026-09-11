@@ -13,11 +13,11 @@ export async function PUT(request: Request) {
   try {
     body = await request.json();
   } catch {
-    return NextResponse.json({ error: 'Gecersiz JSON govdesi.' }, { status: 400 });
+    return NextResponse.json({ error: 'Geçersiz JSON gövdesi.' }, { status: 400 });
   }
 
   if (typeof body !== 'object' || body === null) {
-    return NextResponse.json({ error: 'Gecersiz JSON govdesi.' }, { status: 400 });
+    return NextResponse.json({ error: 'Geçersiz JSON gövdesi.' }, { status: 400 });
   }
 
   const parsed = brandProfileSchema.safeParse({ ...body, updatedAt: new Date().toISOString() });

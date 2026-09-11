@@ -31,7 +31,7 @@ export type GenerateIdeasResult = {
  */
 export async function generateIdeas(input: GenerateIdeasInput): Promise<GenerateIdeasResult> {
   const brand = await input.store.readBrand();
-  if (!brand) throw new Error('Once marka profili olusturulmali.');
+  if (!brand) throw new Error('Önce marka profili oluşturulmalı.');
 
   const existing = await input.store.readIdeas();
   const prompt = composeIdeaBatchPrompt({

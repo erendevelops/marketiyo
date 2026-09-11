@@ -16,11 +16,11 @@ export async function PUT(request: Request) {
   try {
     patch = await request.json();
   } catch {
-    return NextResponse.json({ error: 'Gecersiz JSON govdesi.' }, { status: 400 });
+    return NextResponse.json({ error: 'Geçersiz JSON gövdesi.' }, { status: 400 });
   }
 
   if (typeof patch !== 'object' || patch === null) {
-    return NextResponse.json({ error: 'Gecersiz JSON govdesi.' }, { status: 400 });
+    return NextResponse.json({ error: 'Geçersiz JSON gövdesi.' }, { status: 400 });
   }
 
   const merged = settingsSchema.safeParse({ ...current, ...patch });

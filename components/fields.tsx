@@ -2,24 +2,41 @@
 
 import type { ReactNode } from 'react';
 
-export function Field({ label, children }: { label: string; children: ReactNode }) {
+export const inputClass =
+  'w-full rounded border border-neutral-700 bg-neutral-900 p-2 text-neutral-100 placeholder:text-neutral-600';
+
+export function Field({
+  label,
+  hint,
+  children,
+}: {
+  label: string;
+  hint?: string;
+  children: ReactNode;
+}) {
   return (
     <label className="block">
-      <span className="mb-1 block text-sm text-neutral-400">{label}</span>
+      <span className="mb-1 block text-sm text-neutral-300">{label}</span>
+      {hint && <span className="mb-2 block text-xs text-neutral-500">{hint}</span>}
       {children}
     </label>
   );
 }
 
-export const inputClass =
-  'w-full rounded border border-neutral-700 bg-neutral-900 p-2 text-neutral-100 placeholder:text-neutral-600';
-
-export function Section({ title, children }: { title: string; children: ReactNode }) {
+export function Section({
+  title,
+  hint,
+  children,
+}: {
+  title: string;
+  hint?: string;
+  children: ReactNode;
+}) {
   return (
-    <section className="mb-8">
-      <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-neutral-400">
-        {title}
-      </h2>
+    <section className="mb-10">
+      <h2 className="mb-1 text-base font-semibold text-neutral-100">{title}</h2>
+      {hint && <p className="mb-3 text-sm text-neutral-500">{hint}</p>}
+      {!hint && <div className="mb-3" />}
       {children}
     </section>
   );
@@ -55,7 +72,7 @@ export function StringList({
           />
           <button
             type="button"
-            className="rounded border border-neutral-700 px-3 text-sm text-neutral-400"
+            className="rounded border border-neutral-700 px-3 text-sm text-neutral-400 hover:text-neutral-200"
             onClick={() => onChange(values.filter((_, i) => i !== index))}
           >
             {removeLabel}
@@ -64,7 +81,7 @@ export function StringList({
       ))}
       <button
         type="button"
-        className="rounded border border-neutral-700 px-3 py-1 text-sm text-neutral-300"
+        className="rounded border border-neutral-700 px-3 py-1 text-sm text-neutral-300 hover:text-neutral-100"
         onClick={() => onChange([...values, ''])}
       >
         {addLabel}

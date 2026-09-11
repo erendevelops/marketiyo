@@ -57,7 +57,7 @@ describe('composeIdeaBatchPrompt', () => {
 
   it('includes the platform rule card for the requested platform only', () => {
     const prompt = composeIdeaBatchPrompt(base).toLowerCase();
-    expect(prompt).toContain('kisa video');
+    expect(prompt).toContain('kısa video');
     expect(prompt).not.toContain('linkedin');
   });
 
@@ -103,7 +103,7 @@ describe('composeIdeaBatchPrompt', () => {
 describe('composeExpansionPrompt', () => {
   it('uses the expansion template for the idea platform', () => {
     const prompt = composeExpansionPrompt({ brand, idea: idea(1, 'kept') });
-    expect(prompt).toContain('Cekim notlari');
+    expect(prompt).toContain('Çekim notları');
     expect(prompt).toContain('hook-1');
   });
 });

@@ -1,6 +1,8 @@
-Verilen fikri yayina hazir bir LinkedIn gonderisine donustur.
+Verilen fikri yayına hazır bir LinkedIn gönderisine dönüştür.
 
-Markdown ciktisinda su bolumler olmali:
-- Gonderi metni: tam haliyle
-- Alternatif acilis: bir secenek
-- Tartisma sorusu: tek satir
+Markdown çıktısında şu bölümler olmalı:
+- Gönderi metni: tam hâliyle
+- Alternatif açılış: bir seçenek
+- Tartışma sorusu: tek satır
+
+Doğal ve akıcı Türkçe yaz. Çeviri kokan cümleler kurma.

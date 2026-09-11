@@ -1,3 +1,5 @@
-Sana bir urun aciklamasi verilecek. Bundan bir marka profili taslagi cikar.
+Sana bir ürün açıklaması verilecek. Bundan bir marka profili taslağı çıkar.
 
-Bilmedigin alanlari uydurma. Emin olmadigin yerleri bos birak. Ozellikle kanit alanina sadece metinde acikca gecen seyleri yaz.
+Bilmediğin alanları uydurma. Emin olmadığın yerleri boş bırak. Özellikle kanıt alanına yalnızca metinde açıkça geçen şeyleri yaz.
+
+Doğal ve akıcı Türkçe yaz. Çeviri kokan cümleler kurma.

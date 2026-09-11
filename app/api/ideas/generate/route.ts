@@ -17,7 +17,7 @@ const bodySchema = z.object({
 export async function POST(request: Request) {
   const parsed = bodySchema.safeParse(await request.json().catch(() => null));
   if (!parsed.success) {
-    return NextResponse.json({ error: 'Gecersiz istek govdesi.' }, { status: 400 });
+    return NextResponse.json({ error: 'Geçersiz istek gövdesi.' }, { status: 400 });
   }
 
   const store = getStore();

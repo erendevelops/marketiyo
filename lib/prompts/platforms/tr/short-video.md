@@ -1,23 +1,23 @@
-# Kisa video (TikTok, Reels, Shorts)
+# Kısa video (TikTok, Reels, Shorts)
 
 ## Formatlar
-- `talking-head`: kameraya konusma, 20-45 saniye
-- `screen-demo`: ekran kaydi uzerine anlatim, 25-60 saniye
-- `before-after`: problem ve cozum karsilastirmasi, 15-30 saniye
-- `listicle`: hizli maddeler, 30-50 saniye
+- `talking-head`: kameraya konuşma, 20-45 saniye
+- `screen-demo`: ekran kaydı üzerine anlatım, 25-60 saniye
+- `before-after`: problem ve çözüm karşılaştırması, 15-30 saniye
+- `listicle`: hızlı maddeler, 30-50 saniye
 
 ## Kancalar
-- Ilk 2 saniye izleyiciyi durdurmali.
-- Kanca somut olmali. Soyut vaat yok.
-- Soru sormak yerine net bir iddia ile baslamak daha iyi calisir.
+- İlk 2 saniye izleyiciyi durdurmalı.
+- Kanca somut olmalı. Soyut vaat verme.
+- Soru sormak yerine net bir iddiayla başlamak daha iyi çalışır.
 
-## Yapi
+## Yapı
 1. Kanca
-2. Baglam, tek cumle
-3. Gosterim veya kanit
-4. Sonuc ve tek bir cagri
+2. Bağlam, tek cümle
+3. Gösterim veya kanıt
+4. Sonuç ve tek bir çağrı
 
-## Kacinilacaklar
-- Uzun giris ve kendini tanitma
-- Jenerik motivasyon cumleleri
-- Ayni anda birden fazla cagri
+## Kaçınılacaklar
+- Uzun giriş ve kendini tanıtma
+- Jenerik motivasyon cümleleri
+- Aynı anda birden fazla çağrı

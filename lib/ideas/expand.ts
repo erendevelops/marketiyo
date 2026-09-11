@@ -13,11 +13,11 @@ export type ExpandIdeaInput = {
 /** Turns one kept idea into a platform-specific asset stored as markdown. */
 export async function expandIdea(input: ExpandIdeaInput): Promise<string> {
   const brand = await input.store.readBrand();
-  if (!brand) throw new Error('Once marka profili olusturulmali.');
+  if (!brand) throw new Error('Önce marka profili oluşturulmalı.');
 
   const ideas = await input.store.readIdeas();
   const idea = ideas.find((candidate) => candidate.id === input.ideaId);
-  if (!idea) throw new Error('Fikir bulunamadi.');
+  if (!idea) throw new Error('Fikir bulunamadı.');
 
   const result = await runWithRepair<ExpansionResponse>(input.provider, {
     prompt: composeExpansionPrompt({ brand, idea }),

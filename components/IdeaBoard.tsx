@@ -2,19 +2,13 @@
 
 import { useMemo, useState } from 'react';
 import { IdeaCard } from '@/components/IdeaCard';
-import { inputClass } from '@/components/fields';
+import { Field, inputClass } from '@/components/fields';
 import { t } from '@/lib/i18n';
+import { ideaStatusLabel, platformLabel } from '@/lib/i18n/labels';
 import type { Idea, IdeaStatus, Language, Platform } from '@/lib/schema';
 
 const PLATFORMS: Platform[] = ['short-video', 'x', 'linkedin', 'instagram-static'];
 const STATUSES: IdeaStatus[] = ['new', 'kept', 'rejected', 'expanded', 'scheduled'];
-
-const PLATFORM_LABEL: Record<Platform, string> = {
-  'short-video': 'Kisa video',
-  x: 'X',
-  linkedin: 'LinkedIn',
-  'instagram-static': 'Instagram',
-};
 
 type Props = {
   initial: Idea[];
@@ -62,8 +56,8 @@ export function IdeaBoard({ initial, language, activePlatforms }: Props) {
       setFilterStatus('new');
       setMessage(
         result.discarded > 0
-          ? `${result.ideas.length} + ${result.discarded} ${dict.ideasDiscarded}`
-          : `${result.ideas.length}`,
+          ? `${result.ideas.length} ${dict.ideasGenerated}, ${result.discarded} ${dict.ideasDiscarded}`
+          : `${result.ideas.length} ${dict.ideasGenerated}`,
       );
     }
     setBusy(false);
@@ -71,9 +65,7 @@ export function IdeaBoard({ initial, language, activePlatforms }: Props) {
 
   async function update(id: string, patch: Partial<Idea>) {
     const previous = ideas;
-    setIdeas((current) =>
-      current.map((idea) => (idea.id === id ? { ...idea, ...patch } : idea)),
-    );
+    setIdeas((current) => current.map((idea) => (idea.id === id ? { ...idea, ...patch } : idea)));
 
     const response = await fetch(`/api/ideas/${id}`, {
       method: 'PATCH',
@@ -87,35 +79,38 @@ export function IdeaBoard({ initial, language, activePlatforms }: Props) {
 
   return (
     <main className="mx-auto max-w-5xl p-8">
-      <h1 className="mb-6 text-2xl font-semibold">{dict.ideasTitle}</h1>
+      <h1 className="mb-2 text-2xl font-semibold">{dict.ideasTitle}</h1>
+      <p className="mb-8 text-sm text-neutral-500">{dict.ideasIntro}</p>
 
-      <div className="mb-8 flex flex-wrap items-end gap-3 rounded border border-neutral-800 p-4">
-        <label className="text-sm">
-          <span className="mb-1 block text-neutral-400">{dict.brandPlatforms}</span>
-          <select
-            className={inputClass}
-            value={platform}
-            onChange={(event) => setPlatform(event.target.value as Platform)}
-          >
-            {platforms.map((item) => (
-              <option key={item} value={item}>
-                {PLATFORM_LABEL[item]}
-              </option>
-            ))}
-          </select>
-        </label>
+      <div className="mb-8 flex flex-wrap items-end gap-4 rounded border border-neutral-800 p-4">
+        <div className="w-48">
+          <Field label={dict.ideasPlatform}>
+            <select
+              className={inputClass}
+              value={platform}
+              onChange={(event) => setPlatform(event.target.value as Platform)}
+            >
+              {platforms.map((item) => (
+                <option key={item} value={item}>
+                  {platformLabel(dict, item)}
+                </option>
+              ))}
+            </select>
+          </Field>
+        </div>
 
-        <label className="text-sm">
-          <span className="mb-1 block text-neutral-400">{dict.ideasCount}</span>
-          <input
-            type="number"
-            min={1}
-            max={50}
-            className={`${inputClass} w-24`}
-            value={count}
-            onChange={(event) => setCount(Number(event.target.value))}
-          />
-        </label>
+        <div className="w-28">
+          <Field label={dict.ideasCount}>
+            <input
+              type="number"
+              min={1}
+              max={50}
+              className={inputClass}
+              value={count}
+              onChange={(event) => setCount(Number(event.target.value))}
+            />
+          </Field>
+        </div>
 
         <button
           type="button"
@@ -129,34 +124,40 @@ export function IdeaBoard({ initial, language, activePlatforms }: Props) {
         {message && <p className="text-sm text-neutral-400">{message}</p>}
       </div>
 
-      <div className="mb-6 flex flex-wrap gap-3 text-sm">
-        <select
-          aria-label={dict.brandPlatforms}
-          className={`${inputClass} w-auto`}
-          value={filterPlatform}
-          onChange={(event) => setFilterPlatform(event.target.value as Platform | 'all')}
-        >
-          <option value="all">{dict.ideasFilterAll}</option>
-          {PLATFORMS.map((item) => (
-            <option key={item} value={item}>
-              {PLATFORM_LABEL[item]}
-            </option>
-          ))}
-        </select>
+      <div className="mb-6 flex flex-wrap items-end gap-4">
+        <div className="w-44">
+          <Field label={dict.ideasFilterPlatform}>
+            <select
+              className={inputClass}
+              value={filterPlatform}
+              onChange={(event) => setFilterPlatform(event.target.value as Platform | 'all')}
+            >
+              <option value="all">{dict.ideasFilterAll}</option>
+              {PLATFORMS.map((item) => (
+                <option key={item} value={item}>
+                  {platformLabel(dict, item)}
+                </option>
+              ))}
+            </select>
+          </Field>
+        </div>
 
-        <select
-          aria-label={dict.ideasTitle}
-          className={`${inputClass} w-auto`}
-          value={filterStatus}
-          onChange={(event) => setFilterStatus(event.target.value as IdeaStatus | 'all')}
-        >
-          <option value="all">{dict.ideasFilterAll}</option>
-          {STATUSES.map((status) => (
-            <option key={status} value={status}>
-              {status}
-            </option>
-          ))}
-        </select>
+        <div className="w-44">
+          <Field label={dict.ideasFilterStatus}>
+            <select
+              className={inputClass}
+              value={filterStatus}
+              onChange={(event) => setFilterStatus(event.target.value as IdeaStatus | 'all')}
+            >
+              <option value="all">{dict.ideasFilterAll}</option>
+              {STATUSES.map((status) => (
+                <option key={status} value={status}>
+                  {ideaStatusLabel(dict, status)}
+                </option>
+              ))}
+            </select>
+          </Field>
+        </div>
       </div>
 
       {visible.length === 0 ? (

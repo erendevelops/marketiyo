@@ -17,7 +17,7 @@ export async function POST(request: Request) {
   const parsed = bodySchema.safeParse(await request.json().catch(() => null));
   if (!parsed.success) {
     return NextResponse.json(
-      { error: 'En az 20 karakterlik bir urun aciklamasi gerekli.' },
+      { error: 'En az 20 karakterlik bir ürün açıklaması gerekli.' },
       { status: 400 },
     );
   }

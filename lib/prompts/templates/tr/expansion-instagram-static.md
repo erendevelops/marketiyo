@@ -1,6 +1,8 @@
-Verilen fikri yayina hazir bir Instagram karuseline donustur.
+Verilen fikri yayına hazır bir Instagram karuseline dönüştür.
 
-Markdown ciktisinda su bolumler olmali:
-- Slaytlar: her slayt icin metin ve tasarim yonu
-- Aciklama metni
-- Tek cagri
+Markdown çıktısında şu bölümler olmalı:
+- Slaytlar: her slayt için metin ve tasarım yönü
+- Açıklama metni
+- Tek çağrı
+
+Doğal ve akıcı Türkçe yaz. Çeviri kokan cümleler kurma.

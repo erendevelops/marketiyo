@@ -1,21 +1,21 @@
-# Katki rehberi / Contributing
+# Katkı rehberi / Contributing
 
-## Turkce
+## Türkçe
 
-Katkilar kabul edilir. Lisans, degistirilmis kopyalarin yayinlanmasini yasaklar,
-ancak bu projeye katki hazirlamak amaciyla acilan fork'lar acikca serbesttir.
-Ayrintilar icin lisans dosyasindaki dorduncu maddeye bak.
+Katkılar kabul edilir. Lisans, değiştirilmiş kopyaların yayınlanmasını yasaklar,
+ancak bu projeye katkı hazırlamak amacıyla açılan fork'lar açıkça serbesttir.
+Ayrıntılar için lisans dosyasındaki dördüncü maddeye bak.
 
-Katkilar ayni lisans altinda kabul edilir.
+Katkılar aynı lisans altında kabul edilir.
 
-### Gelistirme
+### Geliştirme
 
 ```bash
 npm install
 npm run dev
 ```
 
-### Dogrulama
+### Doğrulama
 
 ```bash
 npm test
@@ -23,15 +23,16 @@ npm run typecheck
 npm run build
 ```
 
-Uc komut da temiz gecmeden bir pull request acma.
+Üç komut da temiz geçmeden bir pull request açma.
 
 ### Kurallar
 
-- Her yeni davranis icin once test yaz.
-- Prompt dosyalarinin Turkce surumu zorunludur, Ingilizce surumu tercih edilir.
-- Model yanitlari her zaman bir sema ile dogrulanir. Dogrulanmamis veri
+- Her yeni davranış için önce test yaz.
+- Prompt dosyalarının Türkçe sürümü zorunludur, İngilizce sürümü tercih edilir.
+- Türkçe metinlerde Türkçe karakterleri eksiksiz kullan.
+- Model yanıtları her zaman bir şema ile doğrulanır. Doğrulanmamış veri
   uygulama durumuna girmez.
-- Hicbir API anahtari tarayiciya gonderilmez.
+- Hiçbir API anahtarı tarayıcıya gönderilmez.
 
 ## English
 
@@ -62,6 +63,7 @@ Do not open a pull request until all three pass cleanly.
 
 - Write the test before the behaviour.
 - A Turkish version of every prompt file is required, English is preferred.
+- Turkish text must use full Turkish characters.
 - Model responses are always validated against a schema. Unvalidated data never
   reaches application state.
 - No API key is ever sent to the browser.

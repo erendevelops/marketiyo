@@ -15,9 +15,9 @@ function repairPrompt(original: string, raw: string, issues: string): string {
     original,
     '',
     '---',
-    'Onceki yanitin gecersizdi. Sadece gecerli JSON dondur, aciklama yazma.',
-    `Dogrulama hatalari: ${issues}`,
-    'Gecersiz yanit:',
+    'Önceki yanıtın geçersizdi. Sadece geçerli JSON döndür, açıklama yazma.',
+    `Doğrulama hataları: ${issues}`,
+    'Geçersiz yanıt:',
     raw.slice(0, 2000),
   ].join('\n');
 }
@@ -38,7 +38,7 @@ export async function runWithRepair<T>(
       return {
         kind: 'invalid',
         raw: completion.raw,
-        issues: 'yanit icinde JSON nesnesi bulunamadi',
+        issues: 'yanıt içinde JSON nesnesi bulunamadı',
       } as const;
     }
 

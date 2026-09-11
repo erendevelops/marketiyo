@@ -47,7 +47,7 @@ export function ExpansionEditor({ idea, initialMarkdown, language }: Props) {
   return (
     <main className="mx-auto max-w-3xl p-8">
       <Link href="/ideas" className="mb-6 inline-block text-sm text-neutral-400">
-        {dict.navIdeas}
+        {dict.backToIdeas}
       </Link>
 
       <h1 className="mb-2 text-2xl font-semibold leading-snug">{idea.hook}</h1>
@@ -60,7 +60,7 @@ export function ExpansionEditor({ idea, initialMarkdown, language }: Props) {
           disabled={busy}
           className="rounded bg-neutral-100 px-4 py-2 font-medium text-neutral-900 disabled:opacity-50"
         >
-          {busy ? dict.ideasGenerating : dict.expansionGenerate}
+          {busy ? dict.ideasGenerating : markdown.length ? dict.expansionRegenerate : dict.expansionGenerate}
         </button>
         <button
           type="button"

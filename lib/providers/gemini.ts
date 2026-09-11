@@ -27,14 +27,14 @@ export function createGeminiProvider({ apiKey, model }: Options): Provider {
     id: 'gemini',
 
     async isAvailable() {
-      if (!apiKey) return { available: false, detail: 'Gemini API anahtari girilmedi.' };
+      if (!apiKey) return { available: false, detail: 'Gemini API anahtarı girilmedi.' };
       try {
         const response = await call('ping', 16, 15_000);
         if (response.ok) return { available: true, detail: `Model: ${model}` };
         if (response.status === 401 || response.status === 403) {
-          return { available: false, detail: 'API anahtari reddedildi.' };
+          return { available: false, detail: 'API anahtarı reddedildi.' };
         }
-        return { available: false, detail: `Gemini ${response.status} dondurdu.` };
+        return { available: false, detail: `Gemini ${response.status} döndürdü.` };
       } catch (error) {
         return { available: false, detail: (error as Error).message };
       }

@@ -67,7 +67,7 @@ describe('expandIdea', () => {
     const store = createStore(root);
     await store.writeBrand(brand);
     const provider = createStubProvider([JSON.stringify({ markdown: 'x' })]);
-    await expect(expandIdea({ store, provider, ideaId: 'nope' })).rejects.toThrow(/bulunamadi/i);
+    await expect(expandIdea({ store, provider, ideaId: 'nope' })).rejects.toThrow(/bulunamadı/i);
   });
 
   it('throws when there is no brand profile', async () => {
