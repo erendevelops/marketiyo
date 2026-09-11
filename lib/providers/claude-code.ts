@@ -55,6 +55,18 @@ function run(binary: string, args: string[], input: string, timeoutMs: number): 
   });
 }
 
+
+/**
+ * The CLI prints some failures to stdout rather than stderr, so both streams
+ * are considered before deciding what went wrong.
+ */
+export function classifyCliFailure(stderr: string, stdout: string): ProviderError {
+  const message =
+    stderr.trim() || stdout.trim() || 'Claude Code sifir disi cikis kodu dondurdu.';
+  const isAuth = /login|log in|authenticate|auth|unauthori|oauth|session expired/i.test(message);
+  return { code: isAuth ? 'auth' : 'transport', message };
+}
+
 /**
  * Drives the locally installed Claude Code binary in headless print mode.
  * Uses the user's existing subscription login, so no API key is involved.
@@ -90,12 +102,14 @@ export function createClaudeCodeProvider({ binary }: Options): Provider {
         };
       }
       if (result.code !== 0) {
-        const message = result.stderr.trim() || 'Claude Code sifir disi cikis kodu dondurdu.';
-        const code: ProviderError['code'] = /login|auth|unauthori/i.test(message)
-          ? 'auth'
-          : 'transport';
-        return { ok: false, error: { code, message } };
+        return { ok: false, error: classifyCliFailure(result.stderr, result.stdout) };
       }
+
+      // A zero exit with an authentication notice and no usable output is still a failure.
+      if (/failed to authenticate|session expired|please run .login/i.test(result.stdout)) {
+        return { ok: false, error: classifyCliFailure('', result.stdout) };
+      }
+
       return { ok: true, raw: result.stdout };
     },
   };
