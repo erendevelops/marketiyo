@@ -14,6 +14,10 @@ workspace/settings.local.json
 # workspace user data
 workspace/
 
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
 # misc
 .DS_Store
 *.log
