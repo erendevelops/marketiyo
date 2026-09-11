@@ -1,5 +1,12 @@
 import type { Dictionary } from './tr';
-import type { IdeaStatus, Platform, RejectionReason, SlotStatus } from '@/lib/schema';
+import type {
+  AdNetwork,
+  CampaignObjective,
+  IdeaStatus,
+  Platform,
+  RejectionReason,
+  SlotStatus,
+} from '@/lib/schema';
 
 /**
  * Enum values are stored in English in the workspace files. These map them to
@@ -47,4 +54,24 @@ export function slotStatusLabel(dict: Dictionary, status: SlotStatus): string {
     skipped: dict.slotSkipped,
   };
   return map[status];
+}
+
+export function adNetworkLabel(dict: Dictionary, network: AdNetwork): string {
+  const map: Record<AdNetwork, string> = {
+    meta: dict.networkMeta,
+    'google-search': dict.networkGoogleSearch,
+    tiktok: dict.networkTiktok,
+  };
+  return map[network];
+}
+
+export function campaignObjectiveLabel(dict: Dictionary, objective: CampaignObjective): string {
+  const map: Record<CampaignObjective, string> = {
+    awareness: dict.objectiveAwareness,
+    traffic: dict.objectiveTraffic,
+    leads: dict.objectiveLeads,
+    sales: dict.objectiveSales,
+    'app-installs': dict.objectiveAppInstalls,
+  };
+  return map[objective];
 }

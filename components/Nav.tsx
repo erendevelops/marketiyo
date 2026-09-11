@@ -8,6 +8,7 @@ export function Nav({ language }: { language: Language }) {
   const links = [
     { href: '/ideas', label: dict.navIdeas },
     { href: '/calendar', label: dict.navCalendar },
+    { href: '/ads', label: dict.navAds },
     { href: '/brand', label: dict.navBrand },
     { href: '/setup', label: dict.navSetup },
   ];

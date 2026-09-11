@@ -10,4 +10,6 @@ export const workspaceFiles = {
   calendar: 'calendar.json',
   settings: 'settings.local.json',
   expansions: 'expansions',
+  campaigns: 'campaigns.json',
+  campaignDocs: 'campaigns',
 } as const;

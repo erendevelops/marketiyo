@@ -4,11 +4,13 @@ import { z } from 'zod';
 import {
   brandProfileSchema,
   calendarSlotSchema,
+  campaignSchema,
   defaultSettings,
   ideaSchema,
   settingsSchema,
   type BrandProfile,
   type CalendarSlot,
+  type Campaign,
   type Idea,
   type Settings,
 } from '@/lib/schema';
@@ -54,12 +56,19 @@ async function writeAtomic(filePath: string, contents: string): Promise<void> {
 
 const ideasSchema = z.array(ideaSchema);
 const calendarSchema = z.array(calendarSlotSchema);
+const campaignsSchema = z.array(campaignSchema);
 
 export function createStore(root: string) {
   const enqueue = createQueue();
   const file = (name: string) => path.join(root, name);
   const expansionPath = (ideaId: string) =>
     path.join(root, workspaceFiles.expansions, `${ideaId}.md`);
+  const campaignDocPath = (campaignId: string) =>
+    path.join(root, workspaceFiles.campaignDocs, `${campaignId}.md`);
+
+  async function readCampaigns(): Promise<Campaign[]> {
+    return (await readJson(file(workspaceFiles.campaigns), campaignsSchema)) ?? [];
+  }
 
   async function readIdeas(): Promise<Idea[]> {
     return (await readJson(file(workspaceFiles.ideas), ideasSchema)) ?? [];
@@ -114,6 +123,30 @@ export function createStore(root: string) {
     },
     writeExpansion: (ideaId: string, markdown: string): Promise<void> =>
       enqueue(() => writeAtomic(expansionPath(ideaId), markdown)),
+
+    readCampaigns,
+    appendCampaign: (campaign: Campaign): Promise<Campaign[]> =>
+      enqueue(async () => {
+        const merged = [...(await readCampaigns()), campaign];
+        await writeAtomic(file(workspaceFiles.campaigns), JSON.stringify(merged, null, 2));
+        return merged;
+      }),
+    deleteCampaign: (id: string): Promise<Campaign[]> =>
+      enqueue(async () => {
+        const next = (await readCampaigns()).filter((campaign) => campaign.id !== id);
+        await writeAtomic(file(workspaceFiles.campaigns), JSON.stringify(next, null, 2));
+        return next;
+      }),
+    readCampaignDoc: async (campaignId: string): Promise<string | null> => {
+      try {
+        return await readFile(campaignDocPath(campaignId), 'utf8');
+      } catch (error) {
+        if ((error as NodeJS.ErrnoException).code === 'ENOENT') return null;
+        throw error;
+      }
+    },
+    writeCampaignDoc: (campaignId: string, markdown: string): Promise<void> =>
+      enqueue(() => writeAtomic(campaignDocPath(campaignId), markdown)),
   };
 }
 
