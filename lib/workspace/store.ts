@@ -16,7 +16,10 @@ import { WorkspaceCorruptError } from './errors';
 import { workspaceFiles } from './paths';
 import { createQueue } from './queue';
 
-async function readJson<T>(filePath: string, schema: z.ZodType<T>): Promise<T | null> {
+async function readJson<T>(
+  filePath: string,
+  schema: z.ZodType<T, z.ZodTypeDef, unknown>,
+): Promise<T | null> {
   let raw: string;
   try {
     raw = await readFile(filePath, 'utf8');
