@@ -1,9 +1,16 @@
-import { appName } from '@/lib/meta';
+import { redirect } from 'next/navigation';
+import { getStore } from '@/lib/server/store';
 
-export default function Home() {
-  return (
-    <main className="mx-auto max-w-3xl p-8">
-      <h1 className="text-3xl font-semibold">{appName}</h1>
-    </main>
-  );
+export const dynamic = 'force-dynamic';
+
+export default async function Home() {
+  const store = getStore();
+
+  const settings = await store.readSettings();
+  if (!settings.onboarded) redirect('/setup');
+
+  const brand = await store.readBrand();
+  if (!brand) redirect('/brand');
+
+  redirect('/ideas');
 }

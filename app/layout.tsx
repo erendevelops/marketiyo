@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import { Nav } from '@/components/Nav';
+import { getStore } from '@/lib/server/store';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -6,10 +8,15 @@ export const metadata: Metadata = {
   description: 'Urunun icin sosyal medya icerik motoru',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const settings = await getStore().readSettings();
+
   return (
-    <html lang="tr">
-      <body className="min-h-screen bg-neutral-950 text-neutral-100 antialiased">{children}</body>
+    <html lang={settings.interfaceLanguage}>
+      <body className="min-h-screen bg-neutral-950 text-neutral-100 antialiased">
+        <Nav language={settings.interfaceLanguage} />
+        {children}
+      </body>
     </html>
   );
 }
