@@ -9,10 +9,10 @@ build/
 # env and local secrets
 .env
 .env.*
-workspace/settings.local.json
+/workspace/settings.local.json
 
 # workspace user data
-workspace/
+/workspace/
 
 # typescript
 *.tsbuildinfo
