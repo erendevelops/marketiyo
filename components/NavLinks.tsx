@@ -1,19 +1,24 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState, useTransition } from 'react';
 import { Spinner } from '@/components/Spinner';
 
 export type NavItem = { href: string; label: string };
 
 /**
- * Marks the destination active the moment it is clicked rather than when the
- * server responds, so the bar reacts immediately even though every page reads
- * files on the server.
+ * Navigation is driven through a transition so the bar knows, for real, that a
+ * move is in flight. The destination is marked active on click rather than when
+ * the server answers, and the spinner reflects actual pending work.
+ *
+ * In development the first visit to a route compiles it, which costs a second
+ * or two; prefetching is disabled there, so the pending state is what makes the
+ * wait legible. Production serves compiled routes and prefetches them.
  */
 export function NavLinks({ items }: { items: NavItem[] }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [pending, startTransition] = useTransition();
   const [target, setTarget] = useState<string | null>(null);
 
@@ -35,9 +40,13 @@ export function NavLinks({ items }: { items: NavItem[] }) {
               href={item.href}
               prefetch
               aria-current={active ? 'page' : undefined}
-              onClick={() => {
+              onClick={(event) => {
+                if (event.metaKey || event.ctrlKey || event.shiftKey) return;
+                event.preventDefault();
+                if (item.href === pathname) return;
+
                 setTarget(item.href);
-                startTransition(() => undefined);
+                startTransition(() => router.push(item.href));
               }}
               className={`inline-flex items-center gap-2 rounded px-3 py-1.5 transition-colors ${
                 active

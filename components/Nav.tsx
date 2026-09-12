@@ -18,10 +18,12 @@ export function Nav({ language }: { language: Language }) {
 
   return (
     <nav className="border-b border-neutral-900">
-      <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-4 p-3 text-sm">
-        <span className="px-2 font-semibold">{dict.appName}</span>
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-6 gap-y-2 px-6 py-3 text-sm">
+        <span className="font-semibold">{dict.appName}</span>
+
         <NavLinks items={items} />
-        <div className="ml-auto">
+
+        <div className="ml-auto pl-6">
           <LanguageSwitcher current={language} />
         </div>
       </div>
