@@ -2,7 +2,14 @@
 
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
-import { Field, inputClass, primaryButton, secondaryButton, subtleButton } from '@/components/fields';
+import {
+  Field,
+  inputClass,
+  numberInputClass,
+  primaryButton,
+  secondaryButton,
+  subtleButton,
+} from '@/components/fields';
 import { t } from '@/lib/i18n';
 import { funnelStageLabel, searchIntentLabel } from '@/lib/i18n/labels';
 import type { Article, ArticleStatus, Language } from '@/lib/schema';
@@ -92,7 +99,7 @@ export function ArticleBoard({ initial, language }: Props) {
             min={1}
             max={25}
             aria-label={dict.seoCount}
-            className={`${inputClass} w-20 text-center`}
+            className={numberInputClass}
             value={count}
             onChange={(event) => setCount(Number(event.target.value))}
           />

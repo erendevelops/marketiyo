@@ -18,6 +18,9 @@ export const tinyButton =
 export const linkButton =
   'text-xs text-neutral-500 transition-colors hover:text-neutral-100';
 
+export const numberInputClass =
+  'w-14 rounded border border-neutral-700 bg-neutral-900 px-1.5 py-1 text-center text-sm text-neutral-100';
+
 export const inputClass =
   'w-full rounded border border-neutral-700 bg-neutral-900 p-2 text-neutral-100 placeholder:text-neutral-600';
 

@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { IdeaCard } from '@/components/IdeaCard';
-import { Field, inputClass, primaryButton } from '@/components/fields';
+import { Field, inputClass, numberInputClass, primaryButton } from '@/components/fields';
 import { t } from '@/lib/i18n';
 import { ideaStatusLabel, platformLabel } from '@/lib/i18n/labels';
 import type { Idea, IdeaStatus, Language, Platform } from '@/lib/schema';
@@ -99,18 +99,16 @@ export function IdeaBoard({ initial, language, activePlatforms }: Props) {
           </Field>
         </div>
 
-        <div className="w-28">
-          <Field label={dict.ideasCount}>
-            <input
-              type="number"
-              min={1}
-              max={50}
-              className={inputClass}
-              value={count}
-              onChange={(event) => setCount(Number(event.target.value))}
-            />
-          </Field>
-        </div>
+        <Field label={dict.ideasCount}>
+          <input
+            type="number"
+            min={1}
+            max={50}
+            className={numberInputClass}
+            value={count}
+            onChange={(event) => setCount(Number(event.target.value))}
+          />
+        </Field>
 
         <button
           type="button"
