@@ -167,7 +167,7 @@ export const tr = {
   networkGoogleSearch: 'Google Arama',
   networkTiktok: 'TikTok',
 
-  navSeo: 'İçerik',
+  navSeo: 'Blog',
 
   seoTitle: 'Arama içeriği',
   seoIntro:

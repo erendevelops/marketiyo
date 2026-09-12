@@ -169,7 +169,7 @@ export const en: Dictionary = {
   networkGoogleSearch: 'Google Search',
   networkTiktok: 'TikTok',
 
-  navSeo: 'Content',
+  navSeo: 'Blog',
 
   seoTitle: 'Search content',
   seoIntro:
