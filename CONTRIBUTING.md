@@ -18,12 +18,17 @@ npm run dev
 ### Doğrulama
 
 ```bash
-npm test
-npm run typecheck
-npm run build
+npm run verify
 ```
 
-Üç komut da temiz geçmeden bir pull request açma.
+Testleri, tip kontrolünü ve derlemeyi sırayla çalıştırır. Temiz geçmeden bir
+pull request açma.
+
+Bu komut derlemeyi `.next-verify` klasörüne yazar. Sebebi şu: `next build`
+varsayılan olarak geliştirme sunucusuyla aynı klasörü kullanır ve sunucu
+ayaktayken çalıştırırsan onun altındaki dosyaları değiştirir. Çalışan uygulama
+o anda `__webpack_modules__[moduleId] is not a function` gibi hatalarla ölür.
+Ayrı klasör bunu imkânsız kılar.
 
 ### Kurallar
 
@@ -52,12 +57,17 @@ npm run dev
 ### Verification
 
 ```bash
-npm test
-npm run typecheck
-npm run build
+npm run verify
 ```
 
-Do not open a pull request until all three pass cleanly.
+Runs the tests, the type check and the build in order. Do not open a pull
+request until it passes cleanly.
+
+It writes the build to `.next-verify`. By default `next build` shares an
+output directory with the dev server, so building while the server is up
+rewrites the chunks underneath it and the running app dies with errors such as
+`__webpack_modules__[moduleId] is not a function`. A separate directory makes
+that impossible.
 
 ### Rules
 

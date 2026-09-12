@@ -21,3 +21,6 @@ next-env.d.ts
 # misc
 .DS_Store
 *.log
+
+# verification build output
+/.next-verify/

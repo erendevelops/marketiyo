@@ -12,7 +12,8 @@
     "start": "next start",
     "test": "vitest run",
     "test:watch": "vitest",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "verify": "vitest run && tsc --noEmit && cross-env NEXT_DIST_DIR=.next-verify next build"
   },
   "dependencies": {
     "next": "^15.5.25",
@@ -30,6 +31,7 @@
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^6.1.1",
+    "cross-env": "^10.1.0",
     "jsdom": "^25.0.1",
     "postcss": "^8.5.23",
     "tailwindcss": "^4.0.0",
