@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { Busy } from '@/components/Spinner';
 import { Field, Section, StringList, checkClass, checkLabelClass, inputClass, primaryButton, secondaryButton, selectClass, subtleButton } from '@/components/fields';
 import { t } from '@/lib/i18n';
 import { platformLabel } from '@/lib/i18n/labels';
@@ -33,14 +34,15 @@ export function BrandForm({ initial, language }: Props) {
   const [profile, setProfile] = useState<BrandProfile>(initial ?? emptyProfile(language));
   const [description, setDescription] = useState('');
   const [message, setMessage] = useState<{ ok: boolean; text: string } | null>(null);
-  const [busy, setBusy] = useState(false);
+  const [running, setRunning] = useState<'draft' | 'save' | null>(null);
+  const busy = running !== null;
 
   function patch(next: Partial<BrandProfile>) {
     setProfile((current) => ({ ...current, ...next }));
   }
 
   async function draft() {
-    setBusy(true);
+    setRunning('draft');
     setMessage(null);
     const response = await fetch('/api/brand/draft', {
       method: 'POST',
@@ -49,11 +51,11 @@ export function BrandForm({ initial, language }: Props) {
     const body = await response.json();
     if (!response.ok) setMessage({ ok: false, text: body.error ?? dict.errorGeneric });
     else setProfile({ ...(body as BrandProfile), updatedAt: new Date().toISOString() });
-    setBusy(false);
+    setRunning(null);
   }
 
   async function save() {
-    setBusy(true);
+    setRunning('save');
     setMessage(null);
     const response = await fetch('/api/brand', { method: 'PUT', body: JSON.stringify(profile) });
     const body = await response.json();
@@ -62,7 +64,7 @@ export function BrandForm({ initial, language }: Props) {
         ? { ok: true, text: dict.brandSaved }
         : { ok: false, text: body.error ?? dict.errorGeneric },
     );
-    setBusy(false);
+    setRunning(null);
   }
 
   const audienceLabels: Record<(typeof AUDIENCE_KEYS)[number], string> = {
@@ -79,6 +81,7 @@ export function BrandForm({ initial, language }: Props) {
 
       <Section title={dict.brandDraftLabel} hint={dict.brandDraftHint}>
         <textarea
+          aria-label={dict.brandDraftLabel}
           className={`${inputClass} min-h-28`}
           value={description}
           onChange={(event) => setDescription(event.target.value)}
@@ -89,7 +92,7 @@ export function BrandForm({ initial, language }: Props) {
           onClick={draft}
           className={`${secondaryButton} mt-2`}
         >
-          {busy ? dict.brandDrafting : dict.brandDraftAction}
+          {running === 'draft' ? <Busy label={dict.brandDrafting} /> : dict.brandDraftAction}
         </button>
       </Section>
 
@@ -244,7 +247,7 @@ export function BrandForm({ initial, language }: Props) {
         disabled={busy}
         className={primaryButton}
       >
-        {dict.brandSave}
+        {running === 'save' ? <Busy label={dict.brandSaving} /> : dict.brandSave}
       </button>
 
       {message && (

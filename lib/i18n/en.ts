@@ -16,6 +16,7 @@ export const en: Dictionary = {
   setupGemini: 'Gemini, with your own API key',
   setupGeminiHint: 'The key stays on this machine and is only ever sent to Google.',
   setupSave: 'Save and test the connection',
+  setupChecking: 'Testing the connection',
   setupAvailable: 'Connected',
   setupUnavailable: 'Could not connect',
 
@@ -56,6 +57,7 @@ export const en: Dictionary = {
   brandOutputLanguage: 'What language should content be written in?',
   brandPlatforms: 'Which platforms should it write for?',
   brandSave: 'Save brand profile',
+  brandSaving: 'Saving',
   brandSaved: 'Saved.',
 
   ideasTitle: 'Idea bank',
@@ -99,6 +101,7 @@ export const en: Dictionary = {
   calendarIntro: 'Nothing is posted automatically. You mark a slot as posted yourself.',
   calendarAddSlot: 'Add a slot to this day',
   calendarPropose: 'Fill the empty slots',
+  calendarWorking: 'Applying',
   calendarFilled: 'slots filled',
   calendarNothingToFill: 'No eligible content to fill with.',
   calendarClear: 'Empty this slot',

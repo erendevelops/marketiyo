@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { Busy } from '@/components/Spinner';
 
 import { useMemo, useState } from 'react';
 import { Field, inputClass, secondaryButton, selectClass, subtleButton, tinyButton } from '@/components/fields';
@@ -213,7 +214,7 @@ export function CalendarGrid({ initialSlots, ideas, campaigns, language }: Props
           disabled={busy}
           className={`${secondaryButton} mb-0.5 py-2`}
         >
-          {dict.calendarPropose}
+          {busy ? <Busy label={dict.calendarWorking} /> : dict.calendarPropose}
         </button>
 
         {message && <span className="pb-2 text-sm text-neutral-400">{message}</span>}

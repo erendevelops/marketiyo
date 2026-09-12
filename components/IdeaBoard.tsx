@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import { Busy } from '@/components/Spinner';
 import { IdeaCard } from '@/components/IdeaCard';
 import { Field, inputClass, numberInputClass, primaryButton, selectClass } from '@/components/fields';
 import { t } from '@/lib/i18n';
@@ -116,7 +117,7 @@ export function IdeaBoard({ initial, language, activePlatforms }: Props) {
           disabled={busy}
           className={primaryButton}
         >
-          {busy ? dict.ideasGenerating : dict.ideasGenerate}
+          {busy ? <Busy label={dict.ideasGenerating} /> : dict.ideasGenerate}
         </button>
 
         {message && <p className="text-sm text-neutral-400">{message}</p>}

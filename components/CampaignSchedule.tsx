@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { Busy } from '@/components/Spinner';
 import { useState } from 'react';
 import { Field, inputClass, secondaryButton } from '@/components/fields';
 import { t } from '@/lib/i18n';
@@ -65,7 +66,7 @@ export function CampaignSchedule({
           disabled={busy}
           className={`${secondaryButton} mb-0.5 px-4 py-2`}
         >
-          {dict.adsSaveDate}
+          {busy ? <Busy label={dict.brandSaving} /> : dict.adsSaveDate}
         </button>
 
         <p className="pb-2 text-sm text-neutral-500">

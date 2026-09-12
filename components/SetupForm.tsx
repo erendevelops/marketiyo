@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { Busy } from '@/components/Spinner';
 import { checkClass, inputClass, primaryButton, selectClass } from '@/components/fields';
 import { t } from '@/lib/i18n';
 import type { Language, ProviderId, RedactedSettings } from '@/lib/schema';
@@ -104,7 +105,7 @@ export function SetupForm({ initial }: Props) {
         disabled={busy}
         className={primaryButton}
       >
-        {dict.setupSave}
+        {busy ? <Busy label={dict.setupChecking} /> : dict.setupSave}
       </button>
 
       {status && (

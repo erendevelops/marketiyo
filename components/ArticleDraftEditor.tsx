@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { Busy } from '@/components/Spinner';
 import { useState } from 'react';
 import { inputClass, primaryButton, secondaryButton } from '@/components/fields';
 import { t } from '@/lib/i18n';
@@ -16,21 +17,22 @@ type Props = {
 export function ArticleDraftEditor({ article, initialMarkdown, language }: Props) {
   const dict = t(language);
   const [markdown, setMarkdown] = useState(initialMarkdown ?? '');
-  const [busy, setBusy] = useState(false);
+  const [running, setRunning] = useState<'generate' | 'save' | null>(null);
+  const busy = running !== null;
   const [message, setMessage] = useState<{ ok: boolean; text: string } | null>(null);
 
   async function generate() {
-    setBusy(true);
+    setRunning('generate');
     setMessage(null);
     const response = await fetch(`/api/articles/${article.id}/draft`, { method: 'POST' });
     const body = await response.json();
     if (!response.ok) setMessage({ ok: false, text: body.error ?? dict.errorGeneric });
     else setMarkdown(body.markdown as string);
-    setBusy(false);
+    setRunning(null);
   }
 
   async function save() {
-    setBusy(true);
+    setRunning('save');
     setMessage(null);
     const response = await fetch(`/api/articles/${article.id}/draft`, {
       method: 'PUT',
@@ -42,7 +44,7 @@ export function ArticleDraftEditor({ article, initialMarkdown, language }: Props
         ? { ok: true, text: dict.brandSaved }
         : { ok: false, text: body.error ?? dict.errorGeneric },
     );
-    setBusy(false);
+    setRunning(null);
   }
 
   return (
@@ -72,11 +74,13 @@ export function ArticleDraftEditor({ article, initialMarkdown, language }: Props
           disabled={busy}
           className={primaryButton}
         >
-          {busy
-            ? dict.seoGenerating
-            : markdown.length
-              ? dict.seoDraftRegenerate
-              : dict.seoDraftGenerate}
+          {running === 'generate' ? (
+            <Busy label={dict.seoGenerating} />
+          ) : markdown.length ? (
+            dict.seoDraftRegenerate
+          ) : (
+            dict.seoDraftGenerate
+          )}
         </button>
         <button
           type="button"
@@ -84,7 +88,7 @@ export function ArticleDraftEditor({ article, initialMarkdown, language }: Props
           disabled={busy || markdown.length === 0}
           className={`${secondaryButton} px-4 py-2`}
         >
-          {dict.seoDraftSave}
+          {running === 'save' ? <Busy label={dict.brandSaving} /> : dict.seoDraftSave}
         </button>
       </div>
 

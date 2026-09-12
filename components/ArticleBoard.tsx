@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { Busy } from '@/components/Spinner';
 import { useMemo, useState } from 'react';
 import { Field, inputClass, numberInputClass, primaryButton, secondaryButton, selectClass, subtleButton } from '@/components/fields';
 import { t } from '@/lib/i18n';
@@ -99,7 +100,7 @@ export function ArticleBoard({ initial, language }: Props) {
           <span className="text-sm text-neutral-300">{dict.seoCountSuffix}</span>
 
           <button type="button" onClick={generate} disabled={busy} className={primaryButton}>
-            {busy ? dict.seoGenerating : dict.seoGenerate}
+            {busy ? <Busy label={dict.seoGenerating} /> : dict.seoGenerate}
           </button>
         </div>
 

@@ -15,6 +15,7 @@ export const tr = {
   setupGeminiHint:
     'Anahtar yalnızca bu bilgisayarda saklanır ve sadece Google sunucularına gönderilir.',
   setupSave: 'Kaydet ve bağlantıyı sına',
+  setupChecking: 'Bağlantı sınanıyor',
   setupAvailable: 'Bağlantı kuruldu',
   setupUnavailable: 'Bağlantı kurulamadı',
 
@@ -55,6 +56,7 @@ export const tr = {
   brandOutputLanguage: 'İçerikler hangi dilde üretilsin?',
   brandPlatforms: 'Hangi platformlar için üretilsin?',
   brandSave: 'Marka profilini kaydet',
+  brandSaving: 'Kaydediliyor',
   brandSaved: 'Kaydedildi.',
 
   ideasTitle: 'Fikir bankası',
@@ -97,6 +99,7 @@ export const tr = {
   calendarIntro: 'Hiçbir şey otomatik paylaşılmaz. Paylaştığında slota kendin işaretlersin.',
   calendarAddSlot: 'Bu güne slot ekle',
   calendarPropose: 'Boş slotları doldur',
+  calendarWorking: 'Uygulanıyor',
   calendarFilled: 'slot dolduruldu',
   calendarNothingToFill: 'Doldurulacak uygun içerik yok.',
   calendarClear: 'Slotu boşalt',

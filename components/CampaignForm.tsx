@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { Busy } from '@/components/Spinner';
 import { useState } from 'react';
 import { Field, Section, checkClass, checkLabelClass, inputClass, primaryButton, selectClass } from '@/components/fields';
 import { t } from '@/lib/i18n';
@@ -192,7 +193,7 @@ export function CampaignForm({ brand, language, onCreated }: Props) {
           disabled={busy || !ready}
           className={primaryButton}
         >
-          {busy ? dict.adsGenerating : dict.adsGenerate}
+          {busy ? <Busy label={dict.adsGenerating} /> : dict.adsGenerate}
         </button>
 
         {error && <p className="text-sm text-amber-400">{error}</p>}

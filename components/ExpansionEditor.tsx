@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { Busy } from '@/components/Spinner';
 import Link from 'next/link';
 import { inputClass, primaryButton, secondaryButton } from '@/components/fields';
 import { t } from '@/lib/i18n';
@@ -15,21 +16,22 @@ type Props = {
 export function ExpansionEditor({ idea, initialMarkdown, language }: Props) {
   const dict = t(language);
   const [markdown, setMarkdown] = useState(initialMarkdown ?? '');
-  const [busy, setBusy] = useState(false);
+  const [running, setRunning] = useState<'generate' | 'save' | null>(null);
+  const busy = running !== null;
   const [message, setMessage] = useState<{ ok: boolean; text: string } | null>(null);
 
   async function generate() {
-    setBusy(true);
+    setRunning('generate');
     setMessage(null);
     const response = await fetch(`/api/ideas/${idea.id}/expansion`, { method: 'POST' });
     const body = await response.json();
     if (!response.ok) setMessage({ ok: false, text: body.error ?? dict.errorGeneric });
     else setMarkdown(body.markdown as string);
-    setBusy(false);
+    setRunning(null);
   }
 
   async function save() {
-    setBusy(true);
+    setRunning('save');
     setMessage(null);
     const response = await fetch(`/api/ideas/${idea.id}/expansion`, {
       method: 'PUT',
@@ -41,7 +43,7 @@ export function ExpansionEditor({ idea, initialMarkdown, language }: Props) {
         ? { ok: true, text: dict.brandSaved }
         : { ok: false, text: body.error ?? dict.errorGeneric },
     );
-    setBusy(false);
+    setRunning(null);
   }
 
   return (
@@ -60,7 +62,13 @@ export function ExpansionEditor({ idea, initialMarkdown, language }: Props) {
           disabled={busy}
           className={primaryButton}
         >
-          {busy ? dict.ideasGenerating : markdown.length ? dict.expansionRegenerate : dict.expansionGenerate}
+          {running === 'generate' ? (
+            <Busy label={dict.ideasGenerating} />
+          ) : markdown.length ? (
+            dict.expansionRegenerate
+          ) : (
+            dict.expansionGenerate
+          )}
         </button>
         <button
           type="button"
@@ -68,7 +76,7 @@ export function ExpansionEditor({ idea, initialMarkdown, language }: Props) {
           disabled={busy || markdown.length === 0}
           className={`${secondaryButton} px-4 py-2`}
         >
-          {dict.expansionSave}
+          {running === 'save' ? <Busy label={dict.brandSaving} /> : dict.expansionSave}
         </button>
       </div>
 
