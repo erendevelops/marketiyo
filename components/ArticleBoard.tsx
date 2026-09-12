@@ -86,29 +86,34 @@ export function ArticleBoard({ initial, language }: Props) {
       <h1 className="mb-2 text-2xl font-semibold">{dict.seoTitle}</h1>
       <p className="mb-8 text-sm text-neutral-500">{dict.seoIntro}</p>
 
-      <div className="mb-8 space-y-4 rounded border border-neutral-800 p-4">
-        <Field label={dict.seoTopicLabel} hint={dict.seoTopicHint}>
+      <section className="mb-8 rounded border border-neutral-800 p-5">
+        <h2 className="mb-4 text-sm font-semibold text-neutral-200">{dict.seoFormTitle}</h2>
+
+        <div className="mb-5 flex items-center gap-3">
           <input
-            className={inputClass}
-            value={topic}
-            onChange={(event) => setTopic(event.target.value)}
+            type="number"
+            min={1}
+            max={25}
+            aria-label={dict.seoCount}
+            className={`${inputClass} w-20 text-center`}
+            value={count}
+            onChange={(event) => setCount(Number(event.target.value))}
           />
-        </Field>
+          <span className="text-sm text-neutral-300">{dict.seoCountSuffix}</span>
+        </div>
 
-        <div className="flex flex-wrap items-end gap-4">
-          <div className="w-28">
-            <Field label={dict.seoCount}>
-              <input
-                type="number"
-                min={1}
-                max={25}
-                className={inputClass}
-                value={count}
-                onChange={(event) => setCount(Number(event.target.value))}
-              />
-            </Field>
-          </div>
+        <div className="mb-5">
+          <Field label={dict.seoTopicLabel} hint={dict.seoTopicHint}>
+            <input
+              className={inputClass}
+              placeholder={dict.seoTopicPlaceholder}
+              value={topic}
+              onChange={(event) => setTopic(event.target.value)}
+            />
+          </Field>
+        </div>
 
+        <div className="flex flex-wrap items-center gap-3">
           <button
             type="button"
             onClick={generate}
@@ -118,9 +123,13 @@ export function ArticleBoard({ initial, language }: Props) {
             {busy ? dict.seoGenerating : dict.seoGenerate}
           </button>
 
-          {message && <p className="pb-2 text-sm text-neutral-400">{message}</p>}
+          {message ? (
+            <p className="text-sm text-neutral-400">{message}</p>
+          ) : (
+            <p className="text-xs text-neutral-600">{dict.seoRepeatNote}</p>
+          )}
         </div>
-      </div>
+      </section>
 
       <div className="mb-6 w-44">
         <Field label={dict.ideasFilterStatus}>
