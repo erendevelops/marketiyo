@@ -104,6 +104,8 @@ export const en: Dictionary = {
   calendarEmptySlot: 'Empty slot',
   calendarPrevWeek: 'Previous week',
   calendarNextWeek: 'Next week',
+  calendarToday: 'Today',
+  calendarThisWeek: 'Back to this week',
 
   slotPlanned: 'Planned',
   slotReady: 'Ready',

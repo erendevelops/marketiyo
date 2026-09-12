@@ -3,7 +3,7 @@
 import Link from 'next/link';
 
 import { useMemo, useState } from 'react';
-import { Field, inputClass, secondaryButton, tinyButton } from '@/components/fields';
+import { Field, inputClass, secondaryButton, subtleButton, tinyButton } from '@/components/fields';
 import { t } from '@/lib/i18n';
 import { platformLabel, slotStatusLabel } from '@/lib/i18n/labels';
 import { proposeFill } from '@/lib/calendar/plan';
@@ -45,6 +45,7 @@ export function CalendarGrid({ initialSlots, ideas, campaigns, language }: Props
   const dict = t(language);
   const locale = language === 'tr' ? 'tr-TR' : 'en-GB';
 
+  const [today] = useState(() => isoDate(new Date()));
   const [slots, setSlots] = useState<CalendarSlot[]>(initialSlots);
   const [weekStart, setWeekStart] = useState(() => startOfWeek(new Date()));
   const [platform, setPlatform] = useState<Platform>('short-video');
@@ -62,6 +63,29 @@ export function CalendarGrid({ initialSlots, ideas, campaigns, language }: Props
   );
 
   const hookById = useMemo(() => new Map(ideas.map((idea) => [idea.id, idea.hook])), [ideas]);
+
+  const weekRange = useMemo(() => {
+    const first = days[0];
+    const last = days[6];
+    const sameMonth = first.getMonth() === last.getMonth();
+
+    const firstLabel = first.toLocaleDateString(locale, {
+      day: 'numeric',
+      month: sameMonth ? undefined : 'long',
+    });
+    const lastLabel = last.toLocaleDateString(locale, {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
+
+    return `${firstLabel} – ${lastLabel}`;
+  }, [days, locale]);
+
+  const onCurrentWeek = useMemo(
+    () => isoDate(days[0]) <= today && today <= isoDate(days[6]),
+    [days, today],
+  );
 
   const runningCampaigns = useMemo(
     () => campaignsInRange(campaigns, isoDate(days[0]), isoDate(days[6])),
@@ -146,9 +170,7 @@ export function CalendarGrid({ initialSlots, ideas, campaigns, language }: Props
           >
             &larr;
           </button>
-          <span className="text-sm text-neutral-400">
-            {days[0].toLocaleDateString(locale, { day: 'numeric', month: 'long' })}
-          </span>
+          <span className="min-w-44 text-center text-sm text-neutral-300">{weekRange}</span>
           <button
             type="button"
             aria-label={dict.calendarNextWeek}
@@ -157,6 +179,16 @@ export function CalendarGrid({ initialSlots, ideas, campaigns, language }: Props
           >
             &rarr;
           </button>
+
+          {!onCurrentWeek && (
+            <button
+              type="button"
+              className={`${subtleButton} ml-2`}
+              onClick={() => setWeekStart(startOfWeek(new Date()))}
+            >
+              {dict.calendarThisWeek}
+            </button>
+          )}
         </div>
 
         <div className="w-44">
@@ -217,11 +249,21 @@ export function CalendarGrid({ initialSlots, ideas, campaigns, language }: Props
       <div className="grid gap-3 md:grid-cols-7">
         {days.map((date) => {
           const key = isoDate(date);
+          const isToday = key === today;
+
           return (
-            <div key={key} className="rounded border border-neutral-900 p-2">
-              <p className="mb-2 text-xs text-neutral-500">
-                {date.toLocaleDateString(locale, { weekday: 'short', day: 'numeric' })}
-              </p>
+              <div
+                key={key}
+                className={`rounded border p-2 ${
+                  isToday ? 'border-neutral-600 bg-neutral-900/40' : 'border-neutral-900'
+                }`}
+              >
+                <p
+                  className={`mb-2 text-xs ${isToday ? 'font-medium text-neutral-200' : 'text-neutral-500'}`}
+                >
+                  {date.toLocaleDateString(locale, { weekday: 'short', day: 'numeric' })}
+                  {isToday && ` · ${dict.calendarToday}`}
+                </p>
 
               <div className="space-y-2">
                 {slots

@@ -102,6 +102,8 @@ export const tr = {
   calendarEmptySlot: 'Boş slot',
   calendarPrevWeek: 'Önceki hafta',
   calendarNextWeek: 'Sonraki hafta',
+  calendarToday: 'Bugün',
+  calendarThisWeek: 'Bu haftaya dön',
 
   slotPlanned: 'Planlandı',
   slotReady: 'Hazır',
