@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import { CampaignSchedule } from '@/components/CampaignSchedule';
 import { t } from '@/lib/i18n';
 import { adNetworkLabel, campaignObjectiveLabel } from '@/lib/i18n/labels';
 import type { AdSet, Campaign, Language } from '@/lib/schema';
@@ -191,6 +192,8 @@ export function CampaignDetail({
         {campaign.totalBudget} {campaign.currency} / {campaign.periodDays}{' '}
         {language === 'tr' ? 'gün' : 'days'} &middot; {dict.adsTotalBudgetNote}
       </p>
+
+      <CampaignSchedule campaign={campaign} language={language} />
 
       <section className="mb-8 rounded border border-neutral-800 p-5">
         <h2 className="mb-2 text-sm font-semibold uppercase tracking-wide text-neutral-400">

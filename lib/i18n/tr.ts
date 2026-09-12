@@ -166,6 +166,48 @@ export const tr = {
   networkMeta: 'Meta, Facebook ve Instagram',
   networkGoogleSearch: 'Google Arama',
   networkTiktok: 'TikTok',
+
+  navSeo: 'İçerik',
+
+  seoTitle: 'Arama içeriği',
+  seoIntro:
+    'Ürününün gerçekten otorite kurabileceği yazı konuları. Arama hacmi veya zorluk puanı üretilmez, o veriye erişim yok.',
+  seoTopicLabel: 'Bir konu alanı ver',
+  seoTopicHint: 'Boş bırakırsan marka profiline bakarak kendi seçer.',
+  seoCount: 'Kaç konu?',
+  seoGenerate: 'Konuları üret',
+  seoGenerating: 'Konular çıkarılıyor',
+  seoGenerated: 'konu eklendi',
+  seoDiscarded: 'konu hatalı geldiği için atlandı',
+  seoEmpty: 'Burada gösterilecek konu yok.',
+  seoKeep: 'Sakla',
+  seoReject: 'Ele',
+  seoOpen: 'Taslağa geç',
+  seoPrimaryKeyword: 'Ana ifade',
+  seoSecondaryKeywords: 'Yan ifadeler',
+  seoOutline: 'Ana hat',
+  seoDraftTitle: 'Yazı taslağı',
+  seoDraftGenerate: 'Taslağı üret',
+  seoDraftRegenerate: 'Yeniden üret',
+  seoDraftSave: 'Değişiklikleri kaydet',
+  seoDraftEmpty: 'Bu konu henüz taslağa dönüştürülmedi.',
+  seoBackToList: 'Konulara dön',
+
+  intentInformational: 'Bilgi arıyor',
+  intentCommercial: 'Karşılaştırıyor',
+  intentTransactional: 'Satın almaya hazır',
+  intentNavigational: 'Markayı arıyor',
+
+  stageAwareness: 'Sorunun farkında',
+  stageConsideration: 'Seçenekleri tartıyor',
+  stageDecision: 'Karar aşamasında',
+
+  calendarAds: 'Yayındaki kampanyalar',
+  calendarNoAds: 'Bu hafta yayında kampanya yok.',
+  adsStartDate: 'Başlangıç tarihi',
+  adsStartDateHint: 'Tarih girersen kampanya takvimde şerit olarak görünür.',
+  adsSaveDate: 'Tarihi kaydet',
+  adsNoStartDate: 'Tarih girilmedi',
 };
 
 export type Dictionary = typeof tr;

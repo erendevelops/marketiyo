@@ -12,4 +12,6 @@ export const workspaceFiles = {
   expansions: 'expansions',
   campaigns: 'campaigns.json',
   campaignDocs: 'campaigns',
+  articles: 'articles.json',
+  articleDrafts: 'articles',
 } as const;

@@ -2,6 +2,7 @@ import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { z } from 'zod';
 import {
+  articleSchema,
   brandProfileSchema,
   calendarSlotSchema,
   campaignSchema,
@@ -10,6 +11,7 @@ import {
   settingsSchema,
   type BrandProfile,
   type CalendarSlot,
+  type Article,
   type Campaign,
   type Idea,
   type Settings,
@@ -57,6 +59,7 @@ async function writeAtomic(filePath: string, contents: string): Promise<void> {
 const ideasSchema = z.array(ideaSchema);
 const calendarSchema = z.array(calendarSlotSchema);
 const campaignsSchema = z.array(campaignSchema);
+const articlesSchema = z.array(articleSchema);
 
 export function createStore(root: string) {
   const enqueue = createQueue();
@@ -65,6 +68,17 @@ export function createStore(root: string) {
     path.join(root, workspaceFiles.expansions, `${ideaId}.md`);
   const campaignDocPath = (campaignId: string) =>
     path.join(root, workspaceFiles.campaignDocs, `${campaignId}.md`);
+
+  const articleDraftPath = (articleId: string) =>
+    path.join(root, workspaceFiles.articleDrafts, `${articleId}.md`);
+
+  async function readArticles(): Promise<Article[]> {
+    return (await readJson(file(workspaceFiles.articles), articlesSchema)) ?? [];
+  }
+
+  async function writeArticles(articles: Article[]): Promise<void> {
+    await writeAtomic(file(workspaceFiles.articles), JSON.stringify(articles, null, 2));
+  }
 
   async function readCampaigns(): Promise<Campaign[]> {
     return (await readJson(file(workspaceFiles.campaigns), campaignsSchema)) ?? [];
@@ -147,6 +161,40 @@ export function createStore(root: string) {
     },
     writeCampaignDoc: (campaignId: string, markdown: string): Promise<void> =>
       enqueue(() => writeAtomic(campaignDocPath(campaignId), markdown)),
+    updateCampaign: (id: string, patch: Partial<Campaign>): Promise<Campaign[]> =>
+      enqueue(async () => {
+        const next = (await readCampaigns()).map((campaign) =>
+          campaign.id === id ? { ...campaign, ...patch } : campaign,
+        );
+        await writeAtomic(file(workspaceFiles.campaigns), JSON.stringify(next, null, 2));
+        return next;
+      }),
+
+    readArticles,
+    appendArticles: (incoming: Article[]): Promise<Article[]> =>
+      enqueue(async () => {
+        const merged = [...(await readArticles()), ...incoming];
+        await writeArticles(merged);
+        return merged;
+      }),
+    updateArticle: (id: string, patch: Partial<Article>): Promise<Article[]> =>
+      enqueue(async () => {
+        const next = (await readArticles()).map((article) =>
+          article.id === id ? { ...article, ...patch } : article,
+        );
+        await writeArticles(next);
+        return next;
+      }),
+    readArticleDraft: async (articleId: string): Promise<string | null> => {
+      try {
+        return await readFile(articleDraftPath(articleId), 'utf8');
+      } catch (error) {
+        if ((error as NodeJS.ErrnoException).code === 'ENOENT') return null;
+        throw error;
+      }
+    },
+    writeArticleDraft: (articleId: string, markdown: string): Promise<void> =>
+      enqueue(() => writeAtomic(articleDraftPath(articleId), markdown)),
   };
 }
 

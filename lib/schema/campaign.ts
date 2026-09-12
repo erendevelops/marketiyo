@@ -82,6 +82,12 @@ export type CampaignInput = z.infer<typeof campaignInputSchema>;
 
 export const campaignSchema = campaignInputSchema.extend({
   id: z.string().min(1),
+  /** Optional: set later from the campaign screen, drives the calendar band. */
+  startDate: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, 'expected YYYY-MM-DD')
+    .nullable()
+    .default(null),
   createdAt: z.string().datetime(),
   positioning: z.string().min(1),
   adSets: z.array(adSetSchema),

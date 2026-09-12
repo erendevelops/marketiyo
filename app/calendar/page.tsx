@@ -5,13 +5,19 @@ export const dynamic = 'force-dynamic';
 
 export default async function CalendarPage() {
   const store = getStore();
-  const [slots, ideas, settings] = await Promise.all([
+  const [slots, ideas, campaigns, settings] = await Promise.all([
     store.readCalendar(),
     store.readIdeas(),
+    store.readCampaigns(),
     store.readSettings(),
   ]);
 
   return (
-    <CalendarGrid initialSlots={slots} ideas={ideas} language={settings.interfaceLanguage} />
+    <CalendarGrid
+      initialSlots={slots}
+      ideas={ideas}
+      campaigns={campaigns}
+      language={settings.interfaceLanguage}
+    />
   );
 }

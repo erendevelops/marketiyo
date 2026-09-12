@@ -2,6 +2,8 @@ import type { Dictionary } from './tr';
 import type {
   AdNetwork,
   CampaignObjective,
+  FunnelStage,
+  SearchIntent,
   IdeaStatus,
   Platform,
   RejectionReason,
@@ -74,4 +76,23 @@ export function campaignObjectiveLabel(dict: Dictionary, objective: CampaignObje
     'app-installs': dict.objectiveAppInstalls,
   };
   return map[objective];
+}
+
+export function searchIntentLabel(dict: Dictionary, intent: SearchIntent): string {
+  const map: Record<SearchIntent, string> = {
+    informational: dict.intentInformational,
+    commercial: dict.intentCommercial,
+    transactional: dict.intentTransactional,
+    navigational: dict.intentNavigational,
+  };
+  return map[intent];
+}
+
+export function funnelStageLabel(dict: Dictionary, stage: FunnelStage): string {
+  const map: Record<FunnelStage, string> = {
+    awareness: dict.stageAwareness,
+    consideration: dict.stageConsideration,
+    decision: dict.stageDecision,
+  };
+  return map[stage];
 }

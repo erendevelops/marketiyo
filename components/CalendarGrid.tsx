@@ -1,11 +1,14 @@
 'use client';
 
+import Link from 'next/link';
+
 import { useMemo, useState } from 'react';
 import { Field, inputClass } from '@/components/fields';
 import { t } from '@/lib/i18n';
 import { platformLabel, slotStatusLabel } from '@/lib/i18n/labels';
 import { proposeFill } from '@/lib/calendar/plan';
-import type { CalendarSlot, Idea, Language, Platform, SlotStatus } from '@/lib/schema';
+import { campaignEndDate, campaignsInRange } from '@/lib/calendar/flights';
+import type { CalendarSlot, Campaign, Idea, Language, Platform, SlotStatus } from '@/lib/schema';
 
 const PLATFORMS: Platform[] = ['short-video', 'x', 'linkedin', 'instagram-static'];
 const STATUS_CYCLE: SlotStatus[] = ['planned', 'ready', 'posted', 'skipped'];
@@ -34,10 +37,11 @@ function isoDate(date: Date): string {
 type Props = {
   initialSlots: CalendarSlot[];
   ideas: Idea[];
+  campaigns: Campaign[];
   language: Language;
 };
 
-export function CalendarGrid({ initialSlots, ideas, language }: Props) {
+export function CalendarGrid({ initialSlots, ideas, campaigns, language }: Props) {
   const dict = t(language);
   const locale = language === 'tr' ? 'tr-TR' : 'en-GB';
 
@@ -58,6 +62,11 @@ export function CalendarGrid({ initialSlots, ideas, language }: Props) {
   );
 
   const hookById = useMemo(() => new Map(ideas.map((idea) => [idea.id, idea.hook])), [ideas]);
+
+  const runningCampaigns = useMemo(
+    () => campaignsInRange(campaigns, isoDate(days[0]), isoDate(days[6])),
+    [campaigns, days],
+  );
 
   async function persist(next: CalendarSlot[]) {
     const previous = slots;
@@ -177,6 +186,33 @@ export function CalendarGrid({ initialSlots, ideas, language }: Props) {
 
         {message && <span className="pb-2 text-sm text-neutral-400">{message}</span>}
       </div>
+
+      <section className="mb-6 rounded border border-neutral-900 p-4">
+        <h2 className="mb-3 text-xs uppercase tracking-wide text-neutral-500">
+          {dict.calendarAds}
+        </h2>
+
+        {runningCampaigns.length === 0 ? (
+          <p className="text-sm text-neutral-600">{dict.calendarNoAds}</p>
+        ) : (
+          <ul className="space-y-2">
+            {runningCampaigns.map((campaign) => (
+              <li
+                key={campaign.id}
+                className="flex flex-wrap items-center justify-between gap-2 rounded bg-neutral-900 px-3 py-2 text-sm"
+              >
+                <Link href={`/ads/${campaign.id}`} className="font-medium hover:underline">
+                  {campaign.name}
+                </Link>
+                <span className="text-xs text-neutral-500">
+                  {campaign.startDate} &rarr; {campaignEndDate(campaign)} &middot;{' '}
+                  {campaign.totalBudget} {campaign.currency}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
 
       <div className="grid gap-3 md:grid-cols-7">
         {days.map((date) => {
