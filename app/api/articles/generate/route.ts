@@ -9,7 +9,6 @@ export const maxDuration = 300;
 
 const bodySchema = z.object({
   count: z.number().int().min(1).max(25).default(8),
-  topic: z.string().default(''),
 });
 
 export async function POST(request: Request) {
@@ -26,7 +25,6 @@ export async function POST(request: Request) {
       store,
       provider: getProvider(settings),
       count: parsed.data.count,
-      topic: parsed.data.topic,
     });
     return NextResponse.json(result);
   } catch (error) {

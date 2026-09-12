@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { inputClass } from '@/components/fields';
+import { inputClass, primaryButton, secondaryButton } from '@/components/fields';
 import { t } from '@/lib/i18n';
 import type { Idea, Language } from '@/lib/schema';
 
@@ -46,7 +46,7 @@ export function ExpansionEditor({ idea, initialMarkdown, language }: Props) {
 
   return (
     <main className="mx-auto max-w-3xl p-8">
-      <Link href="/ideas" className="mb-6 inline-block text-sm text-neutral-400">
+      <Link href="/ideas" className="mb-6 inline-block text-sm text-neutral-400 transition-colors hover:text-neutral-100">
         {dict.backToIdeas}
       </Link>
 
@@ -58,7 +58,7 @@ export function ExpansionEditor({ idea, initialMarkdown, language }: Props) {
           type="button"
           onClick={generate}
           disabled={busy}
-          className="rounded bg-neutral-100 px-4 py-2 font-medium text-neutral-900 disabled:opacity-50"
+          className={primaryButton}
         >
           {busy ? dict.ideasGenerating : markdown.length ? dict.expansionRegenerate : dict.expansionGenerate}
         </button>
@@ -66,7 +66,7 @@ export function ExpansionEditor({ idea, initialMarkdown, language }: Props) {
           type="button"
           onClick={save}
           disabled={busy || markdown.length === 0}
-          className="rounded border border-neutral-700 px-4 py-2 disabled:opacity-40"
+          className={`${secondaryButton} px-4 py-2`}
         >
           {dict.expansionSave}
         </button>

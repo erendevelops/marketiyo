@@ -33,7 +33,7 @@ export function LanguageSwitcher({ current }: { current: Language }) {
       value={language}
       disabled={pending}
       onChange={(event) => change(event.target.value as Language)}
-      className="rounded border border-neutral-800 bg-neutral-950 px-2 py-1 text-xs text-neutral-400 hover:text-neutral-200 disabled:opacity-50"
+      className="cursor-pointer rounded border border-neutral-800 bg-neutral-950 px-2 py-1 text-xs text-neutral-400 transition-colors hover:border-neutral-600 hover:text-neutral-100 disabled:opacity-50"
     >
       <option value="tr">Türkçe</option>
       <option value="en">English</option>

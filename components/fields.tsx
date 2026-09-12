@@ -2,6 +2,22 @@
 
 import type { ReactNode } from 'react';
 
+/** One set of button styles, so hover and disabled behave the same everywhere. */
+export const primaryButton =
+  'rounded bg-neutral-100 px-4 py-2 font-medium text-neutral-900 transition-colors hover:bg-white disabled:opacity-50 disabled:hover:bg-neutral-100';
+
+export const secondaryButton =
+  'rounded border border-neutral-700 px-3 py-1 text-sm text-neutral-200 transition-colors hover:border-neutral-500 hover:bg-neutral-900 hover:text-neutral-50 disabled:opacity-40 disabled:hover:border-neutral-700 disabled:hover:bg-transparent';
+
+export const subtleButton =
+  'rounded border border-neutral-800 px-3 py-1 text-sm text-neutral-400 transition-colors hover:border-neutral-600 hover:bg-neutral-900 hover:text-neutral-100 disabled:opacity-40';
+
+export const tinyButton =
+  'rounded border border-neutral-800 px-2 py-0.5 text-xs text-neutral-400 transition-colors hover:border-neutral-600 hover:bg-neutral-800 hover:text-neutral-100';
+
+export const linkButton =
+  'text-xs text-neutral-500 transition-colors hover:text-neutral-100';
+
 export const inputClass =
   'w-full rounded border border-neutral-700 bg-neutral-900 p-2 text-neutral-100 placeholder:text-neutral-600';
 
@@ -72,7 +88,7 @@ export function StringList({
           />
           <button
             type="button"
-            className="rounded border border-neutral-700 px-3 text-sm text-neutral-400 hover:text-neutral-200"
+            className={secondaryButton}
             onClick={() => onChange(values.filter((_, i) => i !== index))}
           >
             {removeLabel}
@@ -81,7 +97,7 @@ export function StringList({
       ))}
       <button
         type="button"
-        className="rounded border border-neutral-700 px-3 py-1 text-sm text-neutral-300 hover:text-neutral-100"
+        className={secondaryButton}
         onClick={() => onChange([...values, ''])}
       >
         {addLabel}

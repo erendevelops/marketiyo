@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { secondaryButton, subtleButton } from '@/components/fields';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { CampaignForm } from '@/components/CampaignForm';
@@ -76,14 +77,14 @@ export function CampaignList({ initial, brand, language }: Props) {
               <div className="flex gap-2">
                 <Link
                   href={`/ads/${campaign.id}`}
-                  className="rounded border border-neutral-700 px-3 py-1 text-sm"
+                  className={secondaryButton}
                 >
                   {dict.adsOpen}
                 </Link>
                 <button
                   type="button"
                   onClick={() => remove(campaign.id)}
-                  className="rounded border border-neutral-800 px-3 py-1 text-sm text-neutral-500 hover:text-neutral-300"
+                  className={subtleButton}
                 >
                   {dict.adsDelete}
                 </button>

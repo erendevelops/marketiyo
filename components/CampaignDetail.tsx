@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { linkButton } from '@/components/fields';
 import { useState } from 'react';
 import { CampaignSchedule } from '@/components/CampaignSchedule';
 import { t } from '@/lib/i18n';
@@ -43,7 +44,7 @@ function CopyList({
             <button
               type="button"
               onClick={() => copy(value, index)}
-              className="shrink-0 text-xs text-neutral-500 hover:text-neutral-200"
+              className={`shrink-0 ${linkButton}`}
             >
               {copied === index ? copiedLabel : copyLabel}
             </button>
@@ -179,7 +180,7 @@ export function CampaignDetail({
 
   return (
     <main className="mx-auto max-w-3xl p-8">
-      <Link href="/ads" className="mb-6 inline-block text-sm text-neutral-400">
+      <Link href="/ads" className="mb-6 inline-block text-sm text-neutral-400 transition-colors hover:text-neutral-100">
         {dict.adsBackToList}
       </Link>
 

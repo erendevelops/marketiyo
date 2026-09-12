@@ -176,10 +176,6 @@ export const en: Dictionary = {
     'Article topics your product can genuinely build authority on. No search volume or difficulty score is produced, because there is no access to that data.',
   seoFormTitle: 'Generate new topics',
   seoCountSuffix: 'article topics',
-  seoTopicLabel: 'Any particular topic area?',
-  seoTopicHint:
-    'Leave it empty and it picks the subject from your brand profile. Fill it in and every topic comes from that area.',
-  seoTopicPlaceholder: 'For example: writing content with AI',
   seoRepeatNote: 'Titles you have already generated are never repeated.',
   seoCount: 'How many',
   seoGenerate: 'Generate topics',

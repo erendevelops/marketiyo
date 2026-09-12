@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { IdeaCard } from '@/components/IdeaCard';
-import { Field, inputClass } from '@/components/fields';
+import { Field, inputClass, primaryButton } from '@/components/fields';
 import { t } from '@/lib/i18n';
 import { ideaStatusLabel, platformLabel } from '@/lib/i18n/labels';
 import type { Idea, IdeaStatus, Language, Platform } from '@/lib/schema';
@@ -116,7 +116,7 @@ export function IdeaBoard({ initial, language, activePlatforms }: Props) {
           type="button"
           onClick={generate}
           disabled={busy}
-          className="rounded bg-neutral-100 px-4 py-2 font-medium text-neutral-900 disabled:opacity-50"
+          className={primaryButton}
         >
           {busy ? dict.ideasGenerating : dict.ideasGenerate}
         </button>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { primaryButton } from '@/components/fields';
 import { t } from '@/lib/i18n';
 import type { Language, ProviderId, RedactedSettings } from '@/lib/schema';
 
@@ -99,7 +100,7 @@ export function SetupForm({ initial }: Props) {
         type="button"
         onClick={save}
         disabled={busy}
-        className="rounded bg-neutral-100 px-4 py-2 font-medium text-neutral-900 disabled:opacity-50"
+        className={primaryButton}
       >
         {dict.setupSave}
       </button>

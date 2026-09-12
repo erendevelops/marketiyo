@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { secondaryButton, subtleButton, tinyButton } from '@/components/fields';
 import Link from 'next/link';
 import type { Dictionary } from '@/lib/i18n';
 import { ideaStatusLabel, rejectionReasonLabel } from '@/lib/i18n/labels';
@@ -52,7 +53,7 @@ export function IdeaCard({ idea, dict, onUpdate }: Props) {
               <button
                 key={reason}
                 type="button"
-                className="rounded border border-neutral-700 px-2 py-1 text-xs text-neutral-300 hover:text-neutral-100"
+                className={tinyButton}
                 onClick={() => {
                   setAsking(false);
                   onUpdate(idea.id, { status: 'rejected', rejectionReason: reason });
@@ -67,21 +68,21 @@ export function IdeaCard({ idea, dict, onUpdate }: Props) {
         <div className="mt-auto flex flex-wrap gap-2">
           <button
             type="button"
-            className="rounded border border-neutral-700 px-3 py-1 text-sm hover:border-neutral-500"
+            className={secondaryButton}
             onClick={() => onUpdate(idea.id, { status: 'kept' })}
           >
             {dict.ideasKeep}
           </button>
           <button
             type="button"
-            className="rounded border border-neutral-800 px-3 py-1 text-sm text-neutral-400 hover:text-neutral-200"
+            className={subtleButton}
             onClick={() => setAsking(true)}
           >
             {dict.ideasReject}
           </button>
           <Link
             href={`/ideas/${idea.id}`}
-            className="rounded border border-neutral-700 px-3 py-1 text-sm hover:border-neutral-500"
+            className={secondaryButton}
           >
             {dict.ideasExpand}
           </Link>

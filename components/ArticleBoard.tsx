@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
-import { Field, inputClass } from '@/components/fields';
+import { Field, inputClass, primaryButton, secondaryButton, subtleButton } from '@/components/fields';
 import { t } from '@/lib/i18n';
 import { funnelStageLabel, searchIntentLabel } from '@/lib/i18n/labels';
 import type { Article, ArticleStatus, Language } from '@/lib/schema';
@@ -22,7 +22,6 @@ export function ArticleBoard({ initial, language }: Props) {
   const dict = t(language);
 
   const [articles, setArticles] = useState<Article[]>(initial);
-  const [topic, setTopic] = useState('');
   const [count, setCount] = useState(8);
   const [filterStatus, setFilterStatus] = useState<ArticleStatus | 'all'>('new');
   const [busy, setBusy] = useState(false);
@@ -46,7 +45,7 @@ export function ArticleBoard({ initial, language }: Props) {
 
     const response = await fetch('/api/articles/generate', {
       method: 'POST',
-      body: JSON.stringify({ count, topic }),
+      body: JSON.stringify({ count }),
     });
     const body = await response.json();
 
@@ -87,9 +86,7 @@ export function ArticleBoard({ initial, language }: Props) {
       <p className="mb-8 text-sm text-neutral-500">{dict.seoIntro}</p>
 
       <section className="mb-8 rounded border border-neutral-800 p-5">
-        <h2 className="mb-4 text-sm font-semibold text-neutral-200">{dict.seoFormTitle}</h2>
-
-        <div className="mb-5 flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <input
             type="number"
             min={1}
@@ -100,35 +97,15 @@ export function ArticleBoard({ initial, language }: Props) {
             onChange={(event) => setCount(Number(event.target.value))}
           />
           <span className="text-sm text-neutral-300">{dict.seoCountSuffix}</span>
-        </div>
 
-        <div className="mb-5">
-          <Field label={dict.seoTopicLabel} hint={dict.seoTopicHint}>
-            <input
-              className={inputClass}
-              placeholder={dict.seoTopicPlaceholder}
-              value={topic}
-              onChange={(event) => setTopic(event.target.value)}
-            />
-          </Field>
-        </div>
-
-        <div className="flex flex-wrap items-center gap-3">
-          <button
-            type="button"
-            onClick={generate}
-            disabled={busy}
-            className="rounded bg-neutral-100 px-4 py-2 font-medium text-neutral-900 disabled:opacity-50"
-          >
+          <button type="button" onClick={generate} disabled={busy} className={primaryButton}>
             {busy ? dict.seoGenerating : dict.seoGenerate}
           </button>
-
-          {message ? (
-            <p className="text-sm text-neutral-400">{message}</p>
-          ) : (
-            <p className="text-xs text-neutral-600">{dict.seoRepeatNote}</p>
-          )}
         </div>
+
+        <p className="mt-3 text-xs text-neutral-600">
+          {message ?? dict.seoRepeatNote}
+        </p>
       </section>
 
       <div className="mb-6 w-44">
@@ -184,21 +161,21 @@ export function ArticleBoard({ initial, language }: Props) {
               <div className="flex flex-wrap gap-2">
                 <button
                   type="button"
-                  className="rounded border border-neutral-700 px-3 py-1 text-sm"
+                  className={secondaryButton}
                   onClick={() => update(article.id, 'kept')}
                 >
                   {dict.seoKeep}
                 </button>
                 <button
                   type="button"
-                  className="rounded border border-neutral-800 px-3 py-1 text-sm text-neutral-400"
+                  className={subtleButton}
                   onClick={() => update(article.id, 'rejected')}
                 >
                   {dict.seoReject}
                 </button>
                 <Link
                   href={`/seo/${article.id}`}
-                  className="rounded border border-neutral-700 px-3 py-1 text-sm"
+                  className={secondaryButton}
                 >
                   {dict.seoOpen}
                 </Link>

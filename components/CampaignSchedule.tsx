@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { Field, inputClass } from '@/components/fields';
+import { Field, inputClass, secondaryButton } from '@/components/fields';
 import { t } from '@/lib/i18n';
 import { campaignEndDate } from '@/lib/calendar/flights';
 import type { Campaign, Language } from '@/lib/schema';
@@ -63,7 +63,7 @@ export function CampaignSchedule({
           type="button"
           onClick={save}
           disabled={busy}
-          className="mb-0.5 rounded border border-neutral-700 px-4 py-2 text-sm disabled:opacity-40"
+          className={`${secondaryButton} mb-0.5 px-4 py-2`}
         >
           {dict.adsSaveDate}
         </button>

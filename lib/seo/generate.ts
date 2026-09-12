@@ -15,7 +15,6 @@ export type GenerateArticlesInput = {
   store: Store;
   provider: Provider;
   count: number;
-  topic?: string;
 };
 
 export type GenerateArticlesResult = {
@@ -35,7 +34,6 @@ export async function generateArticles(
   const prompt = composeArticleBatchPrompt({
     brand,
     count: input.count,
-    topic: input.topic ?? '',
     existingTitles: existing.map((article) => article.title),
   });
 

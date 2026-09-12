@@ -50,7 +50,6 @@ const batchContract = `{
 export type ArticleBatchInput = {
   brand: BrandProfile;
   count: number;
-  topic: string;
   existingTitles: string[];
 };
 
@@ -66,10 +65,6 @@ export function composeArticleBatchPrompt(input: ArticleBatchInput): string {
     '## KANAL KURALLARI',
     loadSeoCard(language),
   ];
-
-  if (input.topic.trim()) {
-    sections.push('', '## ODAK', `Bu konu alanına odaklan: ${input.topic.trim()}`);
-  }
 
   const titles = input.existingTitles.slice(-MAX_TITLES).reverse();
   if (titles.length) {

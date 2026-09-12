@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { inputClass } from '@/components/fields';
+import { inputClass, primaryButton, secondaryButton } from '@/components/fields';
 import { t } from '@/lib/i18n';
 import { funnelStageLabel, searchIntentLabel } from '@/lib/i18n/labels';
 import type { Article, Language } from '@/lib/schema';
@@ -47,7 +47,7 @@ export function ArticleDraftEditor({ article, initialMarkdown, language }: Props
 
   return (
     <main className="mx-auto max-w-3xl p-8">
-      <Link href="/seo" className="mb-6 inline-block text-sm text-neutral-400">
+      <Link href="/seo" className="mb-6 inline-block text-sm text-neutral-400 transition-colors hover:text-neutral-100">
         {dict.seoBackToList}
       </Link>
 
@@ -70,7 +70,7 @@ export function ArticleDraftEditor({ article, initialMarkdown, language }: Props
           type="button"
           onClick={generate}
           disabled={busy}
-          className="rounded bg-neutral-100 px-4 py-2 font-medium text-neutral-900 disabled:opacity-50"
+          className={primaryButton}
         >
           {busy
             ? dict.seoGenerating
@@ -82,7 +82,7 @@ export function ArticleDraftEditor({ article, initialMarkdown, language }: Props
           type="button"
           onClick={save}
           disabled={busy || markdown.length === 0}
-          className="rounded border border-neutral-700 px-4 py-2 disabled:opacity-40"
+          className={`${secondaryButton} px-4 py-2`}
         >
           {dict.seoDraftSave}
         </button>

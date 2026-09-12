@@ -174,10 +174,6 @@ export const tr = {
     'Ürününün gerçekten otorite kurabileceği yazı konuları. Arama hacmi veya zorluk puanı üretilmez, o veriye erişim yok.',
   seoFormTitle: 'Yeni konular üret',
   seoCountSuffix: 'adet yazı konusu üret',
-  seoTopicLabel: 'Belirli bir konu alanı var mı?',
-  seoTopicHint:
-    'Boş bırakırsan marka profiline bakıp konuyu kendisi seçer. Doldurursan bütün konular bu alanın içinden çıkar.',
-  seoTopicPlaceholder: 'Örnek: yapay zeka ile içerik üretimi',
   seoRepeatNote: 'Daha önce ürettiğin başlıklar tekrar edilmez.',
   seoCount: 'Adet',
   seoGenerate: 'Konuları üret',

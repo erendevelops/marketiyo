@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Field, Section, StringList, inputClass } from '@/components/fields';
+import { Field, Section, StringList, inputClass, primaryButton, secondaryButton, subtleButton } from '@/components/fields';
 import { t } from '@/lib/i18n';
 import { platformLabel } from '@/lib/i18n/labels';
 import type { BrandProfile, Language, Platform } from '@/lib/schema';
@@ -87,7 +87,7 @@ export function BrandForm({ initial, language }: Props) {
           type="button"
           disabled={busy || description.trim().length < 20}
           onClick={draft}
-          className="mt-2 rounded border border-neutral-700 px-3 py-1 text-sm text-neutral-200 disabled:opacity-40"
+          className={`${secondaryButton} mt-2`}
         >
           {dict.brandDraftAction}
         </button>
@@ -142,7 +142,7 @@ export function BrandForm({ initial, language }: Props) {
               {profile.audiences.length > 1 && (
                 <button
                   type="button"
-                  className="justify-self-start rounded border border-neutral-700 px-3 py-1 text-sm text-neutral-400"
+                  className={`${subtleButton} justify-self-start`}
                   onClick={() =>
                     patch({ audiences: profile.audiences.filter((_, i) => i !== index) })
                   }
@@ -154,7 +154,7 @@ export function BrandForm({ initial, language }: Props) {
           ))}
           <button
             type="button"
-            className="rounded border border-neutral-700 px-3 py-1 text-sm text-neutral-300"
+            className={secondaryButton}
             onClick={() =>
               patch({
                 audiences: [
@@ -241,7 +241,7 @@ export function BrandForm({ initial, language }: Props) {
         type="button"
         onClick={save}
         disabled={busy}
-        className="rounded bg-neutral-100 px-4 py-2 font-medium text-neutral-900 disabled:opacity-50"
+        className={primaryButton}
       >
         {dict.brandSave}
       </button>

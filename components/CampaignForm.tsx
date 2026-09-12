@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { Field, Section, inputClass } from '@/components/fields';
+import { Field, Section, inputClass, primaryButton } from '@/components/fields';
 import { t } from '@/lib/i18n';
 import { adNetworkLabel, campaignObjectiveLabel } from '@/lib/i18n/labels';
 import type {
@@ -189,7 +189,7 @@ export function CampaignForm({ brand, language, onCreated }: Props) {
           type="button"
           onClick={submit}
           disabled={busy || !ready}
-          className="rounded bg-neutral-100 px-4 py-2 font-medium text-neutral-900 disabled:opacity-50"
+          className={primaryButton}
         >
           {busy ? dict.adsGenerating : dict.adsGenerate}
         </button>

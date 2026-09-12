@@ -3,7 +3,7 @@
 import Link from 'next/link';
 
 import { useMemo, useState } from 'react';
-import { Field, inputClass } from '@/components/fields';
+import { Field, inputClass, secondaryButton, tinyButton } from '@/components/fields';
 import { t } from '@/lib/i18n';
 import { platformLabel, slotStatusLabel } from '@/lib/i18n/labels';
 import { proposeFill } from '@/lib/calendar/plan';
@@ -141,7 +141,7 @@ export function CalendarGrid({ initialSlots, ideas, campaigns, language }: Props
           <button
             type="button"
             aria-label={dict.calendarPrevWeek}
-            className="rounded border border-neutral-700 px-3 py-1 text-sm"
+            className={secondaryButton}
             onClick={() => shiftWeek(-1)}
           >
             &larr;
@@ -152,7 +152,7 @@ export function CalendarGrid({ initialSlots, ideas, campaigns, language }: Props
           <button
             type="button"
             aria-label={dict.calendarNextWeek}
-            className="rounded border border-neutral-700 px-3 py-1 text-sm"
+            className={secondaryButton}
             onClick={() => shiftWeek(1)}
           >
             &rarr;
@@ -179,7 +179,7 @@ export function CalendarGrid({ initialSlots, ideas, campaigns, language }: Props
           type="button"
           onClick={propose}
           disabled={busy}
-          className="mb-0.5 rounded border border-neutral-700 px-3 py-2 text-sm disabled:opacity-40"
+          className={`${secondaryButton} mb-0.5 py-2`}
         >
           {dict.calendarPropose}
         </button>
@@ -239,7 +239,7 @@ export function CalendarGrid({ initialSlots, ideas, campaigns, language }: Props
                       <div className="flex flex-wrap gap-1">
                         <button
                           type="button"
-                          className="rounded border border-neutral-800 px-2 py-0.5 text-xs text-neutral-400"
+                          className={tinyButton}
                           onClick={() => cycleStatus(slot.id)}
                         >
                           {slotStatusLabel(dict, slot.status)}
@@ -247,7 +247,7 @@ export function CalendarGrid({ initialSlots, ideas, campaigns, language }: Props
                         {slot.ideaId && (
                           <button
                             type="button"
-                            className="rounded border border-neutral-800 px-2 py-0.5 text-xs text-neutral-400"
+                            className={tinyButton}
                             onClick={() => clearSlot(slot.id)}
                           >
                             {dict.calendarClear}
@@ -260,7 +260,7 @@ export function CalendarGrid({ initialSlots, ideas, campaigns, language }: Props
 
               <button
                 type="button"
-                className="mt-2 w-full rounded border border-dashed border-neutral-800 py-1 text-xs text-neutral-500 hover:text-neutral-300"
+                className="mt-2 w-full rounded border border-dashed border-neutral-800 py-1 text-xs text-neutral-500 transition-colors hover:border-neutral-600 hover:bg-neutral-900 hover:text-neutral-200"
                 onClick={() => addSlot(key)}
               >
                 {dict.calendarAddSlot}
