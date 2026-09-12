@@ -63,7 +63,7 @@ export function ExpansionEditor({ idea, initialMarkdown, language }: Props) {
           className={primaryButton}
         >
           {running === 'generate' ? (
-            <Busy label={dict.ideasGenerating} />
+            <Busy label={dict.ideasGenerating} showElapsed />
           ) : markdown.length ? (
             dict.expansionRegenerate
           ) : (

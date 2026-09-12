@@ -117,7 +117,7 @@ export function IdeaBoard({ initial, language, activePlatforms }: Props) {
           disabled={busy}
           className={primaryButton}
         >
-          {busy ? <Busy label={dict.ideasGenerating} /> : dict.ideasGenerate}
+          {busy ? <Busy label={dict.ideasGenerating} showElapsed /> : dict.ideasGenerate}
         </button>
 
         {message && <p className="text-sm text-neutral-400">{message}</p>}

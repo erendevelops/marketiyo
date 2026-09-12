@@ -75,7 +75,7 @@ export function ArticleDraftEditor({ article, initialMarkdown, language }: Props
           className={primaryButton}
         >
           {running === 'generate' ? (
-            <Busy label={dict.seoGenerating} />
+            <Busy label={dict.seoGenerating} showElapsed />
           ) : markdown.length ? (
             dict.seoDraftRegenerate
           ) : (

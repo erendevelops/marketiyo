@@ -7,7 +7,6 @@ import type {
   IdeaStatus,
   Platform,
   RejectionReason,
-  SlotStatus,
 } from '@/lib/schema';
 
 /**
@@ -48,15 +47,6 @@ export function rejectionReasonLabel(dict: Dictionary, reason: RejectionReason):
   return map[reason];
 }
 
-export function slotStatusLabel(dict: Dictionary, status: SlotStatus): string {
-  const map: Record<SlotStatus, string> = {
-    planned: dict.slotPlanned,
-    ready: dict.slotReady,
-    posted: dict.slotPosted,
-    skipped: dict.slotSkipped,
-  };
-  return map[status];
-}
 
 export function adNetworkLabel(dict: Dictionary, network: AdNetwork): string {
   const map: Record<AdNetwork, string> = {

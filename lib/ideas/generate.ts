@@ -23,6 +23,8 @@ export type GenerateIdeasInput = {
 export type GenerateIdeasResult = {
   ideas: Idea[];
   discarded: number;
+  /** Why each discarded item failed, so a silent zero is never a mystery. */
+  discardReasons: string[];
 };
 
 /**
@@ -53,17 +55,24 @@ export async function generateIdeas(input: GenerateIdeasInput): Promise<Generate
   const createdAt = new Date().toISOString();
 
   let discarded = 0;
+  const discardReasons: string[] = [];
   const ideas: Idea[] = [];
 
   for (const candidate of result.data.ideas) {
     const generated = generatedIdeaSchema.safeParse(candidate);
     if (!generated.success) {
       discarded += 1;
+      discardReasons.push(
+        generated.error.issues
+          .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+          .join('; '),
+      );
       continue;
     }
 
     const idea = ideaSchema.safeParse({
       ...generated.data,
+      platform: input.platform,
       id: randomUUID(),
       createdAt,
       batchId,
@@ -72,12 +81,19 @@ export async function generateIdeas(input: GenerateIdeasInput): Promise<Generate
     });
     if (!idea.success) {
       discarded += 1;
+      discardReasons.push(
+        idea.error.issues.map((issue) => `${issue.path.join('.')}: ${issue.message}`).join('; '),
+      );
       continue;
     }
 
     ideas.push(idea.data);
   }
 
+  if (discardReasons.length) {
+    console.warn('[marketiyo] discarded ideas:', discardReasons.join(' | '));
+  }
+
   if (ideas.length) await input.store.appendIdeas(ideas);
-  return { ideas, discarded };
+  return { ideas, discarded, discardReasons };
 }

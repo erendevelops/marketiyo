@@ -122,6 +122,39 @@ describe('generateIdeas', () => {
     expect(prompts[0]).toContain('Bir kanca');
   });
 
+  it('ignores a platform label the model volunteers and stamps the chosen one', async () => {
+    const store = createStore(root);
+    await store.writeBrand(brand);
+
+    // The reported failure: the model echoed the card heading into the enum field.
+    const withLabel = { ...good, platform: 'TikTok/Reels/Shorts' };
+    const provider = createStubProvider([JSON.stringify({ ideas: [withLabel] })]);
+
+    const result = await generateIdeas({
+      store,
+      provider,
+      platform: 'short-video',
+      count: 1,
+      angles: [],
+    });
+
+    expect(result.discarded).toBe(0);
+    expect(result.ideas).toHaveLength(1);
+    expect(result.ideas[0].platform).toBe('short-video');
+  });
+
+  it('reports why an item was discarded instead of failing silently', async () => {
+    const store = createStore(root);
+    await store.writeBrand(brand);
+    const provider = createStubProvider([JSON.stringify({ ideas: [{ ...good, angle: 'nonsense' }] })]);
+
+    const result = await generateIdeas({ store, provider, platform: 'x', count: 1, angles: [] });
+
+    expect(result.discarded).toBe(1);
+    expect(result.discardReasons).toHaveLength(1);
+    expect(result.discardReasons[0]).toContain('angle');
+  });
+
   it('writes nothing when every item is invalid', async () => {
     const store = createStore(root);
     await store.writeBrand(brand);

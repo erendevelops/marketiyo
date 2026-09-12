@@ -100,7 +100,7 @@ export function ArticleBoard({ initial, language }: Props) {
           <span className="text-sm text-neutral-300">{dict.seoCountSuffix}</span>
 
           <button type="button" onClick={generate} disabled={busy} className={primaryButton}>
-            {busy ? <Busy label={dict.seoGenerating} /> : dict.seoGenerate}
+            {busy ? <Busy label={dict.seoGenerating} showElapsed /> : dict.seoGenerate}
           </button>
         </div>
 

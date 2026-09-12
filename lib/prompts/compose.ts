@@ -8,7 +8,6 @@ const MAX_REJECTIONS = 40;
 const outputContract = `{
   "ideas": [
     {
-      "platform": "<platform>",
       "format": "<platform kartındaki formatlardan biri>",
       "angle": "education | proof | contrarian | story | offer",
       "hook": "<tek cümle>",

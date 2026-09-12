@@ -193,7 +193,7 @@ export function CampaignForm({ brand, language, onCreated }: Props) {
           disabled={busy || !ready}
           className={primaryButton}
         >
-          {busy ? <Busy label={dict.adsGenerating} /> : dict.adsGenerate}
+          {busy ? <Busy label={dict.adsGenerating} showElapsed /> : dict.adsGenerate}
         </button>
 
         {error && <p className="text-sm text-amber-400">{error}</p>}

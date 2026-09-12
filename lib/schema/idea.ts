@@ -17,9 +17,12 @@ export const rejectionReasonSchema = z.enum([
 ]);
 export type RejectionReason = z.infer<typeof rejectionReasonSchema>;
 
-/** The shape the model returns. No identifiers, no status: the app assigns those. */
+/**
+ * The shape the model returns. No identifiers, no status, and no platform:
+ * the app assigns all three. Asking the model to echo back a value the user
+ * already chose only creates a way for the batch to fail.
+ */
 export const generatedIdeaSchema = z.object({
-  platform: platformSchema,
   format: z.string().min(1),
   angle: angleSchema,
   hook: z.string().min(1).max(300),
@@ -42,6 +45,7 @@ export const ideaBatchResponseSchema = z.object({
 export type IdeaBatchResponse = z.infer<typeof ideaBatchResponseSchema>;
 
 export const ideaSchema = generatedIdeaSchema.extend({
+  platform: platformSchema,
   id: z.string().min(1),
   createdAt: z.string().datetime(),
   batchId: z.string().min(1),

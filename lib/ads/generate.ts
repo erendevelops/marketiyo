@@ -25,6 +25,8 @@ export type GenerateCampaignInput = {
 export type GenerateCampaignResult = {
   campaign: Campaign;
   discarded: number;
+  /** Why each discarded ad set failed, so a short plan is never a mystery. */
+  discardReasons: string[];
 };
 
 /**
@@ -77,19 +79,31 @@ export async function generateCampaign(
   if (!result.ok) throw new Error(result.error.message);
 
   let discarded = 0;
+  const discardReasons: string[] = [];
   const accepted: (typeof generatedAdSetSchema)['_output'][] = [];
 
   for (const candidate of result.data.adSets) {
     const parsed = generatedAdSetSchema.safeParse(candidate);
     if (!parsed.success) {
       discarded += 1;
+      discardReasons.push(
+        parsed.error.issues
+          .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+          .join('; '),
+      );
       continue;
     }
     accepted.push(parsed.data);
   }
 
+  if (discardReasons.length) {
+    console.warn('[marketiyo] discarded ad sets:', discardReasons.join(' | '));
+  }
+
   if (accepted.length === 0) {
-    throw new Error('Geçerli hiçbir reklam seti üretilemedi. Tekrar dene.');
+    throw new Error(
+      `Geçerli hiçbir reklam seti üretilemedi. Sebep: ${discardReasons[0] ?? 'bilinmiyor'}`,
+    );
   }
 
   const budgets = distributeBudget(
@@ -116,7 +130,7 @@ export async function generateCampaign(
   await input.store.appendCampaign(campaign);
   await input.store.writeCampaignDoc(campaign.id, renderCampaignDoc(campaign));
 
-  return { campaign, discarded };
+  return { campaign, discarded, discardReasons };
 }
 
 /** A readable copy of the plan, so it can be edited or exported outside the app. */
