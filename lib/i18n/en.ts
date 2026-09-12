@@ -27,6 +27,7 @@ export const en: Dictionary = {
   brandDraftHint:
     'Paste a description of your product and we will fill in the fields below. You can correct them afterwards.',
   brandDraftAction: 'Draft it for me',
+  brandDrafting: 'Drafting, this can take about half a minute',
 
   brandBasics: 'The basics',
   brandProductName: 'Product name',

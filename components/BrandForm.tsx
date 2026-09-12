@@ -89,7 +89,7 @@ export function BrandForm({ initial, language }: Props) {
           onClick={draft}
           className={`${secondaryButton} mt-2`}
         >
-          {dict.brandDraftAction}
+          {busy ? dict.brandDrafting : dict.brandDraftAction}
         </button>
       </Section>
 

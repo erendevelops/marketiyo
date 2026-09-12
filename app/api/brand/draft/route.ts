@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { getProvider, runWithRepair } from '@/lib/providers';
-import { loadTemplate } from '@/lib/prompts/load';
+import { composeBrandDraftPrompt } from '@/lib/prompts/brand-draft';
 import { languageSchema } from '@/lib/schema';
 import { getStore } from '@/lib/server/store';
 
@@ -23,20 +23,7 @@ export async function POST(request: Request) {
   }
 
   const settings = await getStore().readSettings();
-  const prompt = [
-    loadTemplate('brand-draft', parsed.data.language),
-    '',
-    '## URUN ACIKLAMASI',
-    parsed.data.text,
-    '',
-    '## CIKTI',
-    'Sadece gecerli JSON dondur. Su alanlari doldur:',
-    'productName, oneLiner, category, audiences[{label,pain,desire,whereTheyHangOut}],',
-    'offers[{label,cta,url}], voice{do[],dont[],referenceExamples[]}, proof[],',
-    'competitors[{name,positioning,whatWeDoDifferently}], bannedClaims[],',
-    `outputLanguage: "${parsed.data.language}", platforms[], updatedAt: ISO tarih.`,
-    'Bilmedigin alanlari bos dizi veya bos metin birak.',
-  ].join('\n');
+  const prompt = composeBrandDraftPrompt(parsed.data);
 
   const result = await runWithRepair(getProvider(settings), { prompt, schemaName: 'brandProfile' });
   if (!result.ok) {

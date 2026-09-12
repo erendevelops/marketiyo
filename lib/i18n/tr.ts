@@ -26,6 +26,7 @@ export const tr = {
   brandDraftHint:
     'Ürününü tarif eden bir metni buraya yapıştır, aşağıdaki alanları senin için dolduralım. Sonra düzeltirsin.',
   brandDraftAction: 'Taslağı oluştur',
+  brandDrafting: 'Taslak çıkarılıyor, yarım dakika kadar sürebilir',
 
   brandBasics: 'Temel bilgiler',
   brandProductName: 'Ürün adı',
