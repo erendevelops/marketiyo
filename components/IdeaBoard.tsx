@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { IdeaCard } from '@/components/IdeaCard';
-import { Field, inputClass, numberInputClass, primaryButton } from '@/components/fields';
+import { Field, inputClass, numberInputClass, primaryButton, selectClass } from '@/components/fields';
 import { t } from '@/lib/i18n';
 import { ideaStatusLabel, platformLabel } from '@/lib/i18n/labels';
 import type { Idea, IdeaStatus, Language, Platform } from '@/lib/schema';
@@ -86,7 +86,7 @@ export function IdeaBoard({ initial, language, activePlatforms }: Props) {
         <div className="w-48">
           <Field label={dict.ideasPlatform}>
             <select
-              className={inputClass}
+              className={selectClass}
               value={platform}
               onChange={(event) => setPlatform(event.target.value as Platform)}
             >
@@ -126,7 +126,7 @@ export function IdeaBoard({ initial, language, activePlatforms }: Props) {
         <div className="w-44">
           <Field label={dict.ideasFilterPlatform}>
             <select
-              className={inputClass}
+              className={selectClass}
               value={filterPlatform}
               onChange={(event) => setFilterPlatform(event.target.value as Platform | 'all')}
             >
@@ -143,7 +143,7 @@ export function IdeaBoard({ initial, language, activePlatforms }: Props) {
         <div className="w-44">
           <Field label={dict.ideasFilterStatus}>
             <select
-              className={inputClass}
+              className={selectClass}
               value={filterStatus}
               onChange={(event) => setFilterStatus(event.target.value as IdeaStatus | 'all')}
             >

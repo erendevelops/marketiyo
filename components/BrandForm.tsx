@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Field, Section, StringList, inputClass, primaryButton, secondaryButton, subtleButton } from '@/components/fields';
+import { Field, Section, StringList, checkClass, checkLabelClass, inputClass, primaryButton, secondaryButton, selectClass, subtleButton } from '@/components/fields';
 import { t } from '@/lib/i18n';
 import { platformLabel } from '@/lib/i18n/labels';
 import type { BrandProfile, Language, Platform } from '@/lib/schema';
@@ -208,9 +208,10 @@ export function BrandForm({ initial, language }: Props) {
       <Section title={dict.brandPlatforms}>
         <div className="flex flex-wrap gap-4">
           {PLATFORMS.map((platform) => (
-            <label key={platform} className="flex items-center gap-2 text-sm">
+            <label key={platform} className={checkLabelClass}>
               <input
                 type="checkbox"
+                className={checkClass}
                 checked={profile.platforms.includes(platform)}
                 onChange={(event) =>
                   patch({
@@ -228,7 +229,7 @@ export function BrandForm({ initial, language }: Props) {
 
       <Section title={dict.brandOutputLanguage}>
         <select
-          className={`${inputClass} w-auto`}
+          className={`${selectClass} w-auto`}
           value={profile.outputLanguage}
           onChange={(event) => patch({ outputLanguage: event.target.value as Language })}
         >

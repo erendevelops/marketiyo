@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { Field, Section, inputClass, primaryButton } from '@/components/fields';
+import { Field, Section, checkClass, checkLabelClass, inputClass, primaryButton, selectClass } from '@/components/fields';
 import { t } from '@/lib/i18n';
 import { adNetworkLabel, campaignObjectiveLabel } from '@/lib/i18n/labels';
 import type {
@@ -92,7 +92,7 @@ export function CampaignForm({ brand, language, onCreated }: Props) {
         <div className="grid gap-4 sm:grid-cols-2">
           <Field label={dict.adsObjective}>
             <select
-              className={inputClass}
+              className={selectClass}
               value={objective}
               onChange={(event) => setObjective(event.target.value as CampaignObjective)}
             >
@@ -107,7 +107,7 @@ export function CampaignForm({ brand, language, onCreated }: Props) {
           <Field label={dict.adsAudience}>
             {brand && brand.audiences.length > 0 ? (
               <select
-                className={inputClass}
+                className={selectClass}
                 value={audienceRef}
                 onChange={(event) => setAudienceRef(event.target.value)}
               >
@@ -130,9 +130,10 @@ export function CampaignForm({ brand, language, onCreated }: Props) {
         <Field label={dict.adsNetworks}>
           <div className="flex flex-wrap gap-4 pt-1">
             {NETWORKS.map((network) => (
-              <label key={network} className="flex items-center gap-2 text-sm">
+              <label key={network} className={checkLabelClass}>
                 <input
                   type="checkbox"
+                className={checkClass}
                   checked={networks.includes(network)}
                   onChange={(event) =>
                     setNetworks((current) =>

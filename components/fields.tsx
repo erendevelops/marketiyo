@@ -4,25 +4,35 @@ import type { ReactNode } from 'react';
 
 /** One set of button styles, so hover and disabled behave the same everywhere. */
 export const primaryButton =
-  'rounded bg-neutral-100 px-4 py-2 font-medium text-neutral-900 transition-colors hover:bg-white disabled:opacity-50 disabled:hover:bg-neutral-100';
+  'cursor-pointer rounded bg-neutral-100 px-4 py-2 font-medium text-neutral-900 transition-colors hover:bg-neutral-300 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-neutral-100';
 
 export const secondaryButton =
-  'rounded border border-neutral-700 px-3 py-1 text-sm text-neutral-200 transition-colors hover:border-neutral-500 hover:bg-neutral-900 hover:text-neutral-50 disabled:opacity-40 disabled:hover:border-neutral-700 disabled:hover:bg-transparent';
+  'cursor-pointer rounded border border-neutral-700 px-3 py-1 text-sm text-neutral-200 transition-colors hover:border-neutral-400 hover:bg-neutral-800 hover:text-white disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-neutral-700 disabled:hover:bg-transparent';
 
 export const subtleButton =
-  'rounded border border-neutral-800 px-3 py-1 text-sm text-neutral-400 transition-colors hover:border-neutral-600 hover:bg-neutral-900 hover:text-neutral-100 disabled:opacity-40';
+  'cursor-pointer rounded border border-neutral-800 px-3 py-1 text-sm text-neutral-400 transition-colors hover:border-neutral-500 hover:bg-neutral-800 hover:text-white disabled:cursor-not-allowed disabled:opacity-40';
 
 export const tinyButton =
-  'rounded border border-neutral-800 px-2 py-0.5 text-xs text-neutral-400 transition-colors hover:border-neutral-600 hover:bg-neutral-800 hover:text-neutral-100';
+  'cursor-pointer rounded border border-neutral-800 px-2 py-0.5 text-xs text-neutral-400 transition-colors hover:border-neutral-500 hover:bg-neutral-700 hover:text-white';
 
 export const linkButton =
-  'text-xs text-neutral-500 transition-colors hover:text-neutral-100';
+  'cursor-pointer text-xs text-neutral-500 underline-offset-2 transition-colors hover:text-white hover:underline';
 
 export const numberInputClass =
-  'w-14 rounded border border-neutral-700 bg-neutral-900 px-1.5 py-1 text-center text-sm text-neutral-100';
+  'w-14 rounded border border-neutral-700 bg-neutral-900 px-1.5 py-1 text-center text-sm text-neutral-100 transition-colors hover:border-neutral-500 focus:border-neutral-400 focus:outline-none';
 
 export const inputClass =
-  'w-full rounded border border-neutral-700 bg-neutral-900 p-2 text-neutral-100 placeholder:text-neutral-600';
+  'w-full rounded border border-neutral-700 bg-neutral-900 p-2 text-neutral-100 transition-colors placeholder:text-neutral-600 hover:border-neutral-500 focus:border-neutral-400 focus:outline-none';
+
+/** Checkboxes and radios, plus the label that wraps them. */
+export const checkClass = 'cursor-pointer accent-neutral-200';
+
+export const checkLabelClass =
+  'flex cursor-pointer items-center gap-2 text-sm text-neutral-300 transition-colors hover:text-white';
+
+/** Selects need the pointer cursor and the same feedback as buttons. */
+export const selectClass =
+  'w-full cursor-pointer rounded border border-neutral-700 bg-neutral-900 p-2 text-neutral-100 transition-colors hover:border-neutral-400 hover:bg-neutral-800 focus:border-neutral-400 focus:outline-none';
 
 export function Field({
   label,

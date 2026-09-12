@@ -3,7 +3,7 @@
 import Link from 'next/link';
 
 import { useMemo, useState } from 'react';
-import { Field, inputClass, secondaryButton, subtleButton, tinyButton } from '@/components/fields';
+import { Field, inputClass, secondaryButton, selectClass, subtleButton, tinyButton } from '@/components/fields';
 import { t } from '@/lib/i18n';
 import { platformLabel, slotStatusLabel } from '@/lib/i18n/labels';
 import { proposeFill } from '@/lib/calendar/plan';
@@ -194,7 +194,7 @@ export function CalendarGrid({ initialSlots, ideas, campaigns, language }: Props
         <div className="w-44">
           <Field label={dict.ideasPlatform}>
             <select
-              className={inputClass}
+              className={selectClass}
               value={platform}
               onChange={(event) => setPlatform(event.target.value as Platform)}
             >

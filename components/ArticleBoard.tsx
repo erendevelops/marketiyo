@@ -2,14 +2,7 @@
 
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
-import {
-  Field,
-  inputClass,
-  numberInputClass,
-  primaryButton,
-  secondaryButton,
-  subtleButton,
-} from '@/components/fields';
+import { Field, inputClass, numberInputClass, primaryButton, secondaryButton, selectClass, subtleButton } from '@/components/fields';
 import { t } from '@/lib/i18n';
 import { funnelStageLabel, searchIntentLabel } from '@/lib/i18n/labels';
 import type { Article, ArticleStatus, Language } from '@/lib/schema';
@@ -118,7 +111,7 @@ export function ArticleBoard({ initial, language }: Props) {
       <div className="mb-6 w-44">
         <Field label={dict.ideasFilterStatus}>
           <select
-            className={inputClass}
+            className={selectClass}
             value={filterStatus}
             onChange={(event) => setFilterStatus(event.target.value as ArticleStatus | 'all')}
           >

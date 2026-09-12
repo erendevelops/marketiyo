@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { primaryButton } from '@/components/fields';
+import { checkClass, inputClass, primaryButton, selectClass } from '@/components/fields';
 import { t } from '@/lib/i18n';
 import type { Language, ProviderId, RedactedSettings } from '@/lib/schema';
 
@@ -44,7 +44,7 @@ export function SetupForm({ initial }: Props) {
         <h1 className="text-2xl font-semibold">{dict.setupTitle}</h1>
         <select
           aria-label={dict.brandOutputLanguage}
-          className="rounded border border-neutral-700 bg-neutral-900 px-2 py-1 text-sm"
+          className={`${selectClass} w-auto px-2 py-1 text-sm`}
           value={language}
           onChange={(event) => setLanguage(event.target.value as Language)}
         >
@@ -56,10 +56,11 @@ export function SetupForm({ initial }: Props) {
       <fieldset className="mb-6 space-y-4">
         <legend className="mb-2 text-sm text-neutral-400">{dict.setupEngine}</legend>
 
-        <label className="block rounded border border-neutral-800 p-4">
+        <label className="block cursor-pointer rounded border border-neutral-800 p-4 transition-colors hover:border-neutral-600 hover:bg-neutral-900/40">
           <span className="flex items-center gap-2 font-medium">
             <input
               type="radio"
+              className={checkClass}
               name="engine"
               checked={providerId === 'claude-code'}
               onChange={() => setProviderId('claude-code')}
@@ -71,10 +72,11 @@ export function SetupForm({ initial }: Props) {
           </span>
         </label>
 
-        <label className="block rounded border border-neutral-800 p-4">
+        <label className="block cursor-pointer rounded border border-neutral-800 p-4 transition-colors hover:border-neutral-600 hover:bg-neutral-900/40">
           <span className="flex items-center gap-2 font-medium">
             <input
               type="radio"
+              className={checkClass}
               name="engine"
               checked={providerId === 'gemini'}
               onChange={() => setProviderId('gemini')}
@@ -87,7 +89,7 @@ export function SetupForm({ initial }: Props) {
             <input
               type="password"
               aria-label={dict.setupGemini}
-              className="mt-3 w-full rounded border border-neutral-700 bg-neutral-900 p-2"
+              className={`${inputClass} mt-3`}
               placeholder={initial.hasGeminiKey ? '********' : 'AIza...'}
               value={geminiApiKey}
               onChange={(event) => setGeminiApiKey(event.target.value)}
