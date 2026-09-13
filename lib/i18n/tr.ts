@@ -8,6 +8,8 @@ export const tr = {
   dashNextStep: 'Sıradaki adım',
   dashGo: 'Git',
 
+  nextSetupTitle: 'Önce içeriği hangi modelin üreteceğini seç',
+  nextSetupBody: 'Claude Code aboneliğini ya da kendi Gemini anahtarını bağla. Bir dakika sürer.',
   nextBrandTitle: 'Önce markanı tanıt',
   nextBrandBody: 'Üretilen her şey marka profiline dayanıyor. Birkaç dakikanı ayır, gerisi çok daha iyi çıkar.',
   nextPostTodayTitle: 'Bugün paylaşılacak içerik var',

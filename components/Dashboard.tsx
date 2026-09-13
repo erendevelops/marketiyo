@@ -8,6 +8,7 @@ import type { Language } from '@/lib/schema';
 
 function nextStepCopy(dict: Dictionary, step: NextStep) {
   const map: Record<NextStep, { title: string; body: string; href: string }> = {
+    setup: { title: dict.nextSetupTitle, body: dict.nextSetupBody, href: '/setup' },
     brand: { title: dict.nextBrandTitle, body: dict.nextBrandBody, href: '/brand' },
     'post-today': { title: dict.nextPostTodayTitle, body: dict.nextPostTodayBody, href: '/calendar' },
     schedule: { title: dict.nextScheduleTitle, body: dict.nextScheduleBody, href: '/calendar' },

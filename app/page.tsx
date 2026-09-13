@@ -1,4 +1,3 @@
-import { redirect } from 'next/navigation';
 import { Dashboard } from '@/components/Dashboard';
 import { buildSummary } from '@/lib/dashboard/summary';
 import { getStore } from '@/lib/server/store';
@@ -16,7 +15,6 @@ export default async function Home() {
   const store = getStore();
 
   const settings = await store.readSettings();
-  if (!settings.onboarded) redirect('/setup');
 
   const [brand, ideas, slots, campaigns, articles] = await Promise.all([
     store.readBrand(),
@@ -26,7 +24,15 @@ export default async function Home() {
     store.readArticles(),
   ]);
 
-  const summary = buildSummary({ brand, ideas, slots, campaigns, articles, today: todayIso() });
+  const summary = buildSummary({
+    onboarded: settings.onboarded,
+    brand,
+    ideas,
+    slots,
+    campaigns,
+    articles,
+    today: todayIso(),
+  });
 
   return <Dashboard summary={summary} language={settings.interfaceLanguage} />;
 }

@@ -32,10 +32,11 @@ async function renderHome() {
 }
 
 describe('home page', () => {
-  it('sends a fresh install to setup', async () => {
+  it('shows the dashboard to a fresh install instead of redirecting to setup', async () => {
     store.readSettings.mockResolvedValue({ onboarded: false, interfaceLanguage: 'tr' });
-    await renderHome();
-    expect(redirect).toHaveBeenCalledWith('/setup');
+    const result = await renderHome();
+    expect(redirect).not.toHaveBeenCalled();
+    expect(result).not.toBeInstanceOf(Error);
   });
 
   it('shows the dashboard to an onboarded install with no brand, rather than redirecting', async () => {

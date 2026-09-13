@@ -66,7 +66,7 @@ function article(id: string, status: Article['status']): Article {
   };
 }
 
-const empty = { brand, ideas: [], slots: [], campaigns: [], articles: [], today: TODAY };
+const empty = { onboarded: true, brand, ideas: [], slots: [], campaigns: [], articles: [], today: TODAY };
 
 describe('buildSummary: counts', () => {
   it('counts ideas by stage', () => {
@@ -134,6 +134,10 @@ describe('buildSummary: counts', () => {
 });
 
 describe('buildSummary: next step', () => {
+  it('asks for engine setup before anything else', () => {
+    expect(buildSummary({ ...empty, onboarded: false, brand: null }).nextStep).toBe('setup');
+  });
+
   it('asks for a brand profile first', () => {
     expect(buildSummary({ ...empty, brand: null }).nextStep).toBe('brand');
   });

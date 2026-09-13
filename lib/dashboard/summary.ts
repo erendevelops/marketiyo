@@ -2,7 +2,14 @@ import { campaignsInRange } from '@/lib/calendar/flights';
 import type { Article, BrandProfile, CalendarSlot, Campaign, Idea, Platform } from '@/lib/schema';
 
 /** What the dashboard suggests doing next, in priority order. */
-export type NextStep = 'brand' | 'post-today' | 'schedule' | 'expand' | 'triage' | 'generate';
+export type NextStep =
+  | 'setup'
+  | 'brand'
+  | 'post-today'
+  | 'schedule'
+  | 'expand'
+  | 'triage'
+  | 'generate';
 
 export type DueItem = {
   slotId: string;
@@ -36,6 +43,7 @@ function weekAround(isoDate: string): { from: string; to: string } {
 }
 
 export type SummaryInput = {
+  onboarded: boolean;
   brand: BrandProfile | null;
   ideas: Idea[];
   slots: CalendarSlot[];
@@ -79,7 +87,8 @@ export function buildSummary(input: SummaryInput): DashboardSummary {
   ).length;
 
   let nextStep: NextStep;
-  if (!input.brand) nextStep = 'brand';
+  if (!input.onboarded) nextStep = 'setup';
+  else if (!input.brand) nextStep = 'brand';
   else if (today.some((item) => !item.posted)) nextStep = 'post-today';
   else if (readyButUnscheduled > 0) nextStep = 'schedule';
   else if (keptButUnscheduled > 0) nextStep = 'expand';

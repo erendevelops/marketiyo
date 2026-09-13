@@ -10,6 +10,8 @@ export const en: Dictionary = {
   dashNextStep: 'Next step',
   dashGo: 'Go',
 
+  nextSetupTitle: 'First, choose which model writes your content',
+  nextSetupBody: 'Connect your Claude Code subscription or your own Gemini key. It takes a minute.',
   nextBrandTitle: 'Introduce your brand first',
   nextBrandBody: 'Everything generated rests on the brand profile. A few minutes here makes the rest far better.',
   nextPostTodayTitle: 'Something is due to go out today',
