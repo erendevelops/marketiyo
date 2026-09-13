@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { brandProfileSchema } from '@/lib/schema';
 import { getStore } from '@/lib/server/store';
+import { blockUnlessAllowed } from '@/lib/server/onboarding';
 
 export const runtime = 'nodejs';
 
@@ -9,6 +10,9 @@ export async function GET() {
 }
 
 export async function PUT(request: Request) {
+  const blocked = await blockUnlessAllowed('brand');
+  if (blocked) return blocked;
+
   let body: unknown;
   try {
     body = await request.json();

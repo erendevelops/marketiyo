@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Busy } from '@/components/Spinner';
 import { Field, Section, StringList, checkClass, checkLabelClass, inputClass, primaryButton, secondaryButton, selectBase, selectClass, subtleButton } from '@/components/fields';
@@ -35,6 +37,8 @@ export function BrandForm({ initial, language }: Props) {
   const [description, setDescription] = useState('');
   const [message, setMessage] = useState<{ ok: boolean; text: string } | null>(null);
   const [running, setRunning] = useState<'draft' | 'save' | null>(null);
+  const [saved, setSaved] = useState(false);
+  const router = useRouter();
   const busy = running !== null;
 
   function patch(next: Partial<BrandProfile>) {
@@ -64,7 +68,9 @@ export function BrandForm({ initial, language }: Props) {
         ? { ok: true, text: dict.brandSaved }
         : { ok: false, text: body.error ?? dict.errorGeneric },
     );
+    setSaved(response.ok);
     setRunning(null);
+    if (response.ok) router.refresh();
   }
 
   const audienceLabels: Record<(typeof AUDIENCE_KEYS)[number], string> = {
@@ -254,6 +260,12 @@ export function BrandForm({ initial, language }: Props) {
         <p className={`mt-4 text-sm ${message.ok ? 'text-emerald-400' : 'text-amber-400'}`}>
           {message.text}
         </p>
+      )}
+
+      {saved && (
+        <Link href="/" className={`${secondaryButton} mt-4 inline-block`}>
+          {dict.brandNextDashboard}
+        </Link>
       )}
     </main>
   );

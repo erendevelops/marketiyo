@@ -1,10 +1,12 @@
 import { notFound } from 'next/navigation';
 import { ExpansionEditor } from '@/components/ExpansionEditor';
 import { getStore } from '@/lib/server/store';
+import { requireAccess } from '@/lib/server/onboarding';
 
 export const dynamic = 'force-dynamic';
 
 export default async function IdeaPage({ params }: { params: Promise<{ id: string }> }) {
+  await requireAccess('ideas');
   const { id } = await params;
   const store = getStore();
 

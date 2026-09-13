@@ -3,6 +3,7 @@ import { generateCampaign } from '@/lib/ads/generate';
 import { getProvider } from '@/lib/providers';
 import { campaignInputSchema } from '@/lib/schema';
 import { getStore } from '@/lib/server/store';
+import { blockUnlessAllowed } from '@/lib/server/onboarding';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300;
@@ -12,6 +13,9 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  const blocked = await blockUnlessAllowed('ads');
+  if (blocked) return blocked;
+
   const parsed = campaignInputSchema.safeParse(await request.json().catch(() => null));
   if (!parsed.success) {
     return NextResponse.json(

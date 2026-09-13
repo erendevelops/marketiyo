@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { expandIdea } from '@/lib/ideas/expand';
 import { getProvider } from '@/lib/providers';
 import { getStore } from '@/lib/server/store';
+import { blockUnlessAllowed } from '@/lib/server/onboarding';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300;
@@ -15,6 +16,9 @@ export async function GET(_request: Request, context: Context) {
 }
 
 export async function POST(_request: Request, context: Context) {
+  const blocked = await blockUnlessAllowed('ideas');
+  if (blocked) return blocked;
+
   const { id } = await context.params;
   const store = getStore();
   const settings = await store.readSettings();

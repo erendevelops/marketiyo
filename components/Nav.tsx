@@ -2,20 +2,27 @@ import Link from 'next/link';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { NavLinks } from '@/components/NavLinks';
 import { t } from '@/lib/i18n';
+import { canAccess, type AppArea, type OnboardingStatus } from '@/lib/onboarding/status';
 import type { Language } from '@/lib/schema';
 
-export function Nav({ language }: { language: Language }) {
+export function Nav({ language, onboarding }: { language: Language; onboarding: OnboardingStatus }) {
   const dict = t(language);
 
-  const items = [
-    { href: '/brand', label: dict.navBrand },
-    { href: '/ideas', label: dict.navIdeas },
-    { href: '/calendar', label: dict.navCalendar },
-    { href: '/ads', label: dict.navAds },
-    { href: '/seo', label: dict.navSeo },
-    { href: '/guide', label: dict.navGuide },
-    { href: '/setup', label: dict.navSetup },
+  const entries: { href: string; label: string; area: AppArea }[] = [
+    { href: '/brand', label: dict.navBrand, area: 'brand' },
+    { href: '/ideas', label: dict.navIdeas, area: 'ideas' },
+    { href: '/calendar', label: dict.navCalendar, area: 'calendar' },
+    { href: '/ads', label: dict.navAds, area: 'ads' },
+    { href: '/seo', label: dict.navSeo, area: 'seo' },
+    { href: '/guide', label: dict.navGuide, area: 'guide' },
+    { href: '/setup', label: dict.navSetup, area: 'setup' },
   ];
+
+  const items = entries.map(({ href, label, area }) => ({
+    href,
+    label,
+    locked: !canAccess(onboarding, area),
+  }));
 
   return (
     <nav className="border-b border-neutral-900">
@@ -28,7 +35,7 @@ export function Nav({ language }: { language: Language }) {
           {dict.appName}
         </Link>
 
-        <NavLinks items={items} />
+        <NavLinks items={items} lockedHint={dict.onboardingLockedHint} />
 
         <div className="ml-auto pl-6">
           <LanguageSwitcher current={language} />

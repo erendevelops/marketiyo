@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Busy } from '@/components/Spinner';
 import { checkClass, inputClass, primaryButton } from '@/components/fields';
@@ -13,13 +15,18 @@ export function SetupForm({ initial }: Props) {
   const [geminiApiKey, setGeminiApiKey] = useState('');
   const [status, setStatus] = useState<{ ok: boolean; text: string } | null>(null);
   const [busy, setBusy] = useState(false);
+  const [verified, setVerified] = useState(false);
+  const router = useRouter();
   const dict = t(initial.interfaceLanguage);
 
   async function save() {
     setBusy(true);
     setStatus(null);
 
-    const patch: Record<string, unknown> = { providerId, onboarded: true };
+    setVerified(false);
+
+    // Save the engine choice first, without marking setup complete.
+    const patch: Record<string, unknown> = { providerId };
     if (geminiApiKey) patch.geminiApiKey = geminiApiKey;
 
     const saved = await fetch('/api/settings', { method: 'PUT', body: JSON.stringify(patch) });
@@ -31,11 +38,24 @@ export function SetupForm({ initial }: Props) {
 
     const checked = await fetch('/api/provider/status');
     const report = (await checked.json()) as { available: boolean; detail: string };
+
+    // The step only counts as done when the connection actually works. A
+    // failing engine also clears an earlier completion, so a broken setup
+    // cannot keep the working areas open.
+    await fetch('/api/settings', {
+      method: 'PUT',
+      body: JSON.stringify({ onboarded: report.available }),
+    });
+
     setStatus({
       ok: report.available,
-      text: `${report.available ? dict.setupAvailable : dict.setupUnavailable}: ${report.detail}`,
+      text: report.available
+        ? `${dict.setupAvailable}: ${report.detail}`
+        : `${dict.setupUnavailable}: ${report.detail}. ${dict.setupNotVerified}`,
     });
+    setVerified(report.available);
     setBusy(false);
+    router.refresh();
   }
 
   return (
@@ -100,6 +120,12 @@ export function SetupForm({ initial }: Props) {
         <p className={`mt-4 text-sm ${status.ok ? 'text-emerald-400' : 'text-amber-400'}`}>
           {status.text}
         </p>
+      )}
+
+      {verified && (
+        <Link href="/brand" className={`${primaryButton} mt-4 inline-block`}>
+          {dict.setupNextBrand}
+        </Link>
       )}
     </main>
   );

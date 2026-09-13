@@ -5,18 +5,14 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState, useTransition } from 'react';
 import { Spinner } from '@/components/Spinner';
 
-export type NavItem = { href: string; label: string };
+export type NavItem = { href: string; label: string; locked?: boolean };
 
 /**
- * Navigation is driven through a transition so the bar knows, for real, that a
- * move is in flight. The destination is marked active on click rather than when
- * the server answers, and the spinner reflects actual pending work.
- *
- * In development the first visit to a route compiles it, which costs a second
- * or two; prefetching is disabled there, so the pending state is what makes the
- * wait legible. Production serves compiled routes and prefetches them.
+ * Navigation runs through a transition so the bar knows, for real, that a move
+ * is in flight. Locked items stay visible so the user can see what finishing
+ * setup opens up, but they do not navigate.
  */
-export function NavLinks({ items }: { items: NavItem[] }) {
+export function NavLinks({ items, lockedHint }: { items: NavItem[]; lockedHint: string }) {
   const pathname = usePathname();
   const router = useRouter();
   const [pending, startTransition] = useTransition();
@@ -31,6 +27,23 @@ export function NavLinks({ items }: { items: NavItem[] }) {
   return (
     <ul className="flex flex-wrap gap-1">
       {items.map((item) => {
+        if (item.locked) {
+          return (
+            <li key={item.href}>
+              <span
+                aria-disabled="true"
+                title={lockedHint}
+                className="inline-flex cursor-not-allowed items-center gap-1.5 rounded px-3 py-1.5 text-neutral-700"
+              >
+                <svg aria-hidden viewBox="0 0 16 16" className="h-3 w-3 fill-current">
+                  <path d="M5 7V5a3 3 0 1 1 6 0v2h.5A1.5 1.5 0 0 1 13 8.5v5A1.5 1.5 0 0 1 11.5 15h-7A1.5 1.5 0 0 1 3 13.5v-5A1.5 1.5 0 0 1 4.5 7H5Zm1.5 0h3V5a1.5 1.5 0 0 0-3 0v2Z" />
+                </svg>
+                {item.label}
+              </span>
+            </li>
+          );
+        }
+
         const active = item.href === activeHref;
         const loading = pending && target === item.href;
 

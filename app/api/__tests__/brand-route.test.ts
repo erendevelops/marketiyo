@@ -5,6 +5,9 @@ const writeBrand = vi.fn();
 
 vi.mock('@/lib/server/store', () => ({ getStore: () => ({ readBrand, writeBrand }) }));
 
+const blockUnlessAllowed = vi.fn();
+vi.mock('@/lib/server/onboarding', () => ({ blockUnlessAllowed }));
+
 const valid = {
   productName: 'Marketiyo',
   oneLiner: 'Test',
@@ -23,6 +26,8 @@ const valid = {
 beforeEach(() => {
   readBrand.mockReset();
   writeBrand.mockReset();
+  blockUnlessAllowed.mockReset();
+  blockUnlessAllowed.mockResolvedValue(null);
 });
 
 function put(body: unknown) {
@@ -42,6 +47,17 @@ describe('brand routes', () => {
     expect(response.status).toBe(200);
     const saved = writeBrand.mock.calls[0][0];
     expect(new Date(saved.updatedAt).getFullYear()).toBeGreaterThan(2000);
+  });
+
+  it('refuses to save before setup is complete', async () => {
+    const { NextResponse } = await import('next/server');
+    blockUnlessAllowed.mockResolvedValue(
+      NextResponse.json({ code: 'onboarding-incomplete' }, { status: 403 }),
+    );
+    const { PUT } = await import('@/app/api/brand/route');
+    const response = await PUT(put(valid));
+    expect(response.status).toBe(403);
+    expect(writeBrand).not.toHaveBeenCalled();
   });
 
   it('rejects a profile with no audiences', async () => {

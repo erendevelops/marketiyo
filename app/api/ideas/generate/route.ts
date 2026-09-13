@@ -4,6 +4,7 @@ import { generateIdeas } from '@/lib/ideas/generate';
 import { getProvider } from '@/lib/providers';
 import { angleSchema, platformSchema } from '@/lib/schema';
 import { getStore } from '@/lib/server/store';
+import { blockUnlessAllowed } from '@/lib/server/onboarding';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300;
@@ -15,6 +16,9 @@ const bodySchema = z.object({
 });
 
 export async function POST(request: Request) {
+  const blocked = await blockUnlessAllowed('ideas');
+  if (blocked) return blocked;
+
   const parsed = bodySchema.safeParse(await request.json().catch(() => null));
   if (!parsed.success) {
     return NextResponse.json({ error: 'Geçersiz istek gövdesi.' }, { status: 400 });

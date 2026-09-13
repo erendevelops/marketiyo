@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { getProvider } from '@/lib/providers';
 import { generateArticles } from '@/lib/seo/generate';
 import { getStore } from '@/lib/server/store';
+import { blockUnlessAllowed } from '@/lib/server/onboarding';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300;
@@ -12,6 +13,9 @@ const bodySchema = z.object({
 });
 
 export async function POST(request: Request) {
+  const blocked = await blockUnlessAllowed('seo');
+  if (blocked) return blocked;
+
   const parsed = bodySchema.safeParse(await request.json().catch(() => null));
   if (!parsed.success) {
     return NextResponse.json({ error: 'Geçersiz istek gövdesi.' }, { status: 400 });

@@ -1,10 +1,12 @@
 import { notFound } from 'next/navigation';
 import { ArticleDraftEditor } from '@/components/ArticleDraftEditor';
 import { getStore } from '@/lib/server/store';
+import { requireAccess } from '@/lib/server/onboarding';
 
 export const dynamic = 'force-dynamic';
 
 export default async function ArticlePage({ params }: { params: Promise<{ id: string }> }) {
+  await requireAccess('seo');
   const { id } = await params;
   const store = getStore();
 
