@@ -116,3 +116,22 @@ describe('workspace store', () => {
     expect(entries.some((entry) => entry.endsWith('.tmp'))).toBe(false);
   });
 });
+
+describe('updateSettings', () => {
+  it('does not lose a patch when two updates run at the same time', async () => {
+    const store = createStore(root);
+    await Promise.all([
+      store.updateSettings((current) => ({ ...current, theme: 'light' })),
+      store.updateSettings((current) => ({ ...current, interfaceLanguage: 'en' })),
+    ]);
+    const saved = await store.readSettings();
+    expect(saved.theme).toBe('light');
+    expect(saved.interfaceLanguage).toBe('en');
+  });
+
+  it('skips the write when the change is rejected', async () => {
+    const store = createStore(root);
+    expect(await store.updateSettings(() => null)).toBeNull();
+    expect(await readdir(root)).toEqual([]);
+  });
+});

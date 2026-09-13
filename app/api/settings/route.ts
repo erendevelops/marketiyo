@@ -9,9 +9,6 @@ export async function GET() {
 }
 
 export async function PUT(request: Request) {
-  const store = getStore();
-  const current = await store.readSettings();
-
   let patch: unknown;
   try {
     patch = await request.json();
@@ -23,14 +20,14 @@ export async function PUT(request: Request) {
     return NextResponse.json({ error: 'Geçersiz JSON gövdesi.' }, { status: 400 });
   }
 
-  const merged = settingsSchema.safeParse({ ...current, ...patch });
-  if (!merged.success) {
-    return NextResponse.json(
-      { error: merged.error.issues.map((i) => `${i.path.join('.')}: ${i.message}`).join('; ') },
-      { status: 400 },
-    );
-  }
+  let issues = '';
+  const saved = await getStore().updateSettings((current) => {
+    const merged = settingsSchema.safeParse({ ...current, ...patch });
+    if (merged.success) return merged.data;
+    issues = merged.error.issues.map((i) => `${i.path.join('.')}: ${i.message}`).join('; ');
+    return null;
+  });
 
-  await store.writeSettings(merged.data);
-  return NextResponse.json(redactSettings(merged.data));
+  if (!saved) return NextResponse.json({ error: issues }, { status: 400 });
+  return NextResponse.json(redactSettings(saved));
 }

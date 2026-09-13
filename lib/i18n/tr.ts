@@ -81,8 +81,15 @@ export const tr = {
   themeToDark: 'Koyu temaya geç',
   setupClaudeStepInstall: 'Claude Code kurulu değilse bir terminalde kur:',
   setupClaudeStepLogin: 'Kurduktan sonra bir kez çalıştır ve Pro veya Max hesabınla giriş yap:',
-  setupClaudeStepRestart:
-    'Yeni bir terminal aç ve uygulamayı oradan yeniden başlat, yoksa uygulama claude komutunu göremez.',
+  setupClaudeStepRestart: 'Uygulamayı yeni bir terminalden yeniden başlat:',
+  setupClaudeRestartWhy:
+    'Kurulum, claude komutunun yerini sisteme ekler. Ama bu, yalnızca kurulumdan sonra açılan terminallere yansır. Uygulama eski bir terminalde çalışıyorsa claude komutunu bulamaz.',
+  setupClaudeRestartStop: 'Uygulamanın çalıştığı terminale geç ve Ctrl+C ile durdur. Bu sayfa bağlantıyı kaybeder, bu normal.',
+  setupClaudeRestartOpen:
+    'Yeni bir terminal aç. VS Code içindeki terminali kullanıyorsan VS Code’u tamamen kapatıp yeniden aç, çünkü içindeki terminaller eski ayarları taşır.',
+  setupClaudeRestartCd: 'Proje klasörüne gir. Klasörü nereye indirdiysen o yolu yaz:',
+  setupClaudeRestartRun: 'Uygulamayı başlat:',
+  setupClaudeRestartReload: 'Bu sayfayı yenile ve Kaydet ve bağlantıyı sına düğmesine tekrar bas.',
   setupClaudeBinary: 'Claude komutu',
   setupClaudeBinaryHint:
     'Çoğu zaman "claude" yeterli. Bulunamazsa tam yolunu yaz. Terminalde where claude (Windows) veya which claude (macOS, Linux) yolu gösterir.',

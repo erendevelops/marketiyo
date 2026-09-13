@@ -17,6 +17,24 @@ export type RunResult = {
   spawnFailed: boolean;
 };
 
+/**
+ * On Windows the child is cmd.exe, and killing it leaves the real claude
+ * process running. taskkill /T takes the whole tree down with it.
+ */
+export function killTree(
+  pid: number | undefined,
+  fallback: () => void,
+  platform: NodeJS.Platform = process.platform,
+  spawnFn: typeof spawn = spawn,
+): void {
+  if (platform !== 'win32' || pid === undefined) {
+    fallback();
+    return;
+  }
+  const killer = spawnFn('taskkill', ['/pid', String(pid), '/T', '/F'], { stdio: 'ignore' });
+  killer.on('error', fallback);
+}
+
 function run(binary: string, args: string[], input: string, timeoutMs: number): Promise<RunResult> {
   return new Promise((resolve) => {
     // Windows needs the shell to find claude.cmd, and the shell splits unquoted paths on spaces.
@@ -43,7 +61,10 @@ function run(binary: string, args: string[], input: string, timeoutMs: number): 
 
     const timer = setTimeout(() => {
       timedOut = true;
-      child.kill();
+      killTree(child.pid, () => child.kill());
+      // The orphaned grandchild can hold the pipes open, so 'close' may never
+      // come. Settle now instead of waiting for it.
+      finish({ code: null, stdout, stderr, timedOut, spawnFailed: false });
     }, timeoutMs);
 
     child.stdout.on('data', (chunk) => {

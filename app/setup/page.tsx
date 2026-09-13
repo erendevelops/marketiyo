@@ -9,7 +9,7 @@ export default async function SetupPage() {
   const settings = await getStore().readSettings();
   return (
     <>
-      <SetupForm initial={redactSettings(settings)} />
+      <SetupForm initial={redactSettings(settings)} projectDir={process.cwd()} />
       <div className="mx-auto max-w-6xl px-6 pb-12 [&>*]:max-w-2xl">
         <ResetWorkspace language={settings.interfaceLanguage} />
       </div>

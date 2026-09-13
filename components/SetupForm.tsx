@@ -13,7 +13,7 @@ import {
   type RedactedSettings,
 } from '@/lib/schema';
 
-type Props = { initial: RedactedSettings };
+type Props = { initial: RedactedSettings; projectDir?: string };
 
 const codeClass = 'rounded bg-neutral-900 px-1.5 py-0.5 font-mono text-xs text-neutral-200';
 
@@ -56,7 +56,10 @@ function EngineOption({
   );
 }
 
-export function SetupForm({ initial }: Props) {
+export function SetupForm({ initial, projectDir: rawProjectDir }: Props) {
+  // Quoted when it has spaces, so the command can be pasted as is.
+  const projectDir =
+    rawProjectDir && rawProjectDir.includes(' ') ? `"${rawProjectDir}"` : rawProjectDir;
   const [providerId, setProviderId] = useState<ProviderId>(initial.providerId);
   const [geminiApiKey, setGeminiApiKey] = useState('');
   const [geminiModel, setGeminiModel] = useState(initial.geminiModel);
@@ -91,7 +94,7 @@ export function SetupForm({ initial }: Props) {
       return;
     }
 
-    const checked = await fetch('/api/provider/status');
+    const checked = await fetch('/api/provider/status', { method: 'POST' });
     const report = (await checked.json()) as { available: boolean; detail: string };
 
     // The step only counts as done when the connection actually works. A
@@ -144,7 +147,22 @@ export function SetupForm({ initial }: Props) {
               <li>
                 {dict.setupClaudeStepLogin} <code className={codeClass}>claude</code>
               </li>
-              <li>{dict.setupClaudeStepRestart}</li>
+              <li>
+                {dict.setupClaudeStepRestart}
+                <span className="mt-1 block text-xs text-neutral-500">{dict.setupClaudeRestartWhy}</span>
+                <ol className="mt-2 list-[lower-alpha] space-y-1.5 pl-4">
+                  <li>{dict.setupClaudeRestartStop}</li>
+                  <li>{dict.setupClaudeRestartOpen}</li>
+                  <li>
+                    {dict.setupClaudeRestartCd}{' '}
+                    <code className={codeClass}>cd {projectDir ?? 'marketiyo'}</code>
+                  </li>
+                  <li>
+                    {dict.setupClaudeRestartRun} <code className={codeClass}>npm run dev</code>
+                  </li>
+                  <li>{dict.setupClaudeRestartReload}</li>
+                </ol>
+              </li>
             </ol>
 
             <label className="block">

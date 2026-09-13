@@ -126,6 +126,21 @@ export function createStore(root: string) {
       (await readJson(file(workspaceFiles.settings), settingsSchema)) ?? defaultSettings,
     writeSettings: (settings: Settings): Promise<void> =>
       enqueue(() => writeAtomic(file(workspaceFiles.settings), JSON.stringify(settings, null, 2))),
+    /**
+     * Read, change and write inside one queue slot. Two patches sent at once
+     * (theme and language, say) would otherwise both read the old file and
+     * the later write would undo the earlier one. Returning null skips the write.
+     */
+    updateSettings: (apply: (current: Settings) => Settings | null): Promise<Settings | null> =>
+      enqueue(async () => {
+        const current =
+          (await readJson(file(workspaceFiles.settings), settingsSchema)) ?? defaultSettings;
+        const next = apply(current);
+        if (next) {
+          await writeAtomic(file(workspaceFiles.settings), JSON.stringify(next, null, 2));
+        }
+        return next;
+      }),
 
     readExpansion: async (ideaId: string): Promise<string | null> => {
       try {

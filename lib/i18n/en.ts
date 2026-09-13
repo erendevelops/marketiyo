@@ -82,8 +82,16 @@ export const en: Dictionary = {
   themeToDark: 'Switch to dark theme',
   setupClaudeStepInstall: 'If Claude Code is not installed, install it from a terminal:',
   setupClaudeStepLogin: 'Then run it once and log in with your Pro or Max account:',
-  setupClaudeStepRestart:
-    'Open a new terminal and restart the app from there, otherwise the app cannot see the claude command.',
+  setupClaudeStepRestart: 'Restart the app from a new terminal:',
+  setupClaudeRestartWhy:
+    'Installing adds the location of the claude command to your system, but only terminals opened after the install see it. An app started from an older terminal cannot find claude.',
+  setupClaudeRestartStop:
+    'Go to the terminal where the app is running and stop it with Ctrl+C. This page loses its connection, which is expected.',
+  setupClaudeRestartOpen:
+    'Open a new terminal. If you use the terminal inside VS Code, quit VS Code completely and reopen it, because its terminals keep the old settings.',
+  setupClaudeRestartCd: 'Go to the project folder, using wherever you downloaded it:',
+  setupClaudeRestartRun: 'Start the app:',
+  setupClaudeRestartReload: 'Reload this page and press Save and test the connection again.',
   setupClaudeBinary: 'Claude command',
   setupClaudeBinaryHint:
     'Usually "claude" is enough. If it is not found, enter the full path. where claude (Windows) or which claude (macOS, Linux) prints it.',

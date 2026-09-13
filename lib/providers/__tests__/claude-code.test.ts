@@ -5,6 +5,7 @@ import {
   availabilityFrom,
   classifyCliFailure,
   createClaudeCodeProvider,
+  killTree,
   type RunResult,
 } from '@/lib/providers/claude-code';
 
@@ -37,6 +38,26 @@ describe('availabilityFrom', () => {
 
   it('passes when the prompt answers', () => {
     expect(availabilityFrom(ok('2.1.0 (Claude Code)'), ok('OK')).available).toBe(true);
+  });
+});
+
+describe('killTree', () => {
+  it('uses taskkill on the whole tree on windows', () => {
+    const calls: unknown[][] = [];
+    const spawnFn = ((...args: unknown[]) => {
+      calls.push(args);
+      return { on: () => undefined };
+    }) as unknown as Parameters<typeof killTree>[3];
+    let fellBack = false;
+    killTree(4242, () => (fellBack = true), 'win32', spawnFn);
+    expect(calls[0]?.slice(0, 2)).toEqual(['taskkill', ['/pid', '4242', '/T', '/F']]);
+    expect(fellBack).toBe(false);
+  });
+
+  it('kills the child directly elsewhere', () => {
+    let fellBack = false;
+    killTree(4242, () => (fellBack = true), 'linux');
+    expect(fellBack).toBe(true);
   });
 });
 

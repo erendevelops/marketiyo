@@ -3,7 +3,17 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 const readSettings = vi.fn();
 const writeSettings = vi.fn();
 
-vi.mock('@/lib/server/store', () => ({ getStore: () => ({ readSettings, writeSettings }) }));
+vi.mock('@/lib/server/store', () => ({
+  getStore: () => ({
+    readSettings,
+    writeSettings,
+    updateSettings: async (apply: (current: unknown) => unknown) => {
+      const next = apply(await readSettings());
+      if (next) await writeSettings(next);
+      return next;
+    },
+  }),
+}));
 
 const stored = {
   providerId: 'claude-code',
