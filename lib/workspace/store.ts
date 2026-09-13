@@ -1,4 +1,4 @@
-import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, rename, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { z } from 'zod';
 import {
@@ -195,6 +195,18 @@ export function createStore(root: string) {
     },
     writeArticleDraft: (articleId: string, markdown: string): Promise<void> =>
       enqueue(() => writeAtomic(articleDraftPath(articleId), markdown)),
+
+    /**
+     * Permanently deletes everything the app has written, returning the
+     * workspace to its first-run state. Only names from workspaceFiles are
+     * removed, so anything else a user keeps in the folder is left alone. It
+     * runs through the queue so it cannot interleave with a pending write.
+     */
+    resetWorkspace: (): Promise<void> =>
+      enqueue(async () => {
+        const owned = Object.values(workspaceFiles).map((name) => path.join(root, name));
+        await Promise.all(owned.map((target) => rm(target, { recursive: true, force: true })));
+      }),
   };
 }
 
