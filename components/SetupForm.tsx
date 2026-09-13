@@ -2,25 +2,24 @@
 
 import { useState } from 'react';
 import { Busy } from '@/components/Spinner';
-import { checkClass, inputClass, primaryButton, selectClass } from '@/components/fields';
+import { checkClass, inputClass, primaryButton } from '@/components/fields';
 import { t } from '@/lib/i18n';
-import type { Language, ProviderId, RedactedSettings } from '@/lib/schema';
+import type { ProviderId, RedactedSettings } from '@/lib/schema';
 
 type Props = { initial: RedactedSettings };
 
 export function SetupForm({ initial }: Props) {
   const [providerId, setProviderId] = useState<ProviderId>(initial.providerId);
-  const [language, setLanguage] = useState<Language>(initial.interfaceLanguage);
   const [geminiApiKey, setGeminiApiKey] = useState('');
   const [status, setStatus] = useState<{ ok: boolean; text: string } | null>(null);
   const [busy, setBusy] = useState(false);
-  const dict = t(language);
+  const dict = t(initial.interfaceLanguage);
 
   async function save() {
     setBusy(true);
     setStatus(null);
 
-    const patch: Record<string, unknown> = { providerId, interfaceLanguage: language, onboarded: true };
+    const patch: Record<string, unknown> = { providerId, onboarded: true };
     if (geminiApiKey) patch.geminiApiKey = geminiApiKey;
 
     const saved = await fetch('/api/settings', { method: 'PUT', body: JSON.stringify(patch) });
@@ -41,18 +40,7 @@ export function SetupForm({ initial }: Props) {
 
   return (
     <main className="mx-auto max-w-xl p-8">
-      <div className="mb-8 flex items-baseline justify-between">
-        <h1 className="text-2xl font-semibold">{dict.setupTitle}</h1>
-        <select
-          aria-label={dict.brandOutputLanguage}
-          className={`${selectClass} w-auto px-2 py-1 text-sm`}
-          value={language}
-          onChange={(event) => setLanguage(event.target.value as Language)}
-        >
-          <option value="tr">Turkce</option>
-          <option value="en">English</option>
-        </select>
-      </div>
+      <h1 className="mb-8 text-2xl font-semibold">{dict.setupTitle}</h1>
 
       <fieldset className="mb-6 space-y-4">
         <legend className="mb-2 text-sm text-neutral-400">{dict.setupEngine}</legend>

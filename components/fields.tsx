@@ -30,9 +30,15 @@ export const checkClass = 'cursor-pointer accent-neutral-200';
 export const checkLabelClass =
   'flex cursor-pointer items-center gap-2 text-sm text-neutral-300 transition-colors hover:text-white';
 
-/** Selects need the pointer cursor and the same feedback as buttons. */
-export const selectClass =
-  'w-full cursor-pointer rounded border border-neutral-700 bg-neutral-900 p-2 text-neutral-100 transition-colors hover:border-neutral-400 hover:bg-neutral-800 focus:border-neutral-400 focus:outline-none';
+/**
+ * Selects need the pointer cursor and the same feedback as buttons. The base
+ * carries no width: appending w-auto to a class that already has w-full does
+ * nothing, because Tailwind emits w-full later in the stylesheet.
+ */
+export const selectBase =
+  'cursor-pointer rounded border border-neutral-700 bg-neutral-900 p-2 text-neutral-100 transition-colors hover:border-neutral-400 hover:bg-neutral-800 focus:border-neutral-400 focus:outline-none';
+
+export const selectClass = `w-full ${selectBase}`;
 
 export function Field({
   label,
