@@ -5,6 +5,9 @@ type Options = { apiKey: string; model: string };
 const ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models';
 
 export function createGeminiProvider({ apiKey, model }: Options): Provider {
+  const quotaExceeded = `${model} kotası doldu. Dakikalık sınırdaysan biraz bekle; günlük sınırdaysan yarın dene veya kurulumdan başka bir model seç.`;
+  const modelMissing = `${model} modeli bulunamadı. Kurulumdan başka bir model seç.`;
+
   async function call(prompt: string, maxOutputTokens: number, timeoutMs: number) {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), timeoutMs);
@@ -34,6 +37,8 @@ export function createGeminiProvider({ apiKey, model }: Options): Provider {
         if (response.status === 401 || response.status === 403) {
           return { available: false, detail: 'API anahtarı reddedildi.' };
         }
+        if (response.status === 404) return { available: false, detail: modelMissing };
+        if (response.status === 429) return { available: false, detail: quotaExceeded };
         return { available: false, detail: `Gemini ${response.status} döndürdü.` };
       } catch (error) {
         return { available: false, detail: (error as Error).message };
@@ -52,6 +57,12 @@ export function createGeminiProvider({ apiKey, model }: Options): Provider {
           const body = (await response.json().catch(() => ({}))) as {
             error?: { message?: string };
           };
+          if (response.status === 429) {
+            return { ok: false, error: { code: 'rate-limit', message: quotaExceeded } };
+          }
+          if (response.status === 404) {
+            return { ok: false, error: { code: 'not-available', message: modelMissing } };
+          }
           const code: ProviderError['code'] =
             response.status === 401 || response.status === 403 ? 'auth' : 'transport';
           return {

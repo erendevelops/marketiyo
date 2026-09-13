@@ -4,15 +4,25 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Busy } from '@/components/Spinner';
-import { checkClass, inputClass, primaryButton } from '@/components/fields';
+import { checkClass, inputClass, primaryButton, selectClass } from '@/components/fields';
 import { t } from '@/lib/i18n';
-import type { ProviderId, RedactedSettings } from '@/lib/schema';
+import {
+  defaultGeminiModel,
+  geminiModels,
+  type ProviderId,
+  type RedactedSettings,
+} from '@/lib/schema';
 
 type Props = { initial: RedactedSettings };
 
 export function SetupForm({ initial }: Props) {
   const [providerId, setProviderId] = useState<ProviderId>(initial.providerId);
   const [geminiApiKey, setGeminiApiKey] = useState('');
+  const [geminiModel, setGeminiModel] = useState(initial.geminiModel);
+  // Keep a model saved by hand selectable even if it is not in the list.
+  const modelOptions: string[] = (geminiModels as readonly string[]).includes(initial.geminiModel)
+    ? [...geminiModels]
+    : [...geminiModels, initial.geminiModel];
   const [status, setStatus] = useState<{ ok: boolean; text: string } | null>(null);
   const [busy, setBusy] = useState(false);
   const [verified, setVerified] = useState(false);
@@ -28,6 +38,7 @@ export function SetupForm({ initial }: Props) {
     // Save the engine choice first, without marking setup complete.
     const patch: Record<string, unknown> = { providerId };
     if (geminiApiKey) patch.geminiApiKey = geminiApiKey;
+    if (providerId === 'gemini') patch.geminiModel = geminiModel;
 
     const saved = await fetch('/api/settings', { method: 'PUT', body: JSON.stringify(patch) });
     if (!saved.ok) {
@@ -95,14 +106,34 @@ export function SetupForm({ initial }: Props) {
           <span className="mt-1 block pl-6 text-sm text-neutral-400">{dict.setupGeminiHint}</span>
 
           {providerId === 'gemini' && (
-            <input
-              type="password"
-              aria-label={dict.setupGemini}
-              className={`${inputClass} mt-3`}
-              placeholder={initial.hasGeminiKey ? '********' : 'AIza...'}
-              value={geminiApiKey}
-              onChange={(event) => setGeminiApiKey(event.target.value)}
-            />
+            <>
+              <input
+                type="password"
+                aria-label={dict.setupGemini}
+                className={`${inputClass} mt-3`}
+                placeholder={initial.hasGeminiKey ? '********' : 'AIza...'}
+                value={geminiApiKey}
+                onChange={(event) => setGeminiApiKey(event.target.value)}
+              />
+              <span className="mt-3 block text-sm text-neutral-400">{dict.setupGeminiModel}</span>
+              <select
+                aria-label={dict.setupGeminiModel}
+                className={`${selectClass} mt-1`}
+                value={geminiModel}
+                onChange={(event) => setGeminiModel(event.target.value)}
+              >
+                {modelOptions.map((model) => (
+                  <option key={model} value={model}>
+                    {model === defaultGeminiModel
+                      ? `${model} (${dict.setupGeminiModelRecommended})`
+                      : model}
+                  </option>
+                ))}
+              </select>
+              <span className="mt-1 block text-xs text-neutral-500">
+                {dict.setupGeminiModelHint}
+              </span>
+            </>
           )}
         </label>
       </fieldset>

@@ -75,6 +75,10 @@ export const tr = {
   setupGemini: 'Gemini, kendi API anahtarınla',
   setupGeminiHint:
     'Anahtar yalnızca bu bilgisayarda saklanır ve sadece Google sunucularına gönderilir.',
+  setupGeminiModel: 'Model',
+  setupGeminiModelHint:
+    'Ücretsiz anahtarda Flash Lite modelleri günde yaklaşık 500, Flash modelleri yalnızca 20 istek hakkı verir. Güncel sınırların Google AI Studio’da görünür.',
+  setupGeminiModelRecommended: 'önerilen',
   setupSave: 'Kaydet ve bağlantıyı sına',
   setupChecking: 'Bağlantı sınanıyor',
   setupAvailable: 'Bağlantı kuruldu',

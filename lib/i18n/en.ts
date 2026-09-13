@@ -76,6 +76,10 @@ export const en: Dictionary = {
     'Claude Code must be installed and logged in on this machine. No API key needed.',
   setupGemini: 'Gemini, with your own API key',
   setupGeminiHint: 'The key stays on this machine and is only ever sent to Google.',
+  setupGeminiModel: 'Model',
+  setupGeminiModelHint:
+    'On a free key, Flash Lite models allow about 500 requests a day and Flash models only 20. Your current limits are shown in Google AI Studio.',
+  setupGeminiModelRecommended: 'recommended',
   setupSave: 'Save and test the connection',
   setupChecking: 'Testing the connection',
   setupAvailable: 'Connected',

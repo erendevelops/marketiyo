@@ -47,6 +47,22 @@ describe('PUT /api/settings', () => {
     );
   });
 
+  it('replaces a retired gemini model with the current default', async () => {
+    const { PUT } = await import('@/app/api/settings/route');
+    await PUT(put({ providerId: 'gemini' }));
+    expect(writeSettings).toHaveBeenCalledWith(
+      expect.objectContaining({ geminiModel: 'gemini-3.1-flash-lite' }),
+    );
+  });
+
+  it('keeps a chosen gemini model', async () => {
+    const { PUT } = await import('@/app/api/settings/route');
+    await PUT(put({ providerId: 'gemini', geminiModel: 'gemini-3.5-flash' }));
+    expect(writeSettings).toHaveBeenCalledWith(
+      expect.objectContaining({ geminiModel: 'gemini-3.5-flash' }),
+    );
+  });
+
   it('rejects an invalid provider id', async () => {
     const { PUT } = await import('@/app/api/settings/route');
     const response = await PUT(put({ providerId: 'openai' }));

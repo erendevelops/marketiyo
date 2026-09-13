@@ -3,6 +3,7 @@ import type { ProviderId } from '@/lib/schema';
 export type ProviderErrorCode =
   | 'not-available'
   | 'auth'
+  | 'rate-limit'
   | 'timeout'
   | 'transport'
   | 'malformed-output';
