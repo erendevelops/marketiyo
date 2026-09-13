@@ -1,44 +1,55 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-const readSettings = vi.fn();
-const readBrand = vi.fn();
+const store = {
+  readSettings: vi.fn(),
+  readBrand: vi.fn(),
+  readIdeas: vi.fn(),
+  readCalendar: vi.fn(),
+  readCampaigns: vi.fn(),
+  readArticles: vi.fn(),
+};
+
 const redirect = vi.fn((target: string) => {
   throw new Error(`REDIRECT:${target}`);
 });
 
-vi.mock('@/lib/server/store', () => ({ getStore: () => ({ readSettings, readBrand }) }));
+vi.mock('@/lib/server/store', () => ({ getStore: () => store }));
 vi.mock('next/navigation', () => ({ redirect }));
 
 beforeEach(() => {
-  readSettings.mockReset();
-  readBrand.mockReset();
+  Object.values(store).forEach((fn) => fn.mockReset());
   redirect.mockClear();
+  store.readBrand.mockResolvedValue(null);
+  store.readIdeas.mockResolvedValue([]);
+  store.readCalendar.mockResolvedValue([]);
+  store.readCampaigns.mockResolvedValue([]);
+  store.readArticles.mockResolvedValue([]);
 });
 
-async function run() {
+async function renderHome() {
   const { default: Home } = await import('@/app/page');
-  await Home().catch(() => undefined);
+  return Home().catch((error: Error) => error);
 }
 
-describe('home routing', () => {
+describe('home page', () => {
   it('sends a fresh install to setup', async () => {
-    readSettings.mockResolvedValue({ onboarded: false });
-    readBrand.mockResolvedValue(null);
-    await run();
+    store.readSettings.mockResolvedValue({ onboarded: false, interfaceLanguage: 'tr' });
+    await renderHome();
     expect(redirect).toHaveBeenCalledWith('/setup');
   });
 
-  it('sends an onboarded install with no brand to the brand page', async () => {
-    readSettings.mockResolvedValue({ onboarded: true });
-    readBrand.mockResolvedValue(null);
-    await run();
-    expect(redirect).toHaveBeenCalledWith('/brand');
+  it('shows the dashboard to an onboarded install with no brand, rather than redirecting', async () => {
+    store.readSettings.mockResolvedValue({ onboarded: true, interfaceLanguage: 'tr' });
+    const result = await renderHome();
+    expect(redirect).not.toHaveBeenCalled();
+    expect(result).not.toBeInstanceOf(Error);
   });
 
-  it('sends a ready install to the idea bank', async () => {
-    readSettings.mockResolvedValue({ onboarded: true });
-    readBrand.mockResolvedValue({ productName: 'Marketiyo' });
-    await run();
-    expect(redirect).toHaveBeenCalledWith('/ideas');
+  it('shows the dashboard to a ready install', async () => {
+    store.readSettings.mockResolvedValue({ onboarded: true, interfaceLanguage: 'tr' });
+    store.readBrand.mockResolvedValue({ productName: 'Uzayalım' });
+    const result = await renderHome();
+    expect(redirect).not.toHaveBeenCalled();
+    expect(result).not.toBeInstanceOf(Error);
   });
 });

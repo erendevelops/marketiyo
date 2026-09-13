@@ -1,7 +1,16 @@
 import { redirect } from 'next/navigation';
+import { Dashboard } from '@/components/Dashboard';
+import { buildSummary } from '@/lib/dashboard/summary';
 import { getStore } from '@/lib/server/store';
 
 export const dynamic = 'force-dynamic';
+
+function todayIso(): string {
+  const now = new Date();
+  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(
+    now.getDate(),
+  ).padStart(2, '0')}`;
+}
 
 export default async function Home() {
   const store = getStore();
@@ -9,8 +18,15 @@ export default async function Home() {
   const settings = await store.readSettings();
   if (!settings.onboarded) redirect('/setup');
 
-  const brand = await store.readBrand();
-  if (!brand) redirect('/brand');
+  const [brand, ideas, slots, campaigns, articles] = await Promise.all([
+    store.readBrand(),
+    store.readIdeas(),
+    store.readCalendar(),
+    store.readCampaigns(),
+    store.readArticles(),
+  ]);
 
-  redirect('/ideas');
+  const summary = buildSummary({ brand, ideas, slots, campaigns, articles, today: todayIso() });
+
+  return <Dashboard summary={summary} language={settings.interfaceLanguage} />;
 }
