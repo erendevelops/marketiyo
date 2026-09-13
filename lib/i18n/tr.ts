@@ -75,6 +75,21 @@ export const tr = {
   setupGemini: 'Gemini, kendi API anahtarınla',
   setupGeminiHint:
     'Anahtar yalnızca bu bilgisayarda saklanır ve sadece Google sunucularına gönderilir.',
+  themeDark: 'Koyu',
+  themeLight: 'Açık',
+  themeToLight: 'Açık temaya geç',
+  themeToDark: 'Koyu temaya geç',
+  setupClaudeStepInstall: 'Claude Code kurulu değilse bir terminalde kur:',
+  setupClaudeStepLogin: 'Kurduktan sonra bir kez çalıştır ve Pro veya Max hesabınla giriş yap:',
+  setupClaudeStepRestart:
+    'Yeni bir terminal aç ve uygulamayı oradan yeniden başlat, yoksa uygulama claude komutunu göremez.',
+  setupClaudeBinary: 'Claude komutu',
+  setupClaudeBinaryHint:
+    'Çoğu zaman "claude" yeterli. Bulunamazsa tam yolunu yaz. Terminalde where claude (Windows) veya which claude (macOS, Linux) yolu gösterir.',
+  setupClaudeCheckNote:
+    'Sınama, girişin gerçekten yapıldığını görmek için Claude’a çok kısa bir istek gönderir. 10 ila 30 saniye sürebilir ve planından çok küçük bir kullanım düşer.',
+  setupGeminiKey: 'API anahtarı',
+  setupGeminiKeyHint: 'Google AI Studio’dan ücretsiz alınır: aistudio.google.com/apikey',
   setupGeminiModel: 'Model',
   setupGeminiModelHint:
     'Ücretsiz anahtarda Flash Lite modelleri günde yaklaşık 500, Flash modelleri yalnızca 20 istek hakkı verir. Güncel sınırların Google AI Studio’da görünür.',

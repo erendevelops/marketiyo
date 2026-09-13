@@ -76,6 +76,21 @@ export const en: Dictionary = {
     'Claude Code must be installed and logged in on this machine. No API key needed.',
   setupGemini: 'Gemini, with your own API key',
   setupGeminiHint: 'The key stays on this machine and is only ever sent to Google.',
+  themeDark: 'Dark',
+  themeLight: 'Light',
+  themeToLight: 'Switch to light theme',
+  themeToDark: 'Switch to dark theme',
+  setupClaudeStepInstall: 'If Claude Code is not installed, install it from a terminal:',
+  setupClaudeStepLogin: 'Then run it once and log in with your Pro or Max account:',
+  setupClaudeStepRestart:
+    'Open a new terminal and restart the app from there, otherwise the app cannot see the claude command.',
+  setupClaudeBinary: 'Claude command',
+  setupClaudeBinaryHint:
+    'Usually "claude" is enough. If it is not found, enter the full path. where claude (Windows) or which claude (macOS, Linux) prints it.',
+  setupClaudeCheckNote:
+    'The test sends Claude a tiny request to confirm you are really logged in. It can take 10 to 30 seconds and uses a very small amount of your plan.',
+  setupGeminiKey: 'API key',
+  setupGeminiKeyHint: 'Free from Google AI Studio: aistudio.google.com/apikey',
   setupGeminiModel: 'Model',
   setupGeminiModelHint:
     'On a free key, Flash Lite models allow about 500 requests a day and Flash models only 20. Your current limits are shown in Google AI Studio.',

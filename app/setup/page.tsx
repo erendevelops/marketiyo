@@ -10,7 +10,7 @@ export default async function SetupPage() {
   return (
     <>
       <SetupForm initial={redactSettings(settings)} />
-      <div className="mx-auto max-w-xl px-8 pb-12">
+      <div className="mx-auto max-w-6xl px-6 pb-12 [&>*]:max-w-2xl">
         <ResetWorkspace language={settings.interfaceLanguage} />
       </div>
     </>
