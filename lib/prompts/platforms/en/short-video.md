@@ -1,4 +1,6 @@
-# Short video (TikTok, Reels, Shorts)
+# Short video
+
+Where it runs: Instagram Reels, TikTok, YouTube Shorts.
 
 Here the viewer is not looking for your product. They are scrolling. If the first two seconds do not stop them, nothing after that matters.
 

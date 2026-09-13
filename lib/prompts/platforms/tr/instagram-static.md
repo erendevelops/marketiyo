@@ -1,4 +1,6 @@
-# Instagram statik
+# Görsel gönderi (tek görsel veya karusel)
+
+Nerede yayınlanır: Instagram, LinkedIn, Facebook. Kurallar biçime aittir, hangi mecrada paylaşılırsa paylaşılsın geçerlidir.
 
 ## Formatlar
 - `carousel`: 5-8 slayt

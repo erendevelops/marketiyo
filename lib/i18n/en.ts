@@ -179,12 +179,15 @@ export const en: Dictionary = {
   calendarMissingIdea: 'This content was deleted',
 
 
-  platformShortVideo: 'Short video',
-  platformPostNote: 'Short video needs filming, the rest are written posts.',
-  platformX: 'X',
-  platformLinkedin: 'LinkedIn',
-  platformInstagram: 'Instagram',
 
+  mediaShortVideo: 'Short video',
+  mediaShortVideoHint: 'Reels, TikTok, YouTube Shorts',
+  mediaVisualPost: 'Visual post',
+  mediaVisualPostHint: 'Single image or carousel · Instagram, LinkedIn, Facebook',
+  mediaShortText: 'Short text',
+  mediaShortTextHint: 'Single post or thread · X, Threads',
+  mediaLongText: 'Long text',
+  mediaLongTextHint: 'Experience and story posts · LinkedIn, Facebook',
   addRow: 'Add a row',
   removeRow: 'Remove',
   errorGeneric: 'Something went wrong.',

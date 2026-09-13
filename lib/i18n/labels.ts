@@ -14,12 +14,28 @@ import type {
  * whatever the interface language is, so no raw identifier ever reaches a screen.
  */
 
+/**
+ * The stored identifiers predate the media type wording and are kept as they are
+ * so existing workspace files still load: instagram-static is a visual post, x
+ * is short text and linkedin is long text. Only what the user reads changed.
+ */
 export function platformLabel(dict: Dictionary, platform: Platform): string {
   const map: Record<Platform, string> = {
-    'short-video': dict.platformShortVideo,
-    x: dict.platformX,
-    linkedin: dict.platformLinkedin,
-    'instagram-static': dict.platformInstagram,
+    'short-video': dict.mediaShortVideo,
+    'instagram-static': dict.mediaVisualPost,
+    x: dict.mediaShortText,
+    linkedin: dict.mediaLongText,
+  };
+  return map[platform];
+}
+
+/** Where a media type is typically published. */
+export function platformHint(dict: Dictionary, platform: Platform): string {
+  const map: Record<Platform, string> = {
+    'short-video': dict.mediaShortVideoHint,
+    'instagram-static': dict.mediaVisualPostHint,
+    x: dict.mediaShortTextHint,
+    linkedin: dict.mediaLongTextHint,
   };
   return map[platform];
 }

@@ -177,12 +177,15 @@ export const tr = {
   calendarMissingIdea: 'Bu içerik silinmiş',
 
 
-  platformShortVideo: 'Kısa video',
-  platformPostNote: 'Kısa video çekim gerektirir, diğerleri yazılı paylaşımdır.',
-  platformX: 'X',
-  platformLinkedin: 'LinkedIn',
-  platformInstagram: 'Instagram',
 
+  mediaShortVideo: 'Kısa video',
+  mediaShortVideoHint: 'Reels, TikTok, YouTube Shorts',
+  mediaVisualPost: 'Görsel gönderi',
+  mediaVisualPostHint: 'Tek görsel veya karusel · Instagram, LinkedIn, Facebook',
+  mediaShortText: 'Kısa metin',
+  mediaShortTextHint: 'Tek gönderi veya dizi · X, Threads',
+  mediaLongText: 'Uzun metin',
+  mediaLongTextHint: 'Deneyim ve hikâye yazısı · LinkedIn, Facebook',
   addRow: 'Satır ekle',
   removeRow: 'Kaldır',
   errorGeneric: 'Bir şeyler ters gitti.',

@@ -5,10 +5,10 @@ import { Busy } from '@/components/Spinner';
 import { IdeaCard } from '@/components/IdeaCard';
 import { Field, inputClass, numberInputClass, primaryButton, selectClass } from '@/components/fields';
 import { t } from '@/lib/i18n';
-import { ideaStatusLabel, platformLabel } from '@/lib/i18n/labels';
+import { ideaStatusLabel, platformHint, platformLabel } from '@/lib/i18n/labels';
 import type { Idea, IdeaStatus, Language, Platform } from '@/lib/schema';
 
-const PLATFORMS: Platform[] = ['short-video', 'x', 'linkedin', 'instagram-static'];
+const PLATFORMS: Platform[] = ['short-video', 'instagram-static', 'x', 'linkedin'];
 const STATUSES: IdeaStatus[] = ['new', 'kept', 'rejected', 'expanded', 'scheduled'];
 
 type Props = {
@@ -84,8 +84,8 @@ export function IdeaBoard({ initial, language, activePlatforms }: Props) {
       <p className="mb-8 text-sm text-neutral-500">{dict.ideasIntro}</p>
 
       <div className="mb-8 flex flex-wrap items-end gap-4 rounded border border-neutral-800 p-4">
-        <div className="w-48">
-          <Field label={dict.ideasPlatform}>
+        <div className="w-56">
+          <Field label={dict.ideasPlatform} hint={platformHint(dict, platform)}>
             <select
               className={selectClass}
               value={platform}

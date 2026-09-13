@@ -4,12 +4,12 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Busy } from '@/components/Spinner';
-import { Field, Section, StringList, checkClass, checkLabelClass, inputClass, primaryButton, secondaryButton, selectBase, selectClass, subtleButton } from '@/components/fields';
+import { Field, Section, StringList, checkClass, inputClass, primaryButton, secondaryButton, selectBase, selectClass, subtleButton } from '@/components/fields';
 import { t } from '@/lib/i18n';
-import { platformLabel } from '@/lib/i18n/labels';
+import { platformHint, platformLabel } from '@/lib/i18n/labels';
 import type { BrandProfile, Language, Platform } from '@/lib/schema';
 
-const PLATFORMS: Platform[] = ['short-video', 'x', 'linkedin', 'instagram-static'];
+const PLATFORMS: Platform[] = ['short-video', 'instagram-static', 'x', 'linkedin'];
 const AUDIENCE_KEYS = ['label', 'pain', 'desire', 'whereTheyHangOut'] as const;
 
 function emptyProfile(language: Language): BrandProfile {
@@ -215,12 +215,15 @@ export function BrandForm({ initial, language }: Props) {
       </Section>
 
       <Section title={dict.brandPlatforms}>
-        <div className="flex flex-wrap gap-4">
+        <div className="grid gap-2 sm:grid-cols-2">
           {PLATFORMS.map((platform) => (
-            <label key={platform} className={checkLabelClass}>
+            <label
+              key={platform}
+              className="flex cursor-pointer items-start gap-3 rounded border border-neutral-800 p-3 transition-colors hover:border-neutral-600 hover:bg-neutral-900/40"
+            >
               <input
                 type="checkbox"
-                className={checkClass}
+                className={`${checkClass} mt-1`}
                 checked={profile.platforms.includes(platform)}
                 onChange={(event) =>
                   patch({
@@ -230,7 +233,10 @@ export function BrandForm({ initial, language }: Props) {
                   })
                 }
               />
-              {platformLabel(dict, platform)}
+              <span>
+                <span className="block text-sm text-neutral-200">{platformLabel(dict, platform)}</span>
+                <span className="block text-xs text-neutral-500">{platformHint(dict, platform)}</span>
+              </span>
             </label>
           ))}
         </div>

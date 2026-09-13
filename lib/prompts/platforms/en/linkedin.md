@@ -1,4 +1,6 @@
-# LinkedIn
+# Long text (experience and story posts)
+
+Where it runs: LinkedIn, Facebook. On LinkedIn the first two lines show before the fold.
 
 ## Formats
 - `narrative`: short story and takeaway, 120-250 words

@@ -1,4 +1,6 @@
-# Kısa video (TikTok, Reels, Shorts)
+# Kısa video
+
+Nerede yayınlanır: Instagram Reels, TikTok, YouTube Shorts.
 
 Bu mecrada izleyici ürünü aramıyor. Kaydırıyor. İlk iki saniyede durmazsa geri kalanın hiçbir önemi yok.
 

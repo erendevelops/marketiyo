@@ -1,4 +1,6 @@
-# LinkedIn
+# Uzun metin (deneyim ve hikâye yazısı)
+
+Nerede yayınlanır: LinkedIn, Facebook. LinkedIn'de ilk iki satır kırpılmadan görünür.
 
 ## Formatlar
 - `narrative`: kısa hikâye ve çıkarım, 120-250 kelime

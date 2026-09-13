@@ -1,4 +1,6 @@
-# X
+# Short text (single post or thread)
+
+Where it runs: X, Threads. On X a single post is limited to 280 characters.
 
 ## Formats
 - `single`: one post, 280 character limit

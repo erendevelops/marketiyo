@@ -1,4 +1,6 @@
-# Instagram static
+# Visual post (single image or carousel)
+
+Where it runs: Instagram, LinkedIn, Facebook. The rules belong to the format and hold wherever it is published.
 
 ## Formats
 - `carousel`: 5-8 slides

@@ -1,4 +1,6 @@
-# X
+# Kısa metin (tek gönderi veya dizi)
+
+Nerede yayınlanır: X, Threads. X'te tek bir gönderi 280 karakterle sınırlıdır.
 
 ## Formatlar
 - `single`: tek gönderi, 280 karakter sınırı
