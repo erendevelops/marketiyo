@@ -146,8 +146,9 @@ export function CalendarGrid({ initialSlots, ideas, campaigns, language }: Props
   }
 
   return (
-    <main className="mx-auto max-w-6xl p-8">
-      <h1 className="mb-2 text-2xl font-semibold">{dict.calendarTitle}</h1>
+    <main className="mx-auto max-w-6xl px-6 py-6">
+      <div className="max-w-6xl">
+      <h1 className="mb-1 text-lg font-semibold">{dict.calendarTitle}</h1>
       <p className="mb-6 text-sm text-neutral-500">{dict.calendarIntro}</p>
 
       <div className="mb-6 flex flex-wrap items-center gap-3">
@@ -211,7 +212,7 @@ export function CalendarGrid({ initialSlots, ideas, campaigns, language }: Props
               >
                 <Link
                   href={`/ads/${campaign.id}`}
-                  className="font-medium transition-colors hover:text-white"
+                  className="font-medium transition-colors hover:text-neutral-50"
                 >
                   {campaign.name}
                 </Link>
@@ -333,7 +334,7 @@ export function CalendarGrid({ initialSlots, ideas, campaigns, language }: Props
       </div>
 
       {pickerDate && (
-        <section className="mt-6 rounded border border-neutral-800 p-5">
+        <section className="mt-6 rounded border border-neutral-800 p-4">
           <div className="mb-3 flex items-center justify-between">
             <h2 className="text-sm font-semibold">
               {dict.calendarPickFor} {pickerDate}
@@ -362,6 +363,7 @@ export function CalendarGrid({ initialSlots, ideas, campaigns, language }: Props
           </ul>
         </section>
       )}
+      </div>
     </main>
   );
 }

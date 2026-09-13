@@ -25,7 +25,7 @@ export function NavLinks({ items, lockedHint }: { items: NavItem[]; lockedHint: 
   const activeHref = target ?? items.find((item) => pathname.startsWith(item.href))?.href ?? null;
 
   return (
-    <ul className="flex flex-wrap gap-1">
+    <ul className="flex flex-wrap gap-0.5">
       {items.map((item) => {
         if (item.locked) {
           return (
@@ -33,7 +33,7 @@ export function NavLinks({ items, lockedHint }: { items: NavItem[]; lockedHint: 
               <span
                 aria-disabled="true"
                 title={lockedHint}
-                className="inline-flex cursor-not-allowed items-center gap-1.5 rounded px-3 py-1.5 text-neutral-700"
+                className="inline-flex cursor-not-allowed items-center gap-1.5 rounded px-2.5 py-1 text-neutral-600"
               >
                 <svg aria-hidden viewBox="0 0 16 16" className="h-3 w-3 fill-current">
                   <path d="M5 7V5a3 3 0 1 1 6 0v2h.5A1.5 1.5 0 0 1 13 8.5v5A1.5 1.5 0 0 1 11.5 15h-7A1.5 1.5 0 0 1 3 13.5v-5A1.5 1.5 0 0 1 4.5 7H5Zm1.5 0h3V5a1.5 1.5 0 0 0-3 0v2Z" />
@@ -61,10 +61,10 @@ export function NavLinks({ items, lockedHint }: { items: NavItem[]; lockedHint: 
                 setTarget(item.href);
                 startTransition(() => router.push(item.href));
               }}
-              className={`inline-flex items-center gap-2 rounded px-3 py-1.5 transition-colors ${
+              className={`inline-flex items-center gap-2 rounded border px-2.5 py-1 transition-colors ${
                 active
-                  ? 'bg-neutral-800 text-neutral-50'
-                  : 'text-neutral-400 hover:bg-neutral-900 hover:text-neutral-100'
+                  ? 'border-neutral-700 bg-neutral-900 text-neutral-50'
+                  : 'border-transparent text-neutral-400 hover:bg-neutral-900 hover:text-neutral-100'
               }`}
             >
               {item.label}

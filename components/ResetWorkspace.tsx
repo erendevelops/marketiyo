@@ -44,7 +44,7 @@ export function ResetWorkspace({ language }: { language: Language }) {
   }
 
   return (
-    <section className="mt-16 rounded border border-red-950 p-5">
+    <section className="mt-16 rounded border border-red-950 p-4">
       <h2 className="mb-1 text-sm font-semibold text-red-300">{dict.resetTitle}</h2>
       <p className="mb-4 text-sm text-neutral-500">{dict.resetIntro}</p>
 

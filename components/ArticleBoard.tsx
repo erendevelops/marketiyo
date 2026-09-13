@@ -82,11 +82,12 @@ export function ArticleBoard({ initial, language }: Props) {
   }
 
   return (
-    <main className="mx-auto max-w-4xl p-8">
-      <h1 className="mb-2 text-2xl font-semibold">{dict.seoTitle}</h1>
-      <p className="mb-8 text-sm text-neutral-500">{dict.seoIntro}</p>
+    <main className="mx-auto max-w-6xl px-6 py-6">
+      <div className="max-w-4xl">
+      <h1 className="mb-1 text-lg font-semibold">{dict.seoTitle}</h1>
+      <p className="mb-6 border-b border-neutral-800 pb-4 text-sm text-neutral-500">{dict.seoIntro}</p>
 
-      <section className="mb-8 rounded border border-neutral-800 p-5">
+      <section className="mb-8 rounded border border-neutral-800 p-4">
         <div className="flex flex-wrap items-center gap-3">
           <input
             type="number"
@@ -185,6 +186,7 @@ export function ArticleBoard({ initial, language }: Props) {
           ))}
         </ul>
       )}
+      </div>
     </main>
   );
 }

@@ -4,31 +4,31 @@ import type { ReactNode } from 'react';
 
 /** One set of button styles, so hover and disabled behave the same everywhere. */
 export const primaryButton =
-  'cursor-pointer rounded bg-neutral-100 px-4 py-2 font-medium text-neutral-900 transition-colors hover:bg-neutral-300 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-neutral-100';
+  'cursor-pointer rounded bg-neutral-100 px-3 py-1.5 text-sm font-medium text-neutral-900 transition-colors hover:bg-neutral-300 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-neutral-100';
 
 export const secondaryButton =
-  'cursor-pointer rounded border border-neutral-700 px-3 py-1 text-sm text-neutral-200 transition-colors hover:border-neutral-400 hover:bg-neutral-800 hover:text-white disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-neutral-700 disabled:hover:bg-transparent';
+  'cursor-pointer rounded border border-neutral-700 px-3 py-1 text-sm text-neutral-200 transition-colors hover:border-neutral-400 hover:bg-neutral-800 hover:text-neutral-50 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-neutral-700 disabled:hover:bg-transparent';
 
 export const subtleButton =
-  'cursor-pointer rounded border border-neutral-800 px-3 py-1 text-sm text-neutral-400 transition-colors hover:border-neutral-500 hover:bg-neutral-800 hover:text-white disabled:cursor-not-allowed disabled:opacity-40';
+  'cursor-pointer rounded border border-neutral-800 px-3 py-1 text-sm text-neutral-400 transition-colors hover:border-neutral-500 hover:bg-neutral-800 hover:text-neutral-50 disabled:cursor-not-allowed disabled:opacity-40';
 
 export const tinyButton =
-  'cursor-pointer rounded border border-neutral-800 px-2 py-0.5 text-xs text-neutral-400 transition-colors hover:border-neutral-500 hover:bg-neutral-700 hover:text-white';
+  'cursor-pointer rounded border border-neutral-800 px-2 py-0.5 text-xs text-neutral-400 transition-colors hover:border-neutral-500 hover:bg-neutral-700 hover:text-neutral-50';
 
 export const linkButton =
-  'cursor-pointer text-xs text-neutral-500 underline-offset-2 transition-colors hover:text-white hover:underline';
+  'cursor-pointer text-xs text-neutral-500 underline-offset-2 transition-colors hover:text-neutral-50 hover:underline';
 
 export const numberInputClass =
   'w-14 rounded border border-neutral-700 bg-neutral-900 px-1.5 py-1 text-center text-sm text-neutral-100 transition-colors hover:border-neutral-500 focus:border-neutral-400 focus:outline-none';
 
 export const inputClass =
-  'w-full rounded border border-neutral-700 bg-neutral-900 p-2 text-neutral-100 transition-colors placeholder:text-neutral-600 hover:border-neutral-500 focus:border-neutral-400 focus:outline-none';
+  'w-full rounded border border-neutral-700 bg-neutral-900 px-2 py-1.5 text-sm text-neutral-100 transition-colors placeholder:text-neutral-600 hover:border-neutral-500 focus:border-neutral-400 focus:outline-none';
 
 /** Checkboxes and radios, plus the label that wraps them. */
 export const checkClass = 'cursor-pointer accent-neutral-200';
 
 export const checkLabelClass =
-  'flex cursor-pointer items-center gap-2 text-sm text-neutral-300 transition-colors hover:text-white';
+  'flex cursor-pointer items-center gap-2 text-sm text-neutral-300 transition-colors hover:text-neutral-50';
 
 /**
  * Selects need the pointer cursor and the same feedback as buttons. The base
@@ -36,7 +36,7 @@ export const checkLabelClass =
  * nothing, because Tailwind emits w-full later in the stylesheet.
  */
 export const selectBase =
-  'cursor-pointer rounded border border-neutral-700 bg-neutral-900 p-2 text-neutral-100 transition-colors hover:border-neutral-400 hover:bg-neutral-800 focus:border-neutral-400 focus:outline-none';
+  'cursor-pointer rounded border border-neutral-700 bg-neutral-900 px-2 py-1.5 text-sm text-neutral-100 transition-colors hover:border-neutral-400 hover:bg-neutral-800 focus:border-neutral-400 focus:outline-none';
 
 export const selectClass = `w-full ${selectBase}`;
 
@@ -68,8 +68,10 @@ export function Section({
   children: ReactNode;
 }) {
   return (
-    <section className="mb-10">
-      <h2 className="mb-1 text-base font-semibold text-neutral-100">{title}</h2>
+    <section className="mb-8">
+      <h2 className="mb-2 border-b border-neutral-800 pb-1 text-xs font-semibold uppercase tracking-wide text-neutral-400">
+        {title}
+      </h2>
       {hint && <p className="mb-3 text-sm text-neutral-500">{hint}</p>}
       {!hint && <div className="mb-3" />}
       {children}

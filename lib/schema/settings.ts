@@ -4,6 +4,9 @@ import { languageSchema } from './brand';
 export const providerIdSchema = z.enum(['claude-code', 'gemini', 'stub']);
 export type ProviderId = z.infer<typeof providerIdSchema>;
 
+export const themeSchema = z.enum(['dark', 'light']);
+export type Theme = z.infer<typeof themeSchema>;
+
 /**
  * Models offered in setup, recommended first. Free tier limits differ a lot:
  * the Flash Lite models allow 500 requests a day, the Flash models only 20.
@@ -31,6 +34,7 @@ export const settingsSchema = z.object({
     .transform((model) => (isRetiredGeminiModel(model) ? defaultGeminiModel : model)),
   claudeBinary: z.string().default('claude'),
   interfaceLanguage: languageSchema.default('tr'),
+  theme: themeSchema.default('dark'),
   onboarded: z.boolean().default(false),
 });
 export type Settings = z.infer<typeof settingsSchema>;

@@ -29,7 +29,7 @@ function Card({
   children: ReactNode;
 }) {
   return (
-    <section className="flex flex-col rounded border border-neutral-800 p-5">
+    <section className="flex flex-col rounded border border-neutral-800 p-4">
       <h2 className="mb-4 text-xs uppercase tracking-wide text-neutral-500">{title}</h2>
       <div className="flex-1">{children}</div>
       {action && (
@@ -44,7 +44,7 @@ function Card({
 function Stat({ value, label }: { value: number; label: string }) {
   return (
     <div>
-      <p className="text-2xl font-semibold tabular-nums text-neutral-100">{value}</p>
+      <p className="font-mono text-xl font-semibold text-neutral-100">{value}</p>
       <p className="text-xs text-neutral-500">{label}</p>
     </div>
   );
@@ -73,9 +73,10 @@ export function Dashboard({ summary, language }: { summary: DashboardSummary; la
   ];
 
   return (
-    <main className="mx-auto max-w-5xl p-8">
+    <main className="mx-auto max-w-6xl px-6 py-6">
+      <div className="max-w-5xl">
       <p className="mb-1 text-sm text-neutral-500">{dict.dashGreeting}</p>
-      <h1 className="mb-8 text-2xl font-semibold">
+      <h1 className="mb-5 text-lg font-semibold">
         {summary.productName ?? dict.dashNoBrand}
       </h1>
 
@@ -166,7 +167,7 @@ export function Dashboard({ summary, language }: { summary: DashboardSummary; la
                 <li key={campaign.id}>
                   <Link
                     href={`/ads/${campaign.id}`}
-                    className="text-neutral-300 transition-colors hover:text-white"
+                    className="text-neutral-300 transition-colors hover:text-neutral-50"
                   >
                     {campaign.name}
                   </Link>
@@ -182,6 +183,7 @@ export function Dashboard({ summary, language }: { summary: DashboardSummary; la
             <Stat value={summary.articles.drafted} label={dict.dashBlogDrafted} />
           </div>
         </Card>
+      </div>
       </div>
     </main>
   );

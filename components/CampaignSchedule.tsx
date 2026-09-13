@@ -47,7 +47,7 @@ export function CampaignSchedule({
   }
 
   return (
-    <section className="mb-8 rounded border border-neutral-800 p-5">
+    <section className="mb-8 rounded border border-neutral-800 p-4">
       <div className="flex flex-wrap items-end gap-4">
         <div className="w-52">
           <Field label={dict.adsStartDate} hint={dict.adsStartDateHint}>

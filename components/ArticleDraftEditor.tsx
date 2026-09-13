@@ -48,12 +48,13 @@ export function ArticleDraftEditor({ article, initialMarkdown, language }: Props
   }
 
   return (
-    <main className="mx-auto max-w-3xl p-8">
+    <main className="mx-auto max-w-6xl px-6 py-6">
+      <div className="max-w-3xl">
       <Link href="/seo" className="mb-6 inline-block text-sm text-neutral-400 transition-colors hover:text-neutral-100">
         {dict.seoBackToList}
       </Link>
 
-      <h1 className="mb-2 text-2xl font-semibold leading-snug">{article.title}</h1>
+      <h1 className="mb-1 text-lg font-semibold leading-snug">{article.title}</h1>
 
       <div className="mb-6 flex flex-wrap gap-2 text-xs text-neutral-500">
         <span className="rounded bg-neutral-900 px-2 py-1">
@@ -108,6 +109,7 @@ export function ArticleDraftEditor({ article, initialMarkdown, language }: Props
           onChange={(event) => setMarkdown(event.target.value)}
         />
       )}
+      </div>
     </main>
   );
 }

@@ -38,9 +38,10 @@ export function CampaignList({ initial, brand, language }: Props) {
   }
 
   return (
-    <main className="mx-auto max-w-4xl p-8">
-      <h1 className="mb-2 text-2xl font-semibold">{dict.adsTitle}</h1>
-      <p className="mb-8 text-sm text-neutral-500">{dict.adsIntro}</p>
+    <main className="mx-auto max-w-6xl px-6 py-6">
+      <div className="max-w-4xl">
+      <h1 className="mb-1 text-lg font-semibold">{dict.adsTitle}</h1>
+      <p className="mb-6 border-b border-neutral-800 pb-4 text-sm text-neutral-500">{dict.adsIntro}</p>
 
       <CampaignForm
         brand={brand}
@@ -93,6 +94,7 @@ export function CampaignList({ initial, brand, language }: Props) {
           ))}
         </ul>
       )}
+      </div>
     </main>
   );
 }

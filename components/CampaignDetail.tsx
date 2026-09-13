@@ -70,7 +70,7 @@ function AdSetCard({
   const tiktok = set.creatives.tiktok;
 
   return (
-    <section className="mb-6 rounded border border-neutral-800 p-5">
+    <section className="mb-6 rounded border border-neutral-800 p-4">
       <h3 className="mb-1 text-lg font-semibold">{set.angle}</h3>
 
       <p className="mb-4 text-sm text-neutral-400">
@@ -179,12 +179,13 @@ export function CampaignDetail({
   const dict = t(language);
 
   return (
-    <main className="mx-auto max-w-3xl p-8">
+    <main className="mx-auto max-w-6xl px-6 py-6">
+      <div className="max-w-3xl">
       <Link href="/ads" className="mb-6 inline-block text-sm text-neutral-400 transition-colors hover:text-neutral-100">
         {dict.adsBackToList}
       </Link>
 
-      <h1 className="mb-2 text-2xl font-semibold">{campaign.name}</h1>
+      <h1 className="mb-1 text-lg font-semibold">{campaign.name}</h1>
       <p className="mb-1 text-sm text-neutral-500">
         {campaignObjectiveLabel(dict, campaign.objective)} &middot; {campaign.audienceRef} &middot;{' '}
         {campaign.networks.map((network) => adNetworkLabel(dict, network)).join(', ')}
@@ -196,7 +197,7 @@ export function CampaignDetail({
 
       <CampaignSchedule campaign={campaign} language={language} />
 
-      <section className="mb-8 rounded border border-neutral-800 p-5">
+      <section className="mb-8 rounded border border-neutral-800 p-4">
         <h2 className="mb-2 text-sm font-semibold uppercase tracking-wide text-neutral-400">
           {dict.adsPositioning}
         </h2>
@@ -206,6 +207,7 @@ export function CampaignDetail({
       {campaign.adSets.map((set) => (
         <AdSetCard key={set.id} set={set} campaign={campaign} language={language} />
       ))}
+      </div>
     </main>
   );
 }

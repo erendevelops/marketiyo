@@ -1,11 +1,20 @@
 import Link from 'next/link';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { NavLinks } from '@/components/NavLinks';
+import { ThemeSwitcher } from '@/components/ThemeSwitcher';
 import { t } from '@/lib/i18n';
 import { canAccess, type AppArea, type OnboardingStatus } from '@/lib/onboarding/status';
-import type { Language } from '@/lib/schema';
+import type { Language, Theme } from '@/lib/schema';
 
-export function Nav({ language, onboarding }: { language: Language; onboarding: OnboardingStatus }) {
+export function Nav({
+  language,
+  theme,
+  onboarding,
+}: {
+  language: Language;
+  theme: Theme;
+  onboarding: OnboardingStatus;
+}) {
   const dict = t(language);
 
   const entries: { href: string; label: string; area: AppArea }[] = [
@@ -25,19 +34,30 @@ export function Nav({ language, onboarding }: { language: Language; onboarding: 
   }));
 
   return (
-    <nav className="border-b border-neutral-900">
-      <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-6 gap-y-2 px-6 py-3 text-sm">
+    <nav className="sticky top-0 z-20 border-b border-neutral-800 bg-neutral-950">
+      <div className="mx-auto flex min-h-10 max-w-6xl flex-wrap items-center gap-x-4 gap-y-1 px-6 py-1.5">
         <Link
           href="/"
           aria-label={dict.navDashboard}
-          className="rounded px-2 py-1 font-semibold transition-colors hover:bg-neutral-900"
+          className="rounded px-1.5 py-0.5 font-mono text-xs font-bold uppercase tracking-wider text-neutral-100 transition-colors hover:bg-neutral-900"
         >
           {dict.appName}
         </Link>
 
+        <span aria-hidden className="h-4 w-px bg-neutral-800" />
+
         <NavLinks items={items} lockedHint={dict.onboardingLockedHint} />
 
-        <div className="ml-auto pl-6">
+        <div className="ml-auto flex items-center gap-2">
+          <ThemeSwitcher
+            current={theme}
+            labels={{
+              dark: dict.themeDark,
+              light: dict.themeLight,
+              toDark: dict.themeToDark,
+              toLight: dict.themeToLight,
+            }}
+          />
           <LanguageSwitcher current={language} />
         </div>
       </div>

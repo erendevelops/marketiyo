@@ -24,9 +24,10 @@ export function OnboardingChecklist({
   };
 
   return (
-    <main className="mx-auto max-w-2xl p-8">
-      <h1 className="mb-2 text-2xl font-semibold">{dict.onboardingTitle}</h1>
-      <p className="mb-10 text-sm leading-relaxed text-neutral-500">{dict.onboardingIntro}</p>
+    <main className="mx-auto max-w-6xl px-6 py-6">
+      <div className="max-w-2xl">
+      <h1 className="mb-1 text-lg font-semibold">{dict.onboardingTitle}</h1>
+      <p className="mb-6 border-b border-neutral-800 pb-4 text-sm text-neutral-500">{dict.onboardingIntro}</p>
 
       <ol className="space-y-4">
         {status.steps.map((step, index) => {
@@ -36,7 +37,7 @@ export function OnboardingChecklist({
             <li
               key={step.id}
               aria-current={isCurrent ? 'step' : undefined}
-              className={`flex gap-4 rounded border p-5 ${
+              className={`flex gap-4 rounded border p-4 ${
                 isCurrent
                   ? 'border-neutral-600 bg-neutral-900/50'
                   : step.done
@@ -47,7 +48,7 @@ export function OnboardingChecklist({
               <span
                 className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-semibold ${
                   step.done
-                    ? 'bg-emerald-700 text-white'
+                    ? 'bg-emerald-700 text-neutral-50'
                     : isCurrent
                       ? 'bg-neutral-100 text-neutral-900'
                       : 'bg-neutral-800 text-neutral-500'
@@ -75,6 +76,7 @@ export function OnboardingChecklist({
           );
         })}
       </ol>
+      </div>
     </main>
   );
 }

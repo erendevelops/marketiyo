@@ -47,11 +47,12 @@ export function GuideView({ language }: { language: Language }) {
   const sections = guideSections(language);
 
   return (
-    <main className="mx-auto max-w-3xl p-8">
-      <h1 className="mb-2 text-2xl font-semibold">{dict.guideTitle}</h1>
-      <p className="mb-10 text-sm text-neutral-500">{dict.guideIntro}</p>
+    <main className="mx-auto max-w-6xl px-6 py-6">
+      <div className="max-w-3xl">
+      <h1 className="mb-1 text-lg font-semibold">{dict.guideTitle}</h1>
+      <p className="mb-6 border-b border-neutral-800 pb-4 text-sm text-neutral-500">{dict.guideIntro}</p>
 
-      <nav className="mb-12 rounded border border-neutral-900 p-5">
+      <nav className="mb-8 rounded border border-neutral-900 p-4">
         <h2 className="mb-3 text-xs uppercase tracking-wide text-neutral-500">
           {dict.guideContents}
         </h2>
@@ -71,13 +72,14 @@ export function GuideView({ language }: { language: Language }) {
       </nav>
 
       {sections.map((section) => (
-        <section key={section.id} id={section.id} className="mb-12 scroll-mt-20">
+        <section key={section.id} id={section.id} className="mb-8 scroll-mt-20">
           <h2 className="mb-4 text-lg font-semibold text-neutral-100">{section.title}</h2>
           {section.blocks.map((block, index) => (
             <Block key={index} block={block} />
           ))}
         </section>
       ))}
+      </div>
     </main>
   );
 }

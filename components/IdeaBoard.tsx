@@ -79,9 +79,10 @@ export function IdeaBoard({ initial, language, activePlatforms }: Props) {
   }
 
   return (
-    <main className="mx-auto max-w-5xl p-8">
-      <h1 className="mb-2 text-2xl font-semibold">{dict.ideasTitle}</h1>
-      <p className="mb-8 text-sm text-neutral-500">{dict.ideasIntro}</p>
+    <main className="mx-auto max-w-6xl px-6 py-6">
+      <div className="max-w-5xl">
+      <h1 className="mb-1 text-lg font-semibold">{dict.ideasTitle}</h1>
+      <p className="mb-6 border-b border-neutral-800 pb-4 text-sm text-neutral-500">{dict.ideasIntro}</p>
 
       <div className="mb-8 flex flex-wrap items-end gap-4 rounded border border-neutral-800 p-4">
         <div className="w-56">
@@ -168,6 +169,7 @@ export function IdeaBoard({ initial, language, activePlatforms }: Props) {
           ))}
         </div>
       )}
+      </div>
     </main>
   );
 }

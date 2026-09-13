@@ -81,9 +81,10 @@ export function BrandForm({ initial, language }: Props) {
   };
 
   return (
-    <main className="mx-auto max-w-3xl p-8">
-      <h1 className="mb-2 text-2xl font-semibold">{dict.brandTitle}</h1>
-      <p className="mb-10 text-sm text-neutral-500">{dict.brandIntro}</p>
+    <main className="mx-auto max-w-6xl px-6 py-6">
+      <div className="max-w-3xl">
+      <h1 className="mb-1 text-lg font-semibold">{dict.brandTitle}</h1>
+      <p className="mb-6 border-b border-neutral-800 pb-4 text-sm text-neutral-500">{dict.brandIntro}</p>
 
       <Section title={dict.brandDraftLabel} hint={dict.brandDraftHint}>
         <textarea
@@ -273,6 +274,7 @@ export function BrandForm({ initial, language }: Props) {
           {dict.brandNextDashboard}
         </Link>
       )}
+      </div>
     </main>
   );
 }

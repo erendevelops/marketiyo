@@ -14,8 +14,9 @@ export function PageSkeleton({
   panel?: boolean;
 }) {
   return (
-    <main className={`mx-auto ${width} p-8`} aria-busy="true">
-      <div className={`${bar} mb-3 h-7 w-56`} />
+    <main className="mx-auto max-w-6xl px-6 py-6" aria-busy="true">
+      <div className={width}>
+      <div className={`${bar} mb-2 h-6 w-48`} />
       <div className={`${bar} mb-8 h-4 w-4/5 max-w-lg`} />
 
       {panel && <div className={`${bar} mb-8 h-28 w-full`} />}
@@ -24,6 +25,7 @@ export function PageSkeleton({
         {Array.from({ length: rows }, (_, index) => (
           <div key={index} className={`${bar} h-24 w-full`} />
         ))}
+      </div>
       </div>
     </main>
   );

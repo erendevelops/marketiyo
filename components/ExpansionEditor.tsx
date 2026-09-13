@@ -47,12 +47,13 @@ export function ExpansionEditor({ idea, initialMarkdown, language }: Props) {
   }
 
   return (
-    <main className="mx-auto max-w-3xl p-8">
+    <main className="mx-auto max-w-6xl px-6 py-6">
+      <div className="max-w-3xl">
       <Link href="/ideas" className="mb-6 inline-block text-sm text-neutral-400 transition-colors hover:text-neutral-100">
         {dict.backToIdeas}
       </Link>
 
-      <h1 className="mb-2 text-2xl font-semibold leading-snug">{idea.hook}</h1>
+      <h1 className="mb-1 text-lg font-semibold leading-snug">{idea.hook}</h1>
       <p className="mb-6 text-neutral-400">{idea.premise}</p>
 
       <div className="mb-4 flex flex-wrap gap-2">
@@ -96,6 +97,7 @@ export function ExpansionEditor({ idea, initialMarkdown, language }: Props) {
           onChange={(event) => setMarkdown(event.target.value)}
         />
       )}
+      </div>
     </main>
   );
 }
