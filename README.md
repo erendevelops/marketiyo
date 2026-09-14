@@ -13,12 +13,11 @@
 
 - [Ne yapar](#ne-yapar)
 - [Nasıl çalışır](#nasıl-çalışır)
-- [Gereksinimler](#gereksinimler)
-- [Kurulum](#kurulum)
-  - [1. Uygulamayı indir ve başlat](#1-uygulamayı-indir-ve-başlat)
-  - [2a. Claude Code ile bağlan](#2a-claude-code-ile-bağlan)
-  - [2b. Gemini ile bağlan](#2b-gemini-ile-bağlan)
-  - [3. Marka profilini oluştur](#3-marka-profilini-oluştur)
+- [Hangi kurulum yolu sana göre?](#hangi-kurulum-yolu-sana-göre)
+- [Adım adım kurulum (yazılım bilmeyenler için)](#adım-adım-kurulum-yazılım-bilmeyenler-için)
+- [Hızlı kurulum (geliştiriciler için)](#hızlı-kurulum-geliştiriciler-için)
+- [Claude Code bağlantısı](#claude-code-bağlantısı)
+- [Gemini bağlantısı](#gemini-bağlantısı)
 - [Günlük kullanım](#günlük-kullanım)
 - [Güncelleme](#güncelleme)
 - [Verilerin nerede](#verilerin-nerede)
@@ -50,28 +49,186 @@ Tarayıcı  ->  Yerel sunucu (npm run dev)  ->  claude komutu  veya  Gemini API
 ```
 
 - Uygulama yalnızca senin bilgisayarında çalışır. Hesap, bulut veya
-  veritabanı yok.
+  veritabanı yok. Bir web sitesi gibi tarayıcıda açılır ama internette değil,
+  kendi bilgisayarında durur.
 - **Claude Code** seçersen uygulama bilgisayarındaki `claude` komutunu
   çalıştırır ve orada giriş yapılmış aboneliğini kullanır. API anahtarı
   gerekmez, uygulama Anthropic'e kendisi bağlanmaz.
 - **Gemini** seçersen yerel sunucu, kendi anahtarınla doğrudan Google'a istek
   atar. Anahtar tarayıcıya hiç gönderilmez.
 
-## Gereksinimler
+## Hangi kurulum yolu sana göre?
 
-- **Node.js 20 veya üzeri.** [nodejs.org](https://nodejs.org)'dan LTS sürümünü
-  kur. Kontrol etmek için: `node -v`
-- **Git.** [git-scm.com](https://git-scm.com). İstersen repoyu zip olarak da
-  indirebilirsin.
-- İçeriği yazacak bir model, ikisinden biri:
-  - **Claude Code** ve bir Claude **Pro veya Max** aboneliği
-  - **Gemini API anahtarı**, [Google AI Studio](https://aistudio.google.com/apikey)'dan ücretsiz
+| Durumun | Git |
+| --- | --- |
+| Terminal, Git, Node.js gibi kavramlar sana yabancı | [Adım adım kurulum](#adım-adım-kurulum-yazılım-bilmeyenler-için) |
+| Bu araçları zaten kullanıyorsun | [Hızlı kurulum](#hızlı-kurulum-geliştiriciler-için) |
 
-## Kurulum
+Yapay zekâ tarafında en kolayı **Gemini**: bir Google hesabı yeterli, ücretsiz
+ve ek program kurmak gerekmez. Claude Pro veya Max aboneliğin varsa
+**Claude Code** da kullanabilirsin, bir program daha kurman gerekir.
 
-### 1. Uygulamayı indir ve başlat
+## Adım adım kurulum (yazılım bilmeyenler için)
 
-Bir terminal aç (Windows'ta PowerShell, macOS'ta Terminal) ve sırayla çalıştır:
+Toplam 15 ila 20 dakika sürer. Her adımı sırayla yap, atlama.
+
+### Başlamadan önce
+
+**Gerekenler**
+
+- Windows 10, Windows 11 veya macOS yüklü bir bilgisayar
+- İnternet bağlantısı ve yaklaşık 1 GB boş alan
+- Bir Google hesabı (Gemini için) **ya da** Claude Pro veya Max aboneliği
+
+**Terminal nedir?** Bilgisayara yazıyla komut verdiğin, siyah veya beyaz bir
+pencere. Bu kılavuzda yapman gereken tek şey, verilen komutu kopyalayıp bu
+pencereye yapıştırmak ve **Enter**'a basmak.
+
+- **Yapıştırma:** Windows'ta **Ctrl+V** veya pencereye sağ tıkla. macOS'ta **Cmd+V**.
+- Komutu yazdıktan sonra her zaman **Enter**'a bas.
+- Bir komut çalışırken pencerede yazılar akar. Satır başında yeniden yazı
+  yazabileceğin imleç görünene kadar bekle.
+- Sarı veya kırmızı `warn` (uyarı) yazıları çoğu zaman sorun değildir. Gerçek
+  bir hata olursa [Sorun giderme](#sorun-giderme) bölümüne bak.
+
+### Adım 1: Node.js'i kur
+
+Marketiyo'yu çalıştıran program Node.js'dir.
+
+1. <https://nodejs.org> adresine git.
+2. **LTS** yazan sürümün indirme düğmesine bas.
+3. İnen dosyayı aç ve kurulumu varsayılan ayarlarla bitir. Her ekranda
+   **Next / İleri**, sonunda **Install / Yükle** demen yeterli.
+4. Kurulum bittikten sonra bir terminal aç ve kontrol et:
+   - **Windows:** Başlat menüsüne `PowerShell` yaz ve aç.
+   - **macOS:** **Cmd+Boşluk**'a bas, `Terminal` yaz ve Enter.
+
+   ```bash
+   node -v
+   ```
+
+   `v22.12.0` gibi bir sürüm numarası görüyorsan tamam. Bu pencereyi kapatabilirsin.
+
+### Adım 2: Marketiyo'yu indir
+
+1. <https://github.com/erendevelops/marketiyo> adresine git.
+2. Yeşil **Code** düğmesine bas, açılan menüden **Download ZIP**'i seç.
+3. İnen `marketiyo-main.zip` dosyasını bul (genelde **İndirilenler** klasöründe).
+4. Dosyayı aç:
+   - **Windows:** Dosyaya sağ tıkla, **Tümünü ayıkla**'yı seç.
+   - **macOS:** Dosyaya çift tıkla.
+5. Çıkan `marketiyo-main` klasörünü kolay bulacağın bir yere taşı, örneğin
+   **Belgeler**. Bu klasörü silme, uygulama ve verilerin burada duracak.
+
+### Adım 3: Klasörün içinde terminal aç
+
+Komutların Marketiyo klasöründe çalışması gerekiyor.
+
+**Windows 11**
+
+1. `marketiyo-main` klasörünü aç. İçinde `package.json`, `README.md` gibi
+   dosyalar görmelisin.
+2. Klasörün boş bir yerine sağ tıkla ve **Terminalde aç**'ı seç.
+
+**Windows 10**
+
+1. `marketiyo-main` klasörünü aç.
+2. Üstteki adres çubuğuna tıkla, oradaki yazıyı silip `powershell` yaz ve Enter.
+
+**macOS**
+
+1. **Terminal**'i aç.
+2. `cd ` yaz (sonunda bir boşluk olsun), Enter'a **basma**.
+3. Finder'dan `marketiyo-main` klasörünü sürükleyip Terminal penceresine bırak.
+   Klasörün yolu yazılır.
+4. Enter'a bas.
+
+Doğru yerde olup olmadığını anlamak için şunu çalıştır. Listede `package.json`
+görmelisin:
+
+```bash
+ls
+```
+
+### Adım 4: Gerekli dosyaları indir
+
+Bu komutu yalnızca ilk kurulumda bir kez çalıştırırsın. İnternet hızına göre
+1 ila 5 dakika sürer:
+
+```bash
+npm install
+```
+
+Windows'ta **"betiklerin çalıştırılması bu sistemde devre dışı"** gibi kırmızı
+bir hata görürsen komutu şöyle yaz, sonraki adımlarda da `npm` yerine
+`npm.cmd` kullan:
+
+```bash
+npm.cmd install
+```
+
+### Adım 5: Uygulamayı başlat
+
+```bash
+npm run dev
+```
+
+Birkaç saniye sonra `Local: http://localhost:3000` yazısı çıkar. Tarayıcında
+<http://localhost:3000> adresini aç. Marketiyo açılır.
+
+**Önemli:** Bu terminal penceresi açık kaldığı sürece uygulama çalışır.
+Pencereyi kapatırsan uygulama da kapanır. Kullanırken pencereyi küçültüp
+kenarda bırak.
+
+### Adım 6: Yapay zekâyı bağla
+
+İkisinden birini seç.
+
+#### Seçenek A: Gemini (en kolay, ücretsiz)
+
+1. <https://aistudio.google.com/apikey> adresine git ve Google hesabınla giriş yap.
+2. Kullanım koşullarını okuyup kabul et.
+3. **Create API key / API anahtarı oluştur** düğmesine bas.
+4. Oluşan uzun anahtarın yanındaki kopyala simgesine bas.
+5. Marketiyo'da **Kurulum** sayfasını aç, **Gemini, kendi API anahtarınla**'yı seç.
+6. Anahtarı **API anahtarı** kutusuna yapıştır. Model olarak önerileni bırak.
+7. **Kaydet ve bağlantıyı sına**'ya bas. Yeşil **Bağlantı kuruldu** yazısını
+   görürsen tamam.
+
+Anahtarını kimseyle paylaşma. Ücretsiz anahtar günde yaklaşık 500 üretime yeter.
+
+#### Seçenek B: Claude aboneliğinle
+
+Claude Pro veya Max aboneliğin varsa bunu kullanabilirsin. Bir program daha
+kurman gerekir. [Claude Code bağlantısı](#claude-code-bağlantısı) bölümündeki
+adımları izle, sonra buraya dön.
+
+### Adım 7: Marka profilini oluştur
+
+1. Bağlantı kurulunca **Sonraki adım: marka profili** düğmesine bas.
+2. En üstteki kutuya ürününü birkaç cümleyle anlat: ne yapıyor, kime yönelik,
+   neden farklı.
+3. **Taslağı oluştur**'a bas, alanlar senin için doldurulur.
+4. Yanlış veya eksik olanları düzelt ve **Marka profilini kaydet**'e bas.
+
+Artık tüm bölümler açık. Ana sayfa her zaman sıradaki adımı gösterir.
+
+### Sonraki açılışlarda
+
+Kurulum bir kez yapılır. Marketiyo'yu her kullanmak istediğinde:
+
+1. [Adım 3](#adım-3-klasörün-içinde-terminal-aç)'teki gibi `marketiyo-main`
+   klasöründe terminal aç.
+2. `npm run dev` yaz ve Enter.
+3. Tarayıcıda <http://localhost:3000> adresini aç.
+
+**Kapatmak için** terminal penceresinde **Ctrl+C**'ye bas ya da pencereyi kapat.
+Verilerin kaybolmaz.
+
+## Hızlı kurulum (geliştiriciler için)
+
+Gereksinimler: Node.js 20+, Git, ve Claude Code (Pro veya Max) ya da bir Gemini
+API anahtarı.
 
 ```bash
 git clone https://github.com/erendevelops/marketiyo.git
@@ -80,87 +237,81 @@ npm install
 npm run dev
 ```
 
-Terminalde `Local: http://localhost:3000` yazısını görünce tarayıcıda
-<http://localhost:3000> adresini aç. Bu terminal açık kaldığı sürece uygulama
-çalışır. Kapatmak için terminalde **Ctrl+C**.
+<http://localhost:3000> adresini aç, **Kurulum** sayfasında motoru seç, sonra
+marka profilini doldur. 3000 portu doluysa: `npm run dev -- -p 3001`
 
-3000 portu doluysa: `npm run dev -- -p 3001`
+## Claude Code bağlantısı
 
-### 2a. Claude Code ile bağlan
+Claude Code, Anthropic'in terminalde çalışan programıdır. Marketiyo içerik
+üretirken bu programı çalıştırır ve senin aboneliğini kullanır. Claude masaüstü
+uygulaması bunun yerine geçmez.
 
 **1. Claude Code'u kur.**
 
-Windows (PowerShell):
+**Windows:** Önce <https://git-scm.com/downloads/win> adresinden **Git for
+Windows**'u indirip varsayılan ayarlarla kur, Claude Code buna ihtiyaç duyar.
+Sonra PowerShell'i aç ve şunu çalıştır:
 
 ```powershell
 irm https://claude.ai/install.ps1 | iex
 ```
 
-macOS / Linux:
+**macOS / Linux:** Terminal'i aç ve şunu çalıştır:
 
 ```bash
 curl -fsSL https://claude.ai/install.sh | bash
 ```
 
-**2. Bir kez çalıştır ve giriş yap.** Terminale `claude` yaz, açılan tarayıcı
-sayfasında Pro veya Max hesabınla giriş yap. Giriş bir kez yapılır, sonra
-hatırlanır. Çıkmak için `/exit`.
+**2. Bir kez çalıştır ve giriş yap.** Terminale `claude` yaz. Tarayıcıda bir
+sayfa açılır, Pro veya Max hesabınla giriş yap. Terminal birkaç soru sorarsa
+varsayılanları seçebilirsin. Giriş bir kez yapılır, sonra hatırlanır. Çıkmak
+için `/exit` yaz.
 
 ```bash
 claude
 ```
 
-**3. Uygulamayı yeni bir terminalden yeniden başlat.** Bu adım atlanırsa
-uygulama `claude` komutunu bulamaz.
+**3. Marketiyo'yu yeni bir terminalden yeniden başlat.** Bu adım atlanırsa
+Marketiyo `claude` komutunu bulamaz.
 
-*Neden?* Kurulum, `claude` komutunun yerini sistemin arama yoluna (PATH)
-ekler. Bu değişikliği yalnızca kurulumdan **sonra** açılan terminaller görür.
-Uygulama kurulumdan önce açılmış bir terminalde çalışıyorsa `claude`
-komutunu göremez.
+*Neden?* Kurulum, `claude` komutunun yerini sisteme ekler. Bu değişikliği
+yalnızca kurulumdan **sonra** açılan terminal pencereleri görür.
 
-Nasıl yapılır:
-
-1. Uygulamanın çalıştığı terminale geç ve **Ctrl+C** ile durdur. Tarayıcıdaki
-   sayfa bağlantıyı kaybeder, bu normal.
-2. O terminali kapat ve **yeni bir terminal** aç.
+1. Marketiyo'nun çalıştığı terminal penceresine geç ve **Ctrl+C** ile durdur.
+   Tarayıcıdaki sayfa bağlantıyı kaybeder, bu normal.
+2. Açık **bütün** terminal pencerelerini kapat.
    - VS Code, Cursor gibi bir editörün içindeki terminali kullanıyorsan
-     editörü **tamamen kapatıp yeniden aç**. İçindeki terminaller eski ayarları
-     taşımaya devam eder.
-3. Yeni terminalde `claude --version` yaz. Bir sürüm numarası görüyorsan hazır.
-4. Proje klasörüne gir. Klasörü nereye indirdiysen o yolu yaz, boşluk varsa
-   tırnak içine al:
+     editörü **tamamen kapatıp yeniden aç**.
+3. [Adım 3](#adım-3-klasörün-içinde-terminal-aç)'teki gibi Marketiyo
+   klasöründe yeni bir terminal aç.
+4. Kontrol et. Bir sürüm numarası görüyorsan hazır:
 
    ```bash
-   cd "C:\Users\adın\Projects\marketiyo"
+   claude --version
    ```
 
-   Kurulum sayfası bu komutu senin gerçek klasör yolunla gösterir.
-5. Uygulamayı başlat:
+5. Marketiyo'yu başlat ve tarayıcıdaki sayfayı yenile:
 
    ```bash
    npm run dev
    ```
 
-6. Tarayıcıda sayfayı yenile.
+**4. Marketiyo'da bağlan.** **Kurulum** sayfasında **Claude Code**'u seç ve
+**Kaydet ve bağlantıyı sına**'ya bas. Sınama, girişin gerçekten yapıldığını
+görmek için Claude'a çok kısa bir istek gönderir. 5 ila 30 saniye sürebilir ve
+planından çok küçük bir kullanım düşer.
 
-**4. Uygulamada bağlan.** **Kurulum** sayfasında **Claude Code**'u seç ve
-**Kaydet ve bağlantıyı sına** düğmesine bas. Sınama, girişin gerçekten
-yapıldığını görmek için Claude'a çok kısa bir istek gönderir. 5 ila 30 saniye
-sürebilir ve planından çok küçük bir kullanım düşer.
-
-`claude` hâlâ bulunamıyorsa **Claude komutu** alanına tam yolunu yaz. Yolu
-şu komut gösterir:
+`claude` hâlâ bulunamıyorsa **Claude komutu** kutusuna tam yolunu yaz. Yolu
+bulmak için yeni bir terminalde:
 
 - Windows: `where claude`
 - macOS / Linux: `which claude`
 
-Claude masaüstü uygulaması gerekmez, yalnızca Claude Code.
-
-### 2b. Gemini ile bağlan
+## Gemini bağlantısı
 
 1. [Google AI Studio](https://aistudio.google.com/apikey)'da bir API anahtarı oluştur.
 2. **Kurulum** sayfasında **Gemini**'yi seç, anahtarı yapıştır ve modeli seç.
-3. **Kaydet ve bağlantıyı sına** düğmesine bas.
+3. **Kaydet ve bağlantıyı sına**'ya bas.
 
 Modeller ve ücretsiz sınırlar (Eylül 2026):
 
@@ -175,16 +326,9 @@ Her üretim bir istek kullanır. Model hatalı biçimde yanıt verirse bir kez d
 dener, yani en fazla iki. Güncel sınırların
 [AI Studio](https://aistudio.google.com/rate-limit)'da görünür.
 
-### 3. Marka profilini oluştur
-
-Bağlantı kurulunca **Marka** sayfası açılır. Ürününü birkaç cümleyle anlatıp
-**Taslağı oluştur**'a basarsan alanları senin için doldurur, sonra düzeltirsin.
-Kaydedince uygulamanın geri kalanı açılır. Bu iki adım bitmeden diğer bölümler
-kilitli kalır.
-
 ## Günlük kullanım
 
-1. Terminalde proje klasörüne gir ve `npm run dev` çalıştır.
+1. Marketiyo klasöründe terminal aç, `npm run dev` çalıştır.
 2. <http://localhost:3000> adresini aç. Ana sayfa sıradaki adımı gösterir.
 3. **Fikirler**: medya türünü seç, fikir üret, beğendiklerini sakla, diğerlerini
    nedeniyle ele.
@@ -194,19 +338,28 @@ kilitli kalır.
 
 ## Güncelleme
 
+**ZIP ile indirdiysen**
+
+1. Marketiyo'yu kapat (terminalde Ctrl+C).
+2. [Adım 2](#adım-2-marketiyoyu-indir)'deki gibi yeni ZIP'i indirip aç.
+3. Eski klasördeki `workspace` klasörünü kopyalayıp yeni klasörün içine yapıştır.
+   Bütün verilerin bu klasörde.
+4. Yeni klasörde terminal aç, `npm install`, sonra `npm run dev` çalıştır.
+5. Her şey yerindeyse eski klasörü silebilirsin.
+
+**Git ile indirdiysen**
+
 ```bash
 git pull
 npm install
 npm run dev
 ```
 
-Verilerin `workspace/` klasöründe durur ve güncellemeden etkilenmez.
-
 ## Verilerin nerede
 
-Her şey proje içindeki `workspace/` klasöründe düz dosya olarak durur ve Git'e
-girmez. Başka bir klasör kullanmak için `MARKETIYO_WORKSPACE` ortam değişkenini
-ayarla.
+Her şey Marketiyo klasörünün içindeki `workspace` klasöründe düz dosya olarak
+durur. Bu klasör ilk kullanımda oluşur ve Git'e girmez. Başka bir klasör
+kullanmak için `MARKETIYO_WORKSPACE` ortam değişkenini ayarla.
 
 | Dosya | İçerik |
 | --- | --- |
@@ -217,8 +370,8 @@ ayarla.
 | `campaigns.json`, `campaigns/` | Reklam kampanyaları |
 | `articles.json`, `articles/` | Blog konuları ve taslaklar |
 
-Yedek almak için bu klasörü kopyalaman yeterli. **Kurulum** sayfasındaki
-**Tümünü sıfırla** bu dosyaları kalıcı olarak siler.
+**Yedek almak** için `workspace` klasörünü başka bir yere kopyalaman yeterli.
+**Kurulum** sayfasındaki **Tümünü sıfırla** bu dosyaları kalıcı olarak siler.
 
 ## Güvenlik
 
@@ -234,17 +387,28 @@ Yedek almak için bu klasörü kopyalaman yeterli. **Kurulum** sayfasındaki
 
 ## Sorun giderme
 
+**Kurulum sırasında**
+
 | Görülen mesaj | Çözüm |
 | --- | --- |
-| Claude Code kurulu değil veya görünmüyor | [Yeni terminalden yeniden başlat](#2a-claude-code-ile-bağlan), olmazsa **Claude komutu** alanına tam yolu yaz |
+| `node` veya `npm` tanınmıyor, "komut bulunamadı" | Node.js'i [Adım 1](#adım-1-nodejsi-kur)'deki gibi kur, terminali kapatıp yeni bir tane aç |
+| "betiklerin çalıştırılması bu sistemde devre dışı" (Windows) | `npm` yerine `npm.cmd` yaz: `npm.cmd install`, `npm.cmd run dev` |
+| "Could not read package.json" veya "ENOENT" | Terminal yanlış klasörde. [Adım 3](#adım-3-klasörün-içinde-terminal-aç)'e dön, `ls` ile `package.json`'ı görene kadar klasörü kontrol et |
+| `npm install` çok uzun sürüyor veya "network" hatası | İnternet bağlantını kontrol et ve komutu tekrar çalıştır |
+| Tarayıcıda "Bu siteye ulaşılamıyor" | Terminalde `npm run dev` çalışıyor mu bak. Pencere kapandıysa yeniden başlat |
+| "Port 3000 is in use" | Marketiyo zaten başka bir pencerede açık olabilir. Onu kullan ya da `npm run dev -- -p 3001` ile başlatıp <http://localhost:3001> adresini aç |
+| Sayfa stilsiz veya bozuk görünüyor | Terminalde Ctrl+C, sonra `npm run dev` ile yeniden başlat |
+
+**Bağlantı sırasında**
+
+| Görülen mesaj | Çözüm |
+| --- | --- |
+| Claude Code kurulu değil veya görünmüyor | [Yeni terminalden yeniden başlat](#claude-code-bağlantısı), olmazsa **Claude komutu** kutusuna tam yolu yaz |
 | Claude Code kurulu ama giriş yapılmamış | Terminalde `claude` çalıştır, giriş yap, tekrar sına |
 | Claude bulundu ama yanıt vermedi | Terminalde `claude` çalıştırıp açılış sorularını tamamla, internet bağlantını kontrol et |
-| API anahtarı reddedildi | Anahtarı AI Studio'dan yeniden kopyala |
+| API anahtarı reddedildi | Anahtarı AI Studio'dan yeniden kopyala, başında veya sonunda boşluk kalmasın |
 | Kota doldu | Dakikalık sınırsa biraz bekle, günlükse yarın dene veya Flash Lite modeline geç |
 | Model bulunamadı | Kurulumdan listedeki bir modeli seç |
-| `npm` tanınmıyor | Node.js'i kur ve yeni bir terminal aç |
-| Port 3000 kullanımda | `npm run dev -- -p 3001` |
-| Sayfa stilsiz veya bozuk görünüyor | Terminalde Ctrl+C, sonra `npm run dev` ile yeniden başlat |
 
 ## Geliştirme
 
